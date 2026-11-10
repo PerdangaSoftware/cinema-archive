@@ -6,7 +6,15 @@ on:
   workflow_dispatch:
     inputs:
       ids:
-        description: 'Comma-separated IMDb Const IDs'
+        description: 'Comma-separated IMDb Const IDs for Watchlist'
+        required: false
+        default: ''
+      watched_ids:
+        description: 'Comma-separated IMDb Const IDs for Watched'
+        required: false
+        default: ''
+      curated_json:
+        description: 'JSON string of curated lists'
         required: false
         default: ''
 
@@ -26,16 +34,16 @@ jobs:
           python-version: '3.12'
 
       - name: Run synchronization
+        env:
+          INPUT_IDS: ${{ github.event.inputs.ids }}
+          INPUT_WATCHED_IDS: ${{ github.event.inputs.watched_ids }}
+          INPUT_CURATED_JSON: ${{ github.event.inputs.curated_json }}
         run: |
-          if [ -n "${{ github.event.inputs.ids }}" ]; then
-            python sync.py --ids "${{ github.event.inputs.ids }}"
-          else
-            python sync.py
-          fi
+          python sync.py
 
       - name: Commit and push if changed
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add data/ index.html
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-sync watchlist and cinema archive" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-sync watchlist, ratings and curated cinema archive" && git push)
