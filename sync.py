@@ -11,6 +11,7 @@ DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 CURATED_PATH = os.path.join(DATA_DIR, 'curated.json')
 MOVIES_DATA_PATH = os.path.join(DATA_DIR, 'movies_data.json')
 POSTERS_PATH = os.path.join(DATA_DIR, 'posters.json')
+TRAILERS_PATH = os.path.join(DATA_DIR, 'trailers.json')
 INDEX_HTML_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'index.html')
 
 def fetch_poster(const):
@@ -127,6 +128,10 @@ def update_index_html(html_path, data):
     content = re.sub(r'let allMovies\s*=\s*\[.*?\];', f'let allMovies = {all_json};', content, flags=re.DOTALL)
     content = re.sub(r'id="badge-all">\d+<', f'id="badge-all">{len(data["all"])}<', content)
     content = re.sub(r'id="metric-all">\d+<', f'id="metric-all">{len(data["all"])}<', content)
+
+    trailers_map = load_json(TRAILERS_PATH, {})
+    trailers_json = json.dumps(trailers_map, ensure_ascii=False)
+    content = re.sub(r'const trailersData\s*=\s*\{.*?\};', f'const trailersData = {trailers_json};', content, flags=re.DOTALL)
 
     with open(html_path, 'w', encoding='utf-8') as f:
         f.write(content)
