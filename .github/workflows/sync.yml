@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '0 6 * * *'
   workflow_dispatch:
+    inputs:
+      ids:
+        description: 'Comma-separated IMDb Const IDs'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -21,7 +26,12 @@ jobs:
           python-version: '3.12'
 
       - name: Run synchronization
-        run: python sync.py
+        run: |
+          if [ -n "${{ github.event.inputs.ids }}" ]; then
+            python sync.py --ids "${{ github.event.inputs.ids }}"
+          else
+            python sync.py
+          fi
 
       - name: Commit and push if changed
         run: |

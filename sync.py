@@ -125,6 +125,8 @@ def update_index_html(html_path, data):
     content = re.sub(r'let toWatchMovies\s*=\s*\[.*?\];', f'let toWatchMovies = {towatch_json};', content, flags=re.DOTALL)
     content = re.sub(r'let waitingMovies\s*=\s*\[.*?\];', f'let waitingMovies = {waiting_json};', content, flags=re.DOTALL)
     content = re.sub(r'let allMovies\s*=\s*\[.*?\];', f'let allMovies = {all_json};', content, flags=re.DOTALL)
+    content = re.sub(r'id="badge-all">\d+<', f'id="badge-all">{len(data["all"])}<', content)
+    content = re.sub(r'id="metric-all">\d+<', f'id="metric-all">{len(data["all"])}<', content)
 
     with open(html_path, 'w', encoding='utf-8') as f:
         f.write(content)
@@ -132,6 +134,7 @@ def update_index_html(html_path, data):
 def main():
     parser = argparse.ArgumentParser(description='Synchronize Cinema Archive with IMDb Watchlist')
     parser.add_argument('--csv', help='Path to exported IMDb Watchlist CSV file')
+    parser.add_argument('--ids', help='Comma-separated IMDb Const IDs')
     parser.add_argument('--add', help='Add a single IMDb Const to collection (e.g. tt1234567)')
     parser.add_argument('--add-towatch', help='Add IMDb Const to Ready to Watch')
     parser.add_argument('--add-comingsoon', help='Add IMDb Const to Coming Soon')
@@ -177,7 +180,16 @@ def main():
         if const:
             all_movies_map[const] = m
 
-    if csv_candidate and os.path.exists(csv_candidate):
+    provided_ids = []
+    if args.ids:
+        provided_ids = [c.strip() for c in args.ids.split(',') if c.strip().startswith('tt')]
+        if provided_ids:
+            all_movies_map = {c: all_movies_map[c] for c in provided_ids if c in all_movies_map}
+            for c in provided_ids:
+                if c not in all_movies_map:
+                    print(f'Fetching metadata for {c}')
+                    all_movies_map[c] = fetch_movie_meta(c)
+    elif csv_candidate and os.path.exists(csv_candidate):
         csv_movies = load_csv(csv_candidate)
         print(f'Importing {len(csv_movies)} movies from {csv_candidate}')
         for m in csv_movies:
@@ -217,7 +229,12 @@ def main():
             meta = fetch_movie_meta(const)
             all_movies_map[const] = meta
 
-    all_movies = list(all_movies_map.values())
+    if provided_ids:
+        all_movies = [all_movies_map[c] for c in provided_ids if c in all_movies_map]
+        for idx, m in enumerate(all_movies, 1):
+            m['Position'] = str(idx)
+    else:
+        all_movies = list(all_movies_map.values())
 
     new_posters_count = 0
     for m in all_movies:
@@ -262,6 +279,10 @@ def main():
         item = all_movies_map.get(const)
         if item:
             waiting.append(item)
+
+    if provided_ids:
+        curated['top10_to_watch'] = [c for c in curated.get('top10_to_watch', []) if c in provided_ids]
+        curated['awaiting_digital'] = [c for c in curated.get('awaiting_digital', []) if c in provided_ids]
 
     final_data = {
         'favorites': favorites,
