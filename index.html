@@ -751,6 +751,15 @@
     opacity: 0.6;
     pointer-events: none;
   }
+  .btn-control.btn-reset {
+    border-color: var(--border-light);
+    color: var(--text-secondary);
+  }
+  .btn-control.btn-reset:hover {
+    border-color: #ef4444;
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.08);
+  }
 
 
   .btn-card-curate,
@@ -1091,6 +1100,10 @@
 
       <button class="btn-control btn-publish" id="btnPublish" onclick="publishCuratedToGitHub()" title="Publish all changes (Watched, Favorites, Ready to Watch) to GitHub repository">
         ☁ Publish to GitHub
+      </button>
+
+      <button class="btn-control btn-reset" id="btnReset" onclick="resetLocalData()" title="Reset local changes back to repository defaults">
+        ↺ Reset Local
       </button>
     </div>
   </div>
@@ -1659,6 +1672,13 @@
         btn.classList.remove('loading');
       }
     });
+  }
+
+  function resetLocalData() {
+    if (!confirm('Reset local changes (watched and curated lists) back to repository defaults?')) return;
+    localStorage.removeItem('cinema_archive_curated_v1');
+    localStorage.removeItem('cinema_archive_watched_v1');
+    location.reload();
   }
 
   document.addEventListener('keydown', (e) => {
