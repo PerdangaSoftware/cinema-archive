@@ -15,7 +15,7 @@ TRAILERS_PATH = os.path.join(DATA_DIR, 'trailers.json')
 INDEX_HTML_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'index.html')
 
 def fetch_poster(const):
-    if not const:
+    if not const or not re.match(r'^tt\d{7,10}$', const):
         return ''
     try:
         url = f'https://v2.sg.media-imdb.com/suggests/{const[0].lower()}/{const}.json'
@@ -36,6 +36,8 @@ def fetch_poster(const):
     return ''
 
 def fetch_movie_meta(const):
+    if not const or not re.match(r'^tt\d{7,10}$', const):
+        return None
     meta = {
         'Position': '',
         'Const': const,
@@ -57,29 +59,62 @@ def fetch_movie_meta(const):
         'Date Rated': '',
         'Poster': ''
     }
-    try:
-        url = f'https://v2.sg.media-imdb.com/suggests/{const[0].lower()}/{const}.json'
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req, timeout=5) as resp:
-            text = resp.read().decode('utf-8', errors='ignore')
-        m = re.search(r'\((\{.*\})\)', text)
-        if m:
-            payload = json.loads(m.group(1))
-            for item in payload.get('d', []):
-                if item.get('id') == const:
-                    meta['Title'] = item.get('l', const)
-                    meta['Year'] = str(item.get('y', ''))
-                    if item.get('s'):
-                        meta['Directors'] = item.get('s')
-                    if item.get('i'):
-                        raw_url = item['i'][0]
-                        if raw_url.endswith('._V1_.jpg'):
-                            meta['Poster'] = raw_url[:-9] + '._V1_QL75_UX380_CR0,0,380,562_.jpg'
-                        else:
-                            meta['Poster'] = raw_url
+    for kind in ['movie', 'series']:
+        try:
+            url = f'https://v3-cinemeta.strem.io/meta/{kind}/{const}.json'
+            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+            with urllib.request.urlopen(req, timeout=5) as r:
+                d = json.loads(r.read().decode('utf-8'))
+                cm = d.get('meta')
+                if cm:
+                    if cm.get('name'):
+                        meta['Title'] = cm['name']
+                    if cm.get('year'):
+                        meta['Year'] = str(cm['year'])
+                    if cm.get('imdbRating'):
+                        meta['IMDb Rating'] = str(cm['imdbRating'])
+                    if cm.get('runtime'):
+                        m_rt = re.search(r'(\d+)', str(cm['runtime']))
+                        if m_rt:
+                            meta['Runtime (mins)'] = m_rt.group(1)
+                    if cm.get('genres') and isinstance(cm['genres'], list):
+                        meta['Genres'] = ', '.join(cm['genres'])
+                    dirs = cm.get('director')
+                    if dirs and isinstance(dirs, list) and len(dirs) > 0:
+                        meta['Directors'] = ', '.join(dirs)
+                    elif cm.get('writer') and isinstance(cm['writer'], list) and len(cm['writer']) > 0:
+                        meta['Directors'] = ', '.join(cm['writer'])
+                    if cm.get('poster'):
+                        meta['Poster'] = cm['poster']
                     break
-    except Exception:
-        pass
+        except Exception:
+            pass
+
+    if not meta['Title'] or meta['Title'] == const or not meta['Poster']:
+        try:
+            url = f'https://v2.sg.media-imdb.com/suggests/{const[0].lower()}/{const}.json'
+            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                text = resp.read().decode('utf-8', errors='ignore')
+            m = re.search(r'\((\{.*\})\)', text)
+            if m:
+                payload = json.loads(m.group(1))
+                for item in payload.get('d', []):
+                    if item.get('id') == const:
+                        if not meta['Title'] or meta['Title'] == const:
+                            meta['Title'] = item.get('l', const)
+                        if not meta['Year']:
+                            meta['Year'] = str(item.get('y', ''))
+                        if not meta['Poster'] and item.get('i'):
+                            raw_url = item['i'][0]
+                            if raw_url.endswith('._V1_.jpg'):
+                                meta['Poster'] = raw_url[:-9] + '._V1_QL75_UX380_CR0,0,380,562_.jpg'
+                            else:
+                                meta['Poster'] = raw_url
+                        break
+        except Exception:
+            pass
+
     return meta
 
 def load_csv(csv_path):
@@ -111,28 +146,31 @@ def save_json(path, data):
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
+def safe_json_dumps(obj):
+    return json.dumps(obj, ensure_ascii=False).replace('<', '\\u003c').replace('>', '\\u003e')
+
 def update_index_html(html_path, data):
     if not os.path.exists(html_path):
         return
     with open(html_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    fav_json = json.dumps(data['favorites'], ensure_ascii=False)
-    towatch_json = json.dumps(data['to_watch'], ensure_ascii=False)
-    waiting_json = json.dumps(data['waiting'], ensure_ascii=False)
-    all_json = json.dumps(data['all'], ensure_ascii=False)
-    watched_ids_json = json.dumps(data.get('watched_ids', []), ensure_ascii=False)
-    watched_arch_json = json.dumps(data.get('watched_archive', []), ensure_ascii=False)
+    fav_json = safe_json_dumps(data['favorites'])
+    towatch_json = safe_json_dumps(data['to_watch'])
+    waiting_json = safe_json_dumps(data['waiting'])
+    all_json = safe_json_dumps(data['all'])
+    watched_ids_json = safe_json_dumps(data.get('watched_ids', []))
+    watched_arch_json = safe_json_dumps(data.get('watched_archive', []))
 
-    content = re.sub(r'let favoriteMovies\s*=\s*\[.*?\];', f'let favoriteMovies = {fav_json};', content, flags=re.DOTALL)
-    content = re.sub(r'let toWatchMovies\s*=\s*\[.*?\];', f'let toWatchMovies = {towatch_json};', content, flags=re.DOTALL)
-    content = re.sub(r'let waitingMovies\s*=\s*\[.*?\];', f'let waitingMovies = {waiting_json};', content, flags=re.DOTALL)
-    content = re.sub(r'let allMovies\s*=\s*\[.*?\];', f'let allMovies = {all_json};', content, flags=re.DOTALL)
-    content = re.sub(r'let watchedMovies\s*=\s*\[.*?\];', f'let watchedMovies = {watched_ids_json};', content, flags=re.DOTALL)
+    content = re.sub(r'let favoriteMovies\s*=\s*\[.*?\];', lambda _: f'let favoriteMovies = {fav_json};', content, flags=re.DOTALL)
+    content = re.sub(r'let toWatchMovies\s*=\s*\[.*?\];', lambda _: f'let toWatchMovies = {towatch_json};', content, flags=re.DOTALL)
+    content = re.sub(r'let waitingMovies\s*=\s*\[.*?\];', lambda _: f'let waitingMovies = {waiting_json};', content, flags=re.DOTALL)
+    content = re.sub(r'let allMovies\s*=\s*\[.*?\];', lambda _: f'let allMovies = {all_json};', content, flags=re.DOTALL)
+    content = re.sub(r'let watchedMovies\s*=\s*\[.*?\];', lambda _: f'let watchedMovies = {watched_ids_json};', content, flags=re.DOTALL)
     if 'let watchedArchive' in content:
-        content = re.sub(r'let watchedArchive\s*=\s*\[.*?\];', f'let watchedArchive = {watched_arch_json};', content, flags=re.DOTALL)
+        content = re.sub(r'let watchedArchive\s*=\s*\[.*?\];', lambda _: f'let watchedArchive = {watched_arch_json};', content, flags=re.DOTALL)
     else:
-        content = re.sub(r'let watchedMovies\s*=\s*\[.*?\];', f'let watchedMovies = {watched_ids_json};\n  let watchedArchive = {watched_arch_json};', content)
+        content = re.sub(r'let watchedMovies\s*=\s*\[.*?\];', lambda _: f'let watchedMovies = {watched_ids_json};\n  let watchedArchive = {watched_arch_json};', content)
 
     content = re.sub(r'id="badge-all">\d+<', f'id="badge-all">{len(data["all"])}<', content)
     content = re.sub(r'id="metric-all">\d+<', f'id="metric-all">{len(data["all"])}<', content)
@@ -146,8 +184,8 @@ def update_index_html(html_path, data):
     content = re.sub(r'id="metric-watched">\d+<', f'id="metric-watched">{len(data.get("watched_ids", []))}<', content)
 
     trailers_map = load_json(TRAILERS_PATH, {})
-    trailers_json = json.dumps(trailers_map, ensure_ascii=False)
-    content = re.sub(r'const trailersData\s*=\s*\{.*?\};', f'const trailersData = {trailers_json};', content, flags=re.DOTALL)
+    trailers_json = safe_json_dumps(trailers_map)
+    content = re.sub(r'const trailersData\s*=\s*\{.*?\};', lambda _: f'const trailersData = {trailers_json};', content, flags=re.DOTALL)
 
     with open(html_path, 'w', encoding='utf-8') as f:
         f.write(content)
@@ -178,19 +216,23 @@ def main():
         try:
             parsed = json.loads(curated_input)
             if 'favorites' in parsed and isinstance(parsed['favorites'], list):
-                curated['favorites'] = parsed['favorites']
+                curated['favorites'] = [c for c in parsed['favorites'] if isinstance(c, str) and re.match(r'^tt\d{7,10}$', c)]
             if 'top10_to_watch' in parsed or 'to_watch' in parsed:
-                curated['top10_to_watch'] = parsed.get('top10_to_watch') or parsed.get('to_watch', [])
+                raw_tw = parsed.get('top10_to_watch') or parsed.get('to_watch', [])
+                if isinstance(raw_tw, list):
+                    curated['top10_to_watch'] = [c for c in raw_tw if isinstance(c, str) and re.match(r'^tt\d{7,10}$', c)]
             if 'awaiting_digital' in parsed or 'waiting' in parsed:
-                curated['awaiting_digital'] = parsed.get('awaiting_digital') or parsed.get('waiting', [])
+                raw_w = parsed.get('awaiting_digital') or parsed.get('waiting', [])
+                if isinstance(raw_w, list):
+                    curated['awaiting_digital'] = [c for c in raw_w if isinstance(c, str) and re.match(r'^tt\d{7,10}$', c)]
             if 'watched' in parsed and isinstance(parsed['watched'], list):
-                curated['watched'] = parsed['watched']
+                curated['watched'] = [c for c in parsed['watched'] if isinstance(c, str) and re.match(r'^tt\d{7,10}$', c)]
         except Exception as e:
             print(f'Error parsing curated JSON: {e}')
 
     watched_input = args.watched_ids or env_watched_ids
     if watched_input:
-        parsed_w = [c.strip() for c in watched_input.split(',') if c.strip().startswith('tt')]
+        parsed_w = [c.strip() for c in watched_input.split(',') if re.match(r'^tt\d{7,10}$', c.strip())]
         if parsed_w:
             existing_w = curated.get('watched', [])
             curated['watched'] = list(dict.fromkeys(existing_w + parsed_w))
@@ -242,19 +284,21 @@ def main():
     raw_ids = args.ids or env_ids
     provided_ids = []
     if raw_ids:
-        provided_ids = [c.strip() for c in raw_ids.split(',') if c.strip().startswith('tt')]
+        provided_ids = [c.strip() for c in raw_ids.split(',') if re.match(r'^tt\d{7,10}$', c.strip())]
         if provided_ids:
             all_movies_map = {c: all_movies_map[c] for c in provided_ids if c in all_movies_map}
             for c in provided_ids:
                 if c not in all_movies_map:
                     print(f'Fetching metadata for {c}')
-                    all_movies_map[c] = fetch_movie_meta(c)
+                    meta = fetch_movie_meta(c)
+                    if meta:
+                        all_movies_map[c] = meta
     elif csv_candidate and os.path.exists(csv_candidate):
         csv_movies = load_csv(csv_candidate)
         print(f'Importing {len(csv_movies)} movies from {csv_candidate}')
         for m in csv_movies:
             const = m.get('Const')
-            if not const:
+            if not const or not re.match(r'^tt\d{7,10}$', const):
                 continue
             if const in all_movies_map:
                 existing_poster = all_movies_map[const].get('Poster', '')
@@ -265,19 +309,19 @@ def main():
                 all_movies_map[const] = m
 
     manual_consts = []
-    if args.add:
+    if args.add and re.match(r'^tt\d{7,10}$', args.add.strip()):
         manual_consts.append((args.add.strip(), 'all'))
-    if args.add_towatch:
+    if args.add_towatch and re.match(r'^tt\d{7,10}$', args.add_towatch.strip()):
         c = args.add_towatch.strip()
         manual_consts.append((c, 'towatch'))
         if c not in curated.get('top10_to_watch', []):
             curated.setdefault('top10_to_watch', []).append(c)
-    if args.add_comingsoon:
+    if args.add_comingsoon and re.match(r'^tt\d{7,10}$', args.add_comingsoon.strip()):
         c = args.add_comingsoon.strip()
         manual_consts.append((c, 'waiting'))
         if c not in curated.get('awaiting_digital', []):
             curated.setdefault('awaiting_digital', []).append(c)
-    if args.add_fav:
+    if args.add_fav and re.match(r'^tt\d{7,10}$', args.add_fav.strip()):
         c = args.add_fav.strip()
         manual_consts.append((c, 'fav'))
         if c not in curated.get('favorites', []):
@@ -287,17 +331,22 @@ def main():
         if const not in all_movies_map:
             print(f'Fetching metadata for {const}')
             meta = fetch_movie_meta(const)
-            all_movies_map[const] = meta
+            if meta:
+                all_movies_map[const] = meta
 
     for c in curated.get('watched', []):
         if c not in all_movies_map:
             print(f'Fetching metadata for watched film {c}')
-            all_movies_map[c] = fetch_movie_meta(c)
+            meta = fetch_movie_meta(c)
+            if meta:
+                all_movies_map[c] = meta
 
     for c in curated.get('favorites', []):
         if c not in all_movies_map:
             print(f'Fetching metadata for favorite film {c}')
-            all_movies_map[c] = fetch_movie_meta(c)
+            meta = fetch_movie_meta(c)
+            if meta:
+                all_movies_map[c] = meta
 
     if provided_ids:
         all_movies = [all_movies_map[c] for c in provided_ids if c in all_movies_map]
