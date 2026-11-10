@@ -6,6 +6,7 @@ import re
 import random
 import argparse
 import urllib.request
+import html
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 CURATED_PATH = os.path.join(DATA_DIR, 'curated.json')
@@ -59,7 +60,43 @@ def fetch_movie_meta(const):
         'Date Rated': '',
         'Poster': ''
     }
-    for kind in ['movie', 'series']:
+
+    suggest_title = ''
+    suggest_q = ''
+    suggest_year = ''
+    suggest_poster = ''
+    try:
+        url = f'https://v2.sg.media-imdb.com/suggests/{const[0].lower()}/{const}.json'
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            text = resp.read().decode('utf-8', errors='ignore')
+        m = re.search(r'\((\{.*\})\)', text)
+        if m:
+            payload = json.loads(m.group(1))
+            for item in payload.get('d', []):
+                if item.get('id') == const:
+                    suggest_title = item.get('l', '')
+                    suggest_q = item.get('q', '')
+                    suggest_year = str(item.get('y', ''))
+                    if item.get('i'):
+                        raw_url = item['i'][0]
+                        if raw_url.endswith('._V1_.jpg'):
+                            suggest_poster = raw_url[:-9] + '._V1_QL75_UX380_CR0,0,380,562_.jpg'
+                        else:
+                            suggest_poster = raw_url
+                    break
+    except Exception:
+        pass
+
+    if suggest_title:
+        meta['Title'] = suggest_title
+    if suggest_year:
+        meta['Year'] = suggest_year
+    if suggest_poster:
+        meta['Poster'] = suggest_poster
+
+    kinds = ['series', 'movie'] if 'tv' in suggest_q.lower() else ['movie', 'series']
+    for kind in kinds:
         try:
             url = f'https://v3-cinemeta.strem.io/meta/{kind}/{const}.json'
             req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
@@ -67,8 +104,14 @@ def fetch_movie_meta(const):
                 d = json.loads(r.read().decode('utf-8'))
                 cm = d.get('meta')
                 if cm:
+                    c_name = cm.get('name', '')
+                    t1 = re.sub(r'[^a-z0-9]', '', (suggest_title or meta['Title']).lower())
+                    t2 = re.sub(r'[^a-z0-9]', '', c_name.lower())
+                    if suggest_title and t1 and t2 and not (t1 == t2 or t1 in t2 or t2 in t1):
+                        continue
+
                     if cm.get('name'):
-                        meta['Title'] = cm['name']
+                        meta['Title'] = html.unescape(cm['name'])
                     if cm.get('year'):
                         meta['Year'] = str(cm['year'])
                     if cm.get('imdbRating'):
@@ -78,40 +121,15 @@ def fetch_movie_meta(const):
                         if m_rt:
                             meta['Runtime (mins)'] = m_rt.group(1)
                     if cm.get('genres') and isinstance(cm['genres'], list):
-                        meta['Genres'] = ', '.join(cm['genres'])
+                        meta['Genres'] = html.unescape(', '.join(cm['genres']))
                     dirs = cm.get('director')
                     if dirs and isinstance(dirs, list) and len(dirs) > 0:
-                        meta['Directors'] = ', '.join(dirs)
+                        meta['Directors'] = html.unescape(', '.join(dirs))
                     elif cm.get('writer') and isinstance(cm['writer'], list) and len(cm['writer']) > 0:
-                        meta['Directors'] = ', '.join(cm['writer'])
-                    if cm.get('poster'):
+                        meta['Directors'] = html.unescape(', '.join(cm['writer']))
+                    if not meta['Poster'] and cm.get('poster'):
                         meta['Poster'] = cm['poster']
                     break
-        except Exception:
-            pass
-
-    if not meta['Title'] or meta['Title'] == const or not meta['Poster']:
-        try:
-            url = f'https://v2.sg.media-imdb.com/suggests/{const[0].lower()}/{const}.json'
-            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-            with urllib.request.urlopen(req, timeout=5) as resp:
-                text = resp.read().decode('utf-8', errors='ignore')
-            m = re.search(r'\((\{.*\})\)', text)
-            if m:
-                payload = json.loads(m.group(1))
-                for item in payload.get('d', []):
-                    if item.get('id') == const:
-                        if not meta['Title'] or meta['Title'] == const:
-                            meta['Title'] = item.get('l', const)
-                        if not meta['Year']:
-                            meta['Year'] = str(item.get('y', ''))
-                        if not meta['Poster'] and item.get('i'):
-                            raw_url = item['i'][0]
-                            if raw_url.endswith('._V1_.jpg'):
-                                meta['Poster'] = raw_url[:-9] + '._V1_QL75_UX380_CR0,0,380,562_.jpg'
-                            else:
-                                meta['Poster'] = raw_url
-                        break
         except Exception:
             pass
 
