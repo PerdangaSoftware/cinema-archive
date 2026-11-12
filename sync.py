@@ -419,14 +419,17 @@ def main():
         elif curated_has_ratings:
             m['Your Rating'] = ''
 
+    watched_set = set(curated.get('watched', []))
+
     if provided_ids:
-        all_movies = [all_movies_map[c] for c in provided_ids if c in all_movies_map]
-        for idx, m in enumerate(all_movies, 1):
-            m['Position'] = str(idx)
+        all_movies = [all_movies_map[c] for c in provided_ids if c in all_movies_map and c not in watched_set]
     else:
-        all_movies = [m for m in existing_data.get('all', []) if m.get('Const') in all_movies_map]
-        if not all_movies:
-            all_movies = list(all_movies_map.values())
+        all_movies = [m for m in existing_data.get('all', []) if m.get('Const') in all_movies_map and m.get('Const') not in watched_set]
+        if not all_movies and not existing_data.get('all'):
+            all_movies = [m for m in all_movies_map.values() if m.get('Const') not in watched_set]
+
+    for idx, m in enumerate(all_movies, 1):
+        m['Position'] = str(idx)
 
     new_posters_count = 0
     for m in all_movies_map.values():
@@ -445,9 +448,19 @@ def main():
         elif const not in posters:
             posters[const] = m['Poster']
 
+    all_const_set = set(m['Const'] for m in all_movies if m.get('Const'))
+    curated['top10_to_watch'] = [
+        c for c in curated.get('top10_to_watch', [])
+        if c not in watched_set and (not provided_ids or c in all_const_set)
+    ]
+    curated['awaiting_digital'] = [
+        c for c in curated.get('awaiting_digital', [])
+        if c not in watched_set and (not provided_ids or c in all_const_set)
+    ]
+
     fav_ids = curated.get('favorites', [])
-    to_watch_ids = curated.get('top10_to_watch', [])
-    waiting_ids = curated.get('awaiting_digital', [])
+    to_watch_ids = curated['top10_to_watch']
+    waiting_ids = curated['awaiting_digital']
 
     existing_fav_map = {m['Const']: m for m in existing_data.get('favorites', []) if m.get('Const')}
     favorites = []
@@ -472,16 +485,13 @@ def main():
         if item:
             waiting.append(item)
 
-    all_const_set = set(m['Const'] for m in all_movies if m.get('Const'))
     fav_const_set = set(m['Const'] for m in favorites if m.get('Const'))
     watched_archive = []
     for c in curated.get('watched', []):
         if c not in all_const_set and c not in fav_const_set and c in all_movies_map:
-            watched_archive.append(all_movies_map[c])
-
-    if provided_ids:
-        curated['top10_to_watch'] = [c for c in curated.get('top10_to_watch', []) if c in provided_ids]
-        curated['awaiting_digital'] = [c for c in curated.get('awaiting_digital', []) if c in provided_ids]
+            arch_item = dict(all_movies_map[c])
+            arch_item['Position'] = ''
+            watched_archive.append(arch_item)
 
     final_data = {
         'favorites': favorites,
