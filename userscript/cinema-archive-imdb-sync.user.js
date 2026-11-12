@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cinema Archive — IMDb Auto Sync
 // @namespace    https://github.com/PerdangaSoftware/cinema-archive
-// @version      1.0.2
+// @version      1.0.3
 // @description  Автоматически синхронизирует Watchlist, Watched и оценки (1–10) с IMDb в Cinema Archive при изменениях на сайте.
 // @author       Roman Zhdanov
 // @match        https://www.imdb.com/*
@@ -500,7 +500,6 @@
     return /rating|watchlist|listItem|addItem|removeItem|deleteTitleRating|updateTitleRating/i.test(combined);
   }
 
-  // 1. Перехват GraphQL-запросов IMDb (добавление/удаление в Watchlist или смена оценки)
   try {
     const origFetch = pageWin.fetch;
     if (typeof origFetch === 'function') {
@@ -521,7 +520,6 @@
     }
   } catch (e) {}
 
-  // 2. Резервный перехват кликов по кнопкам оценки и Watchlist в интерфейсе IMDb
   document.addEventListener('click', (e) => {
     const target = e.target && e.target.closest ? e.target.closest(
       '[data-testid*="watchlist"], [data-testid*="Watchlist"], ' +
@@ -539,7 +537,6 @@
 
   let activeObserver = null;
 
-  // 3. Автоматическая проверка при открытии или изменении /watchlist/ и /ratings/
   function setupPageHooks() {
     if (activeObserver) {
       activeObserver.disconnect();
@@ -589,7 +586,6 @@
     setupPageHooks();
   }
 
-  // Поддержка SPA-переходов внутри IMDb (Next.js router)
   let lastPath = location.pathname + location.search;
   setInterval(() => {
     const current = location.pathname + location.search;
