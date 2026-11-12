@@ -191,6 +191,7 @@ def update_index_html(html_path, data):
     watched_ids_json = safe_json_dumps(data.get('watched_ids', []))
     watched_arch_json = safe_json_dumps(data.get('watched_archive', []))
     ratings_json = safe_json_dumps(data.get('ratings', {}))
+    cinema_pick_json = safe_json_dumps(data.get('cinema_pick', ''))
 
     content = re.sub(r'let favoriteMovies\s*=\s*\[.*?\];', lambda _: f'let favoriteMovies = {fav_json};', content, flags=re.DOTALL)
     content = re.sub(r'let toWatchMovies\s*=\s*\[.*?\];', lambda _: f'let toWatchMovies = {towatch_json};', content, flags=re.DOTALL)
@@ -205,6 +206,10 @@ def update_index_html(html_path, data):
         content = re.sub(r'let userRatings\s*=\s*\{.*?\};', lambda _: f'let userRatings = {ratings_json};', content, flags=re.DOTALL)
     else:
         content = re.sub(r'let watchedArchive\s*=\s*\[.*?\];', lambda _: f'let watchedArchive = {watched_arch_json};\n  let userRatings = {ratings_json};', content)
+    if 'let cinemaPickConst' in content:
+        content = re.sub(r'let cinemaPickConst\s*=\s*".*?";', lambda _: f'let cinemaPickConst = {cinema_pick_json};', content)
+    else:
+        content = re.sub(r'let userRatings\s*=\s*\{.*?\};', lambda _: f'let userRatings = {ratings_json};\n  let cinemaPickConst = {cinema_pick_json};', content, flags=re.DOTALL)
 
     content = re.sub(r'id="badge-all">\d+<', f'id="badge-all">{len(data["all"])}<', content)
     content = re.sub(r'id="metric-all">\d+<', f'id="metric-all">{len(data["all"])}<', content)
@@ -239,9 +244,11 @@ def main():
     parser.add_argument('--random', action='store_true', help='Pick random film from Ready to Watch')
     args = parser.parse_args()
 
-    curated = load_json(CURATED_PATH, {'favorites': [], 'top10_to_watch': [], 'awaiting_digital': [], 'watched': [], 'ratings': {}})
+    curated = load_json(CURATED_PATH, {'favorites': [], 'top10_to_watch': [], 'awaiting_digital': [], 'watched': [], 'ratings': {}, 'cinema_pick': ''})
     if 'ratings' not in curated or not isinstance(curated['ratings'], dict):
         curated['ratings'] = {}
+    if 'cinema_pick' not in curated or not isinstance(curated['cinema_pick'], str):
+        curated['cinema_pick'] = ''
     posters = load_json(POSTERS_PATH, {})
     existing_data = load_json(MOVIES_DATA_PATH, {'favorites': [], 'to_watch': [], 'waiting': [], 'watched_ids': [], 'watched_archive': [], 'ratings': {}, 'all': []})
 
@@ -271,6 +278,9 @@ def main():
             if 'ratings' in parsed and isinstance(parsed['ratings'], dict):
                 curated['ratings'] = parse_valid_ratings(parsed['ratings'])
                 curated_has_ratings = True
+            if 'cinema_pick' in parsed:
+                raw_pick = parsed.get('cinema_pick')
+                curated['cinema_pick'] = raw_pick.strip() if isinstance(raw_pick, str) and re.match(r'^tt\d{7,10}$', raw_pick.strip()) else ''
         except Exception as e:
             print(f'Error parsing curated JSON: {e}')
 
@@ -512,6 +522,14 @@ def main():
             arch_item['Position'] = ''
             watched_archive.append(arch_item)
 
+    to_watch_const_set = set(m['Const'] for m in to_watch if m.get('Const'))
+    current_pick = curated.get('cinema_pick', '')
+    if not isinstance(current_pick, str) or not re.match(r'^tt\d{7,10}$', current_pick):
+        current_pick = ''
+    if current_pick in watched_set or current_pick not in to_watch_const_set:
+        current_pick = ''
+    curated['cinema_pick'] = current_pick
+
     final_data = {
         'favorites': favorites,
         'to_watch': to_watch,
@@ -519,6 +537,7 @@ def main():
         'watched_ids': curated.get('watched', []),
         'watched_archive': watched_archive,
         'ratings': ratings_map,
+        'cinema_pick': current_pick,
         'all': all_movies
     }
 
