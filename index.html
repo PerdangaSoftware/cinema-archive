@@ -1628,12 +1628,23 @@
   
   
 
-  function showToast(msg) {
+  let toastTimer = null;
+
+  function showToast(msg, durationMs = 2500) {
     const t = document.getElementById('toastNotice');
     if (!t) return;
+    if (toastTimer) {
+      clearTimeout(toastTimer);
+      toastTimer = null;
+    }
     t.textContent = msg;
     t.classList.add('active');
-    setTimeout(() => t.classList.remove('active'), 2500);
+    if (durationMs > 0) {
+      toastTimer = setTimeout(() => {
+        t.classList.remove('active');
+        toastTimer = null;
+      }, durationMs);
+    }
   }
 
   function getMovieByConst(constId) {
@@ -1964,7 +1975,121 @@
     showToast('Downloaded curated.json');
   }
 
-  function publishCuratedToGitHub() {
+  const GITHUB_API_REPO = 'https://api.github.com/repos/PerdangaSoftware/cinema-archive';
+  let isPublishing = false;
+
+  function sleepMs(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async function githubApiGet(path, token) {
+    const resp = await fetch(GITHUB_API_REPO + path, {
+      headers: {
+        'Authorization': 'token ' + token,
+        'Accept': 'application/vnd.github.v3+json'
+      },
+      cache: 'no-store'
+    });
+    if (!resp.ok) return null;
+    return resp.json();
+  }
+
+  async function trackPublishAndDeploy(token, prevRunId, baseSha, btn) {
+    const setStatus = (btnLabel, toastMsg) => {
+      if (btn) btn.textContent = btnLabel;
+      showToast(toastMsg, 0);
+    };
+
+    let targetRun = null;
+    const syncDeadline = Date.now() + 90000;
+
+    setStatus('⏳ Queued...', '⏳ Waiting for GitHub Actions workflow...');
+
+    while (Date.now() < syncDeadline) {
+      await sleepMs(2200);
+      const runsData = await githubApiGet('/actions/workflows/sync.yml/runs?event=workflow_dispatch&per_page=5', token);
+      const runs = (runsData && Array.isArray(runsData.workflow_runs)) ? runsData.workflow_runs : [];
+
+      if (!targetRun) {
+        const candidate = runs.find(r => r && r.id && r.id !== prevRunId);
+        if (candidate) targetRun = candidate;
+      } else {
+        const updated = runs.find(r => r && r.id === targetRun.id);
+        if (updated) targetRun = updated;
+      }
+
+      if (!targetRun) continue;
+
+      if (targetRun.status === 'completed') {
+        if (targetRun.conclusion !== 'success') {
+          showToast('✕ Sync failed: ' + (targetRun.conclusion || 'error'), 5000);
+          return;
+        }
+        break;
+      }
+
+      if (targetRun.status === 'in_progress') {
+        setStatus('⚙ Syncing...', '⚙ Running sync.py on GitHub...');
+      } else {
+        setStatus('⏳ Queued...', '⏳ Workflow queued on GitHub...');
+      }
+    }
+
+    if (!targetRun || targetRun.status !== 'completed') {
+      showToast('⏳ Sync is still running on GitHub — check again shortly.', 5000);
+      return;
+    }
+
+    const headCommit = await githubApiGet('/commits/main', token);
+    const newSha = headCommit && headCommit.sha ? headCommit.sha : null;
+
+    if (baseSha && newSha && newSha === baseSha) {
+      await syncFreshRepoData();
+      showToast('✓ Published (already up to date)', 3500);
+      return;
+    }
+
+    if (!location.protocol.startsWith('http')) {
+      showToast('✓ Synced & committed to GitHub!', 4000);
+      return;
+    }
+
+    setStatus('🚀 Deploying...', '🚀 Deploying updates to GitHub Pages...');
+
+    const syncCompletedAt = Date.parse(targetRun.updated_at || targetRun.created_at) || Date.now();
+    const deployDeadline = Date.now() + 90000;
+
+    while (Date.now() < deployDeadline) {
+      await sleepMs(2500);
+      const updated = await syncFreshRepoData();
+      if (updated) {
+        showToast('✓ Published & site updated with fresh data!', 4000);
+        return;
+      }
+
+      const allRuns = await githubApiGet('/actions/runs?per_page=5', token);
+      const pagesRun = allRuns && Array.isArray(allRuns.workflow_runs)
+        ? allRuns.workflow_runs.find(r => r && r.path && r.path.includes('pages-build-deployment') && Date.parse(r.created_at) >= syncCompletedAt - 10000)
+        : null;
+
+      if (pagesRun && pagesRun.status === 'completed') {
+        if (pagesRun.conclusion !== 'success') {
+          showToast('✕ Pages deploy failed: ' + (pagesRun.conclusion || 'error'), 5000);
+          return;
+        }
+        await sleepMs(1500);
+        await syncFreshRepoData();
+        showToast('✓ Deployed to GitHub Pages!', 4000);
+        return;
+      }
+    }
+
+    showToast('✓ Committed to GitHub! Pages CDN may take a few more seconds.', 5000);
+  }
+
+  async function publishCuratedToGitHub() {
+    if (isPublishing) return;
+
     let token = localStorage.getItem('cinema_archive_token');
     if (!token) {
       token = prompt('🎬 Cinema Archive: Введите GitHub Personal Access Token для публикации в репозиторий:');
@@ -1973,50 +2098,63 @@
       localStorage.setItem('cinema_archive_token', token);
     }
 
+    isPublishing = true;
     const btn = document.getElementById('btnPublish');
     const origText = btn ? btn.textContent : '';
     if (btn) {
       btn.textContent = 'Publishing...';
       btn.classList.add('loading');
     }
-    showToast('☁ Publishing updates to GitHub...');
+    showToast('☁ Sending updates to GitHub...', 0);
 
-    const payload = buildCuratedPayload();
+    try {
+      const [prevRunsData, headCommit] = await Promise.all([
+        githubApiGet('/actions/workflows/sync.yml/runs?event=workflow_dispatch&per_page=1', token).catch(() => null),
+        githubApiGet('/commits/main', token).catch(() => null)
+      ]);
+      const prevRunId = (prevRunsData && prevRunsData.workflow_runs && prevRunsData.workflow_runs[0])
+        ? prevRunsData.workflow_runs[0].id
+        : 0;
+      const baseSha = headCommit && headCommit.sha ? headCommit.sha : null;
 
-    fetch('https://api.github.com/repos/PerdangaSoftware/cinema-archive/actions/workflows/sync.yml/dispatches', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'token ' + token,
-        'Accept': 'application/vnd.github.v3+json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        ref: 'main',
-        inputs: {
-          curated_json: JSON.stringify(payload)
-        }
-      })
-    }).then(res => {
+      const payload = buildCuratedPayload();
+      const res = await fetch(GITHUB_API_REPO + '/actions/workflows/sync.yml/dispatches', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'token ' + token,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          ref: 'main',
+          inputs: {
+            curated_json: JSON.stringify(payload)
+          }
+        })
+      });
+
       if (res.status === 204) {
-        showToast('✓ Published to GitHub! Site will update in ~30s');
+        await trackPublishAndDeploy(token, prevRunId, baseSha, btn);
       } else if (res.status === 401) {
         localStorage.removeItem('cinema_archive_token');
-        showToast('✕ Invalid GitHub token. Please click again to re-enter.');
+        showToast('✕ Invalid GitHub token. Please click again to re-enter.', 4000);
       } else {
-        res.json().then(d => {
-          showToast('✕ GitHub Error: ' + (d.message || res.status));
-        }).catch(() => {
-          showToast('✕ GitHub Error: ' + res.status);
-        });
+        let errMsg = String(res.status);
+        try {
+          const d = await res.json();
+          if (d && d.message) errMsg = d.message;
+        } catch (e) {}
+        showToast('✕ GitHub Error: ' + errMsg, 4500);
       }
-    }).catch(err => {
-      showToast('✕ Network Error: ' + err.message);
-    }).finally(() => {
+    } catch (err) {
+      showToast('✕ Network Error: ' + (err && err.message ? err.message : String(err)), 4500);
+    } finally {
+      isPublishing = false;
       if (btn) {
         btn.textContent = origText;
         btn.classList.remove('loading');
       }
-    });
+    }
   }
 
   function resetLocalData() {
@@ -2026,14 +2164,14 @@
   }
 
   async function syncFreshRepoData() {
-    if (!location.protocol.startsWith('http')) return;
+    if (!location.protocol.startsWith('http')) return false;
     try {
       const resp = await fetch('data/movies_data.json?t=' + Date.now(), { cache: 'no-store' });
-      if (!resp.ok) return;
+      if (!resp.ok) return false;
       const fresh = await resp.json();
-      if (!fresh || !Array.isArray(fresh.all)) return;
+      if (!fresh || !Array.isArray(fresh.all)) return false;
       const freshSig = computeDatasetSignature(fresh);
-      if (freshSig === repoSignature) return;
+      if (freshSig === repoSignature) return false;
 
       repoSignature = freshSig;
       allMovies = fresh.all;
@@ -2048,7 +2186,10 @@
       loadCuratedFromStorage();
       updateCounts();
       render();
-    } catch (e) {}
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   document.addEventListener('keydown', (e) => {
