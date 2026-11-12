@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cinema Archive — IMDb Auto Sync
 // @namespace    https://github.com/PerdangaSoftware/cinema-archive
-// @version      1.0.1
+// @version      1.0.2
 // @description  Автоматически синхронизирует Watchlist, Watched и оценки (1–10) с IMDb в Cinema Archive при изменениях на сайте.
 // @author       Roman Zhdanov
 // @match        https://www.imdb.com/*
@@ -60,21 +60,22 @@
 
   function getToken(promptIfMissing = false) {
     let token = GM_getValue(KEY_TOKEN, '');
-    if (!token) {
-      try {
-        const lsToken = localStorage.getItem('cinema_archive_token');
-        if (lsToken && lsToken.trim()) {
-          token = lsToken.trim();
-          GM_setValue(KEY_TOKEN, token);
-        }
-      } catch (e) {}
-    }
+    let lsToken = '';
+    try {
+      const raw = localStorage.getItem('cinema_archive_token');
+      if (raw && raw.trim()) lsToken = raw.trim();
+    } catch (e) {}
+
     if (!token && promptIfMissing && !tokenPromptDismissed) {
-      const entered = prompt('Cinema Archive Auto Sync: Введите GitHub Personal Access Token (repo + workflow):');
+      const entered = prompt(
+        'Cinema Archive Auto Sync: Введите GitHub Personal Access Token (repo + workflow):',
+        lsToken
+      );
       if (entered && entered.trim()) {
         token = entered.trim();
         GM_setValue(KEY_TOKEN, token);
         try { localStorage.setItem('cinema_archive_token', token); } catch (e) {}
+        showToast('<div style="font-weight:600;color:#10b981;">✓ GitHub токен сохранён — автосинк IMDb активен</div>', 3500, '#10b981');
       } else {
         tokenPromptDismissed = true;
       }
@@ -572,9 +573,19 @@
     activeObserver.observe(root, { childList: true, subtree: true });
   }
 
+  function ensureTokenOnStartup() {
+    if (!GM_getValue(KEY_TOKEN, '')) {
+      setTimeout(() => getToken(true), 400);
+    }
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupPageHooks, { once: true });
+    document.addEventListener('DOMContentLoaded', () => {
+      ensureTokenOnStartup();
+      setupPageHooks();
+    }, { once: true });
   } else {
+    ensureTokenOnStartup();
     setupPageHooks();
   }
 
