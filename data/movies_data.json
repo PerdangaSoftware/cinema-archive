@@ -457,6 +457,7 @@
     }
   ],
   "watched_ids": [
+    "tt34384661",
     "tt18382850",
     "tt0208502",
     "tt0500092",
@@ -627,6 +628,27 @@
     "tt21027780"
   ],
   "watched_archive": [
+    {
+      "Position": "",
+      "Const": "tt34384661",
+      "Created": "",
+      "Modified": "",
+      "Description": "",
+      "Title": "Godzilla Minus Zero",
+      "Original Title": "",
+      "URL": "https://www.imdb.com/title/tt34384661/",
+      "Title Type": "Movie",
+      "IMDb Rating": "",
+      "Runtime (mins)": "135",
+      "Year": "2026",
+      "Genres": "Action, Adventure, Drama",
+      "Num Votes": "",
+      "Release Date": "",
+      "Directors": "Takashi Yamazaki",
+      "Your Rating": "8",
+      "Date Rated": "",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BYzY2OWFhMTgtODJhMi00NDIyLWIzNTQtYjc4MjE4YTBjYzllXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
     {
       "Position": "",
       "Const": "tt18382850",
@@ -4115,7 +4137,8 @@
     "tt7984734": "8",
     "tt8228288": "8",
     "tt8999762": "8",
-    "tt9243946": "7"
+    "tt9243946": "7",
+    "tt34384661": "8"
   },
   "all": [
     {
