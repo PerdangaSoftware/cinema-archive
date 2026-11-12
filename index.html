@@ -811,6 +811,29 @@
     opacity: 0.6;
     pointer-events: none;
   }
+  .btn-control.btn-publish.has-unsaved {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+    background: rgba(212, 163, 115, 0.1);
+    box-shadow: 0 0 0 1px rgba(212, 163, 115, 0.2);
+  }
+  .btn-control.btn-publish.has-unsaved::after {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #f59e0b;
+    box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.28);
+    animation: unsavedPulse 1.8s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  .btn-control.btn-publish.loading::after {
+    display: none;
+  }
+  @keyframes unsavedPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.55; transform: scale(0.85); }
+  }
   .btn-control.btn-reset {
     border-color: var(--border-light);
     color: var(--text-secondary);
@@ -1707,6 +1730,17 @@
     });
   }
 
+  function computeCuratedSignature(p) {
+    const favIds = (p.favorites || []).join(',');
+    const twIds = (p.top10_to_watch || []).join(',');
+    const wIds = (p.awaiting_digital || []).join(',');
+    const watched = (p.watched || []).join(',');
+    const rObj = p.ratings || {};
+    const ratings = Object.keys(rObj).sort().map(k => k + ':' + rObj[k]).join(',');
+    const pick = typeof p.cinema_pick === 'string' ? p.cinema_pick : '';
+    return [favIds, twIds, wIds, watched, ratings, pick].join('|');
+  }
+
   function computeDatasetSignature(d) {
     const allIds = (d.all || []).map(x => x && x.Const).filter(Boolean).join(',');
     const favIds = (d.favorites || []).map(x => x && x.Const).filter(Boolean).join(',');
@@ -1728,6 +1762,18 @@
     ratings: userRatings,
     cinema_pick: cinemaPickConst
   });
+
+  let repoCuratedSignature = computeCuratedSignature(buildCuratedPayload());
+
+  function updatePublishDirtyState() {
+    const btn = document.getElementById('btnPublish');
+    if (!btn) return;
+    const dirty = computeCuratedSignature(buildCuratedPayload()) !== repoCuratedSignature;
+    btn.classList.toggle('has-unsaved', dirty && !isPublishing);
+    btn.title = dirty
+      ? 'You have unpublished local changes — click to publish to GitHub'
+      : 'Publish all changes (Watched, Favorites, Ready to Watch) to GitHub repository';
+  }
 
   function clearCuratedStorage() {
     localStorage.removeItem('cinema_archive_curated_v1');
@@ -1753,6 +1799,7 @@
     localStorage.setItem('cinema_archive_watched_v1', JSON.stringify(watchedMovies));
     localStorage.setItem('cinema_archive_ratings_v1', JSON.stringify(userRatings));
     localStorage.setItem('cinema_archive_repo_sig_v1', repoSignature);
+    updatePublishDirtyState();
   }
 
   function sanitizeCinemaPick() {
@@ -1775,6 +1822,7 @@
           clearCuratedStorage();
           pruneWatchedFromWatchlists();
           sanitizeCinemaPick();
+          updatePublishDirtyState();
           return;
         }
       }
@@ -1815,6 +1863,7 @@
     } catch (e) {}
     pruneWatchedFromWatchlists();
     sanitizeCinemaPick();
+    updatePublishDirtyState();
   }
 
   function addToWatch(constId) {
@@ -2067,7 +2116,7 @@
     return resp.json();
   }
 
-  async function trackPublishAndDeploy(token, prevRunId, baseSha, btn) {
+  async function trackPublishAndDeploy(token, prevRunId, baseSha, btn, publishedPayloadSig) {
     const setStatus = (btnLabel, toastMsg) => {
       if (btn) btn.textContent = btnLabel;
       showToast(toastMsg, 0);
@@ -2116,13 +2165,23 @@
     const headCommit = await githubApiGet('/commits/main', token);
     const newSha = headCommit && headCommit.sha ? headCommit.sha : null;
 
+    const markPublishedClean = () => {
+      if (computeCuratedSignature(buildCuratedPayload()) === publishedPayloadSig) {
+        repoCuratedSignature = publishedPayloadSig;
+        clearCuratedStorage();
+      }
+      updatePublishDirtyState();
+    };
+
     if (baseSha && newSha && newSha === baseSha) {
       await syncFreshRepoData();
+      markPublishedClean();
       showToast('✓ Published (already up to date)', 3500);
       return;
     }
 
     if (!location.protocol.startsWith('http')) {
+      markPublishedClean();
       showToast('✓ Synced & committed to GitHub!', 4000);
       return;
     }
@@ -2136,6 +2195,7 @@
       await sleepMs(2500);
       const updated = await syncFreshRepoData();
       if (updated) {
+        markPublishedClean();
         showToast('✓ Published & site updated with fresh data!', 4000);
         return;
       }
@@ -2152,11 +2212,13 @@
         }
         await sleepMs(1500);
         await syncFreshRepoData();
+        markPublishedClean();
         showToast('✓ Deployed to GitHub Pages!', 4000);
         return;
       }
     }
 
+    markPublishedClean();
     showToast('✓ Committed to GitHub! Pages CDN may take a few more seconds.', 5000);
   }
 
@@ -2172,6 +2234,7 @@
     }
 
     isPublishing = true;
+    updatePublishDirtyState();
     const btn = document.getElementById('btnPublish');
     const origText = btn ? btn.textContent : '';
     if (btn) {
@@ -2191,6 +2254,7 @@
       const baseSha = headCommit && headCommit.sha ? headCommit.sha : null;
 
       const payload = buildCuratedPayload();
+      const publishedPayloadSig = computeCuratedSignature(payload);
       const res = await fetch(GITHUB_API_REPO + '/actions/workflows/sync.yml/dispatches', {
         method: 'POST',
         headers: {
@@ -2207,7 +2271,7 @@
       });
 
       if (res.status === 204) {
-        await trackPublishAndDeploy(token, prevRunId, baseSha, btn);
+        await trackPublishAndDeploy(token, prevRunId, baseSha, btn, publishedPayloadSig);
       } else if (res.status === 401) {
         localStorage.removeItem('cinema_archive_token');
         showToast('✕ Invalid GitHub token. Please click again to re-enter.', 4000);
@@ -2227,6 +2291,7 @@
         btn.textContent = origText;
         btn.classList.remove('loading');
       }
+      updatePublishDirtyState();
       if (pendingPublishAfterCurrent) {
         pendingPublishAfterCurrent = false;
         setTimeout(() => publishCuratedToGitHub(), 200);
@@ -2260,6 +2325,7 @@
       watchedArchive = Array.isArray(fresh.watched_archive) ? fresh.watched_archive : [];
       userRatings = (fresh.ratings && typeof fresh.ratings === 'object' && !Array.isArray(fresh.ratings)) ? fresh.ratings : {};
       cinemaPickConst = typeof fresh.cinema_pick === 'string' ? fresh.cinema_pick : '';
+      repoCuratedSignature = computeCuratedSignature(buildCuratedPayload());
 
       Object.keys(watchlistRemovedCache).forEach(k => delete watchlistRemovedCache[k]);
       loadCuratedFromStorage();
