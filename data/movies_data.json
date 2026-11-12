@@ -13,7 +13,8 @@
       "Genres": "Crime, Drama",
       "Directors": "François Truffaut",
       "Poster": "https://m.media-amazon.com/images/M/MV5BOTU3YTM0YzQtMmFlOS00OTIxLWFmZjctMDJkOGQxNTVhODM3XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg",
-      "Trailer": "i89oN8v7RdY"
+      "Trailer": "i89oN8v7RdY",
+      "Your Rating": "9"
     },
     {
       "Position": "FAV 02",
@@ -28,7 +29,8 @@
       "Genres": "Crime, Drama",
       "Directors": "Martin Scorsese",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZDNhMGYwM2UtMTdlZS00MGQ1LWI2YzAtODY5YWI1MjYyNzRmXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg",
-      "Trailer": "T5IligQP7Fo"
+      "Trailer": "T5IligQP7Fo",
+      "Your Rating": "9"
     },
     {
       "Position": "FAV 03",
@@ -43,7 +45,8 @@
       "Genres": "Crime, Drama, Mystery",
       "Directors": "David Lynch, Mark Frost",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMTExNzk2NjcxNTNeQTJeQWpwZ15BbWU4MDcxOTczOTIx._V1_FMjpg_UX600_.jpg",
-      "Trailer": "rFuKtJjhBCQ"
+      "Trailer": "rFuKtJjhBCQ",
+      "Your Rating": "10"
     },
     {
       "Position": "FAV 04",
@@ -58,7 +61,8 @@
       "Genres": "Adventure, Drama",
       "Directors": "Werner Herzog",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYzJjNTRkNjUtZGE4MC00YmRlLWI0ODYtMzJjNGZkYWMzNTJhXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg",
-      "Trailer": "xWeb7i8IjYs"
+      "Trailer": "xWeb7i8IjYs",
+      "Your Rating": "9"
     },
     {
       "Position": "FAV 05",
@@ -73,7 +77,8 @@
       "Genres": "Action, Adventure, Comedy",
       "Directors": "Weston Razooli",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZDA0MDcyNWQtNjZhMi00ZWQ2LWI4MDktYTA3MDkwODQ3NDA5XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg",
-      "Trailer": "V9RhW4hE5gU"
+      "Trailer": "V9RhW4hE5gU",
+      "Your Rating": "10"
     },
     {
       "Position": "FAV 06",
@@ -88,7 +93,8 @@
       "Genres": "Drama",
       "Directors": "Maura Delpero",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNjdhZTg5NjUtYjg5Ny00NDc3LWI2NzUtYjY4NDMxZjQ4NjVmXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg",
-      "Trailer": "veSSKsfx-N4"
+      "Trailer": "veSSKsfx-N4",
+      "Your Rating": "10"
     },
     {
       "Position": "FAV 07",
@@ -107,7 +113,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Benjamin Voisin, Rebecca Marder",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BOGE5ODZjNjgtNTdhZS00ZmM0LWI2NDYtYTBiYWY2NmI4YWMzXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -124,7 +130,8 @@
       "Genres": "Animation, Action, Drama, Sci-Fi",
       "Directors": "Katsuhiro Otomo",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNzlhZGRmZGEtM2ZjNC00MWRmLTk0MDctYzU1NzAzODIxYzEyXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg",
-      "Trailer": "nA8KmHC2Z-g"
+      "Trailer": "nA8KmHC2Z-g",
+      "Your Rating": "10"
     },
     {
       "Position": "FAV 09",
@@ -139,7 +146,8 @@
       "Genres": "Animation, Drama",
       "Directors": "Kiyotaka Oshiyama",
       "Poster": "https://m.media-amazon.com/images/M/MV5BOTVhN2ZlNmUtZTY1Mi00OTUwLWIxNzEtYzgwZjg2ZTlhNWU1XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg",
-      "Trailer": "wkRR2VUsWfU"
+      "Trailer": "wkRR2VUsWfU",
+      "Your Rating": "10"
     },
     {
       "Position": "FAV 10",
@@ -154,7 +162,8 @@
       "Genres": "Animation, Drama, Fantasy",
       "Directors": "Mamoru Oshii",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYmU1ZDEyNzEtMWYyZi00OTc2LTgxMmEtZWU3YzMxNTUwM2YzXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg",
-      "Trailer": "4X9LM3aTiyY"
+      "Trailer": "4X9LM3aTiyY",
+      "Your Rating": "10"
     }
   ],
   "to_watch": [
@@ -307,7 +316,7 @@
       "Num Votes": "43116",
       "Release Date": "2025-10-10",
       "Directors": "Mary Bronstein",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMGRlMjIzMDctNzNkMS00MzEwLTlhZWEtM2FjYmE1ZmFjMzZlXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg",
       "Trailer": "ywFDoT7LBbQ"
@@ -470,6 +479,7 @@
     }
   ],
   "watched_ids": [
+    "tt18382850",
     "tt0208502",
     "tt0500092",
     "tt36517689",
@@ -656,7 +666,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Ryūtarō Nakamura",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZGJiMmEyMDMtMTJlZi00YTgwLWI1ODgtZDA1YjEyM2Q5MjI3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -677,7 +687,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Shirow Masamune",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BODVlMDUwMmUtNTg4Ny00NWI1LWI5YTQtOGNmZWQ3NzViNzg4XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -698,7 +708,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Kyle Balda",
-      "Your Rating": "",
+      "Your Rating": "7",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNTFmZWI4YmMtNmQ0ZC00ZGQwLTk1OWEtZjAyZmIzOGY0MGFiXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -719,7 +729,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Shirahama Kamome",
-      "Your Rating": "",
+      "Your Rating": "7",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZjQ2NGVmNzEtODg3Mi00MmViLTkzNGYtNWExNGEzNmNkOGYwXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -740,7 +750,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Matt Duffer, Ross Duffer",
-      "Your Rating": "",
+      "Your Rating": "6",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMjEzMDAxOTUyMV5BMl5BanBnXkFtZTgwNzAxMzYzOTE@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -761,7 +771,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Eric Kripke",
-      "Your Rating": "",
+      "Your Rating": "5",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZjU4OWNiYzQtMzc1NS00NjZlLTgyYTctZWY4ZmEzMTkxYjA4XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -782,7 +792,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Katie Dippold",
-      "Your Rating": "",
+      "Your Rating": "7",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZDBiMWZlMDQtNzkzMi00YzQzLTkwNTUtNzYwOGY3YmUxNDJjXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -803,7 +813,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Yasuo Hasegawa",
-      "Your Rating": "",
+      "Your Rating": "7",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BODA0MjVjNmUtMzQyOC00NDgzLWEzNDYtYzdmM2FmYjZkMDdiXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -824,7 +834,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Oren Uziel",
-      "Your Rating": "",
+      "Your Rating": "6",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYjU3NjEwNTItMzc1Mi00Y2QyLTljNDItOTQ4YjU4NjZjN2EyXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -845,7 +855,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Shinichi Fukuda",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYmJhYjgzYTQtMzMxYi00NTkyLWI2MWItNTgxNjk1NzU0YmQzXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -866,7 +876,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Keiichirō Saitō",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BOWI1MzA5YTMtNDZiYy00M2Q2LTgxNzQtZTE1MGJmMDhhZWI3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -887,7 +897,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Richard Linklater",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZGUyNWRjMTMtYTgxZS00YWI4LTg2MDAtNzEwZDgyZjk4YzMzXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -908,7 +918,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Jean-Luc Godard",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMDA0OWFkNTgtOTUzNy00MmE3LTgxMzgtNmI2YjRhYzc3ODEyXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -929,7 +939,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Chloé Zhao",
-      "Your Rating": "",
+      "Your Rating": "7",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMDQ5ZmY0OWYtOTYzZi00Mzg5LWE3N2EtMjYwZTAzZmJhYjkyXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -950,7 +960,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Federico Fellini",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNmI4YWJlYzAtNGU5MS00NTljLThhN2QtNzMwMWM4NTA0ODNlXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -971,7 +981,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Mascha Schilinski",
-      "Your Rating": "",
+      "Your Rating": "1",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BOTcxOWU0ZTUtMjY1OC00NTRlLTk0YjMtMjViNDYxYWVkNzBiXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -992,7 +1002,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Action, Adventure, Drama",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYmVkNDM3MzUtN2YyYS00MDg0LWIxN2EtMjQ2ZGQ1ZDhlZWY4XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1013,7 +1023,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Darren Aronofsky",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYTk0YTIyYmMtMTJjOC00NmNiLTkxMTktYTU0ZDFhNjJlMTJiXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1034,7 +1044,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "George R.R. Martin, Ira Parker",
-      "Your Rating": "",
+      "Your Rating": "7",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYzg4M2U3YWMtMWY4MS00MzFkLTk2ZWQtOThiOGYxZDEyMGQ2XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1055,7 +1065,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Josh Safdie",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZTRhYjI1MTItMWYwMi00MjY5LWI1OTktMzQwNzA3MWJlN2QyXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1076,7 +1086,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Payal Kapadia",
-      "Your Rating": "",
+      "Your Rating": "3",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNzg5OWVkODQtNDViMS00YmFkLTg4YjctMGFmZjM4OTdlYWRhXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1097,7 +1107,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Kleber Mendonça Filho",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNDlkMzNhYzgtNTk1Yi00M2I1LTlkOTMtY2RmZGU3YzVmMzE2XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1118,7 +1128,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Kirill Serebrennikov",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMjA3MTc3MjU2M15BMl5BanBnXkFtZTgwNTg0NTgwODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1139,7 +1149,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Rian Johnson",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BY2Q0OTA5MTEtNWU4NC00ZWFmLTg5NmYtNDFmODViYWUxZmJkXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1160,7 +1170,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Lars von Trier",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BY2Q3MDFiZGQtMjc4NS00MDJiLWFmYjgtNmI0MTQwMzUyOWNmXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1181,7 +1191,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Paul Thomas Anderson",
-      "Your Rating": "",
+      "Your Rating": "5",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMzBkZmQ0NjMtNTZlMy00ZjdlLTg5ODUtYWFlNGM0YzE3MTg0XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1202,7 +1212,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Coralie Fargeat",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZDQ1NGE5MGMtYzdlZC00ODExLWJlMDMtNWU4NjA5OWYwMDEwXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1223,7 +1233,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Yorgos Lanthimos",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNzIzNWQxMjEtZmQ3MS00OTk2LWFlZjktZDUyYWRkM2M3NWVlXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1244,7 +1254,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Bong Joon Ho",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZGQwYmEzMzktYzBmMy00NmVmLTkyYTUtOTYyZjliZDNhZGVkXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1265,7 +1275,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Winona Ryder, David Harbour",
-      "Your Rating": "",
+      "Your Rating": "1",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNzIzMTgwM2UtNmNlMS00MzQ1LThlN2EtNzM0M2VmZjJlZWI3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1286,7 +1296,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Werner Herzog",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNGYyMDRhYTgtMjIzNy00OGQyLTk4MTEtZTM2ODlmNjc0NTlhXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1307,7 +1317,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Yukinobu Tatsu",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYWFhOWMxNTYtZThiMi00ZmQ5LTlmODktN2QwNzUyZjMyZGQzXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1328,7 +1338,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Alfred Gough, Miles Millar",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BY2E1NDI5OWEtODJmYi00Nzg2LWI4MjUtODFiMTU2YWViOTU3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1349,7 +1359,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Daniel Vávra, Petr Pekař",
-      "Your Rating": "",
+      "Your Rating": "10",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMGMxOTFkMTgtZjQwZS00YWFlLWFlZjgtMGU2MDA0YWQzMjllXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1370,7 +1380,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "James Mangold",
-      "Your Rating": "",
+      "Your Rating": "10",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYTA2NTA5NDYtMzlkOC00MTQxLWI0NDQtMzk2M2YzMGE4MTkxXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1391,7 +1401,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Robert Bresson",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMmEwNTc3NDgtNDMzNy00YmMzLWFkYzMtNzUyNWRhYjJhY2QyXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1412,7 +1422,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Brady Corbet",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BM2U0MWRjZTMtMDVhNC00MzY4LTgwOTktZGQ2MDdiYTI4OWMxXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1433,7 +1443,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Sean Baker",
-      "Your Rating": "",
+      "Your Rating": "4",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYThiN2M0NTItODRmNC00NDhlLWFiYTgtMWM2YTEyYzI3ZTY1XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1454,7 +1464,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Robert Eggers",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BY2FhZGE3NmEtNWJjOC00NDI1LWFhMTQtMjcxNmQzZmEwNGIzXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1475,7 +1485,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "David Lynch",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYzJmZGFiMzAtODNhOC00NzAwLWFlMzAtYTQzYmRmYjIwNDgyXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1496,7 +1506,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Merlin Crossingham, Nick Park",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMTk3M2YwMGUtZDJiZS00MDNkLWIyZDEtY2VjMWYyZDFmZjMzXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1517,7 +1527,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "George Miller",
-      "Your Rating": "",
+      "Your Rating": "6",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNTcwYWE1NTYtOWNiYy00NzY3LWIwY2MtNjJmZDkxNDNmOWE1XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1538,7 +1548,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Theo van Gogh",
-      "Your Rating": "",
+      "Your Rating": "10",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYjA2NzhlMDItNWRmZC00MzRjLWE3ZjAtZjBlZDAwOWY2ODdjXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1559,7 +1569,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Jean-Luc Godard",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNmU4OGYwYzQtNjA3My00YmM3LWI4ZDQtNDlkZWJhMmQ2M2M5XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1580,7 +1590,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Yorgos Lanthimos",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMjZmZGY1MzMtNDVkNi00NjE2LTlkMzMtMmUzNWExY2ExZWI2XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1601,7 +1611,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Phạm Thiên Ân",
-      "Your Rating": "",
+      "Your Rating": "3",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMzA3Y2M0MGYtMzRmMS00MmNkLTg5MTUtNjc0YjBmZjc0Y2IwXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1622,7 +1632,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Patrick Delage, Chris Renaud",
-      "Your Rating": "",
+      "Your Rating": "5",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNzY0ZTlhYzgtOTgzZC00ZTg2LTk4NTEtZDllM2E2NGE5Njg2XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1643,7 +1653,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Trey Parker",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNDYwNjkxMTAtZDc3Yi00NWI1LTg4ZTYtMjIxOTY2NWQyNTU3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1664,7 +1674,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Jeff Nichols",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZDY3MGVjYjItN2I1OC00ZGNkLWIwOGQtNTBiNWM1NmQ5NTZlXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1685,7 +1695,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Kentaro Miura",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMzEzMzhkNDgtY2Q0YS00MDk0LTg0YzItODY5ZjNjMDc4ODI3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1706,7 +1716,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Hideaki Anno",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZjZjZGI3ZDQtODNmZC00NjE0LTlmYTUtOTljMWI2YjNmMTQ0XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1727,7 +1737,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Shin'ichiro Watanabe",
-      "Your Rating": "",
+      "Your Rating": "10",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMTU3ZTdiOGQtYmYwYy00OGM5LThmNjMtZGJmNTVlZjk1ZmEyXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1748,7 +1758,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Hayao Miyazaki",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZjcyMjg2MzktNjg4YS00MjQzLTg0YWQtMjUyZDk2Y2Y0YzZjXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1769,7 +1779,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Hayao Miyazaki",
-      "Your Rating": "",
+      "Your Rating": "10",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMzA5Zjg3MTAtM2FhZS00NTNjLTg3NjEtNWQ4MTRhZjhiNzVmXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1790,7 +1800,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "David Lynch",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNjliY2UwMjQtYjVlNi00NzExLTg1MDMtMjE2OTYwYjI0NTcxXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1811,7 +1821,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Tran Anh Hung",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMTBkZTk1NzMtMTNlMC00ZjFmLWE5ZWYtYzg0NmVlNzllNTRlXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1832,7 +1842,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Hayao Miyazaki",
-      "Your Rating": "",
+      "Your Rating": "10",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BODBhMTI3YzMtNTRjYS00OTFkLWJmODUtNjJiNzcwYTVkNDhiXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1853,7 +1863,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Hideaki Anno, Kazuya Tsurumaki",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMGI2Y2RiYTctYWIwZi00NjA2LWFmYzYtZDhkNTk1ZGNmNDVmXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1874,7 +1884,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Satoshi Kon",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYjkyZjY1OWItNjYyNC00ZjlhLTgwOTAtMGNiYTFmYTNmZDI3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1895,7 +1905,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Mamoru Oshii",
-      "Your Rating": "",
+      "Your Rating": "10",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNzljMjA3MTQtMjM1OS00OGJjLWJiYzctZDRiMTk1NWI5YzQ5XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1916,7 +1926,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Alice Rohrwacher",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMjk5ZDRjNjAtZTgwYi00NzE5LWEzMTItODM3Y2NmNGFmYTdiXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1937,7 +1947,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Wim Wenders",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNGVmODFkM2MtOTEzMy00MjFjLThjZmYtODMxZmI1MzcyNDkyXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1958,7 +1968,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "James Cameron",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZmE0YzIxM2QtMGNlMi00MjRmLWE3MWMtOWQzMGVjMmU0YTFmXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -1979,7 +1989,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Quentin Tarantino",
-      "Your Rating": "",
+      "Your Rating": "7",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMzMzNmViNjYtN2ViNi00NDM3LWFlMmItNDYyMGIzY2EzZjE2XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2000,7 +2010,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Laurie Nunn",
-      "Your Rating": "",
+      "Your Rating": "6",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BOTE0MjQ1NDU3OV5BMl5BanBnXkFtZTgwNTI4MTgwNzM@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2021,7 +2031,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Vince Gilligan",
-      "Your Rating": "",
+      "Your Rating": "7",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYTYxMjI2YzUtODQ5Mi00M2JmLTlmNzItOTlkM2MyM2ExM2RlXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2042,7 +2052,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Robert Eggers",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMTI4MjFhMjAtNmQxYi00N2IxLWJjMGEtYWY1YmU3OTQ0Zjk3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2063,7 +2073,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Benny Safdie, Josh Safdie",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNmI0YjA5NjItYzExYi00NzkxLTkxNDctNGJjYTZhM2M0NDQ0XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2084,7 +2094,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Michael Hirst",
-      "Your Rating": "",
+      "Your Rating": "6",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BOTFmZmExYTEtYmE0Mi00MzRmLWE4ZDYtOThiNzNlOTIyODljXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2105,7 +2115,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Vince Gilligan",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMzU5ZGYzNmQtMTdhYy00OGRiLTg0NmQtYjVjNzliZTg1ZGE4XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2126,7 +2136,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "David Benioff, D.B. Weiss",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNGYxOGJkMjItZjVkZC00OGEzLWExNjktOTZmNGZhZmRlMTk2XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2147,7 +2157,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Hwang Dong-hyuk",
-      "Your Rating": "",
+      "Your Rating": "6",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMDcxYjg1OTctYmUxZi00ZjhjLWIwNTMtNmI2M2Y4OTU1YWU2XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2168,7 +2178,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Steven Spielberg",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMTY5MzYzNjc5NV5BMl5BanBnXkFtZTYwNTUyNTc2._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2189,7 +2199,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Francis Lawrence",
-      "Your Rating": "",
+      "Your Rating": "6",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMGE1OWZkZmItNmVhMC00YzAxLTgxOTctNjg3NWExM2RmOWJkXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2210,7 +2220,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Scott Frank, Allan Scott",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMmRlNjQxNWQtMjk1OS00N2QxLTk0YWQtMzRhYjY5YTFhNjMxXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2231,7 +2241,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Paul Thomas Anderson",
-      "Your Rating": "",
+      "Your Rating": "7",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYjU5MjRiOWMtNmI0OC00ZTU1LThlNGItYTViNzU2YzAzMWMxXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2252,7 +2262,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Wes Anderson",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZjA1ZjliMGYtNTcyYS00YjA3LWI3NGItMjdmNzE1NjUyY2RmXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2273,7 +2283,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Martin McDonagh",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNjliZjBlNDItOWUyZC00ZTExLTg5NmUtNzE5ZmQyZWVmZmE5XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2294,7 +2304,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Hayao Miyazaki",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZTcyN2Y0MDYtMGI1NC00MWQ1LWFhZGMtN2U4NTcxZGYyNjljXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2315,7 +2325,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Anthony Russo, Joe Russo",
-      "Your Rating": "",
+      "Your Rating": "1",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2336,7 +2346,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Michael Curtiz",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNWEzN2U1YTYtYTQyMS00NTVkLWE2NGQtZWFlMmM0MDNjMmRiXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2357,7 +2367,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Masaki Kobayashi",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZThiZjU5ZDQtZDI4Mi00ZGYyLTkzOTktYmIzZTFlZTkxYzg5XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2378,7 +2388,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Jordan Peele",
-      "Your Rating": "",
+      "Your Rating": "5",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BODRlNWRhZWUtMzdlZC00ZDIyLWFhZjMtYTcxNjI1ZDIwODhjXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2399,7 +2409,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Park Chan-wook",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMTAwNzNjYWItZmI0Ni00ZTcyLWIwNWMtZjlmNGMxZTEyYTJmXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2420,7 +2430,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Jean-Pierre Jeunet",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BOTNmYzY0MWQtZGZmNy00Y2Y4LWFmMDQtMTZjYTdiYzEwZGQ2XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2441,7 +2451,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Hayao Miyazaki",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNTEyNmEwOWUtYzkyOC00ZTQ4LTllZmUtMjk0Y2YwOGUzYjRiXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2462,7 +2472,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Olivier Nakache, Éric Toledano",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMTYxNDA3MDQwNl5BMl5BanBnXkFtZTcwNTU4Mzc1Nw@@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2483,7 +2493,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Alfred Hitchcock",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYjZhMzFiZjItODA3ZC00MmRhLWIzMGYtMmVjOWUwYTA3MTRjXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2504,7 +2514,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Yorgos Lanthimos",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYWU2MjRjZTYtMjVkMS00MTBjLWFiMTAtYmZlYTk1YjkyMWFkXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2525,7 +2535,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Galder Gaztelu-Urrutia",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYjUyZjNmYmMtNjA1My00ZWMyLTliZGQtODgzZjIxM2Y4NGI1XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2546,7 +2556,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Elem Klimov",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNDlkZmVkZDAtZGFmMS00OWIzLWJkY2YtNWE5NjNhNjhiZGE3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2567,7 +2577,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Stanley Kubrick",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNmM5ZThhY2ItOGRjOS00NzZiLWEwYTItNDgyMjFkOTgxMmRiXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2588,7 +2598,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Luc Besson",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNGRkYTNhOWQtYmI0Ni00MjZhLWJmMzAtMTA2Mjg4NGNiNDU0XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2609,7 +2619,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Quentin Tarantino",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYTViYTE3ZGQtNDBlMC00ZTAyLTkyODMtZGRiZDg0MjA2YThkXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2630,7 +2640,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Peter Jackson",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNzIxMDQ2YTctNDY4MC00ZTRhLTk4ODQtMTVlOWY4NTdiYmMwXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2651,7 +2661,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Jonathan Glazer",
-      "Your Rating": "",
+      "Your Rating": "6",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNjk4MTQ3MGEtZmI4OS00N2NhLWI5ZjgtYWE5ZWVkZGExYTQ1XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2672,7 +2682,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Sean Penn",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNTgwZTJhNWMtNzVjMy00YzQzLWI4MTAtYmJhOGQ5ZmQ3MDM0XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2693,7 +2703,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "James Mangold",
-      "Your Rating": "",
+      "Your Rating": "7",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BOTBjNTEyNjYtYjdkNi00YzE5LTljYzUtZjVlYmYwZmJmZWYxXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2714,7 +2724,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "George Miller",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZDRkODJhOTgtOTc1OC00NTgzLTk4NjItNDgxZDY4YjlmNDY2XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2735,7 +2745,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Wes Anderson",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMzM5NjUxOTEyMl5BMl5BanBnXkFtZTgwNjEyMDM0MDE@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2756,7 +2766,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Denis Villeneuve",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMTg0NTIzMjQ1NV5BMl5BanBnXkFtZTcwNDc3MzM5OQ@@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2777,7 +2787,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Danny Boyle",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYmVkNGJkMzQtYWQwOS00OTZmLThjODQtZjNjNzllYzRiNTE0XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2798,7 +2808,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Joel Coen, Ethan Coen",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNjg4MWE0MjEtODFhNy00MjA5LTg5ODktMzgwNWFmZTAwNjBlXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2819,7 +2829,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Martin Scorsese",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BN2E5NzI2ZGMtY2VjNi00YTRjLWI1MDUtZGY5OWU1MWJjZjRjXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2840,7 +2850,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Ethan Coen, Joel Coen",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMjA5Njk3MjM4OV5BMl5BanBnXkFtZTcwMTc5MTE1MQ@@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2861,7 +2871,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Brad Bird, Jan Pinkava",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMTMzODU0NTkxMF5BMl5BanBnXkFtZTcwMjQ4MzMzMw@@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2882,7 +2892,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Joel Coen, Ethan Coen",
-      "Your Rating": "",
+      "Your Rating": "7",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BY2E3OWQ5OWYtYTRkMC00NjVjLWIzZDQtNmRmM2ZiYTIyYmYxXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2903,7 +2913,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Thomas Vinterberg",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMTg2NDg3ODg4NF5BMl5BanBnXkFtZTcwNzk3NTc3Nw@@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2924,7 +2934,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Harold Ramis",
-      "Your Rating": "",
+      "Your Rating": "10",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BOWE3MjQ3ZDAtNDQ2MC00YjBjLTk0ZWYtNjQ0YzQ4YWE3YTEyXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2945,7 +2955,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Sergio Leone",
-      "Your Rating": "",
+      "Your Rating": "10",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMDQ0ZTg2OGUtZjMyOC00M2M5LThkMmItZmM2MmUzMmIxMWJhXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2966,7 +2976,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Quentin Tarantino",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMjIyNTQ5NjQ1OV5BMl5BanBnXkFtZTcwODg1MDU4OA@@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -2987,7 +2997,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Martin Scorsese",
-      "Your Rating": "",
+      "Your Rating": "7",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMDRlZWZjZjYtYzY2NS00ZWVjLTkwYzAtZTA2ZDAzMGRiYmYwXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3008,7 +3018,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Christopher Nolan",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMTE0Mjg4MTMwMDZeQTJeQWpwZ15BbWU4MDAwMDQ1ODAy._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3029,7 +3039,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Quentin Tarantino",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMmMzYjg4NDctYWY0Mi00OGViLWIzMTMtYWNlZGY5ZDJmYjk3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3050,7 +3060,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Alejandro G. Iñárritu",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYTgwNmQzZDctMjNmOS00OTExLTkwM2UtNzJmOTJhODFjOTdlXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3071,7 +3081,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Denis Villeneuve",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNzA1Njg4NzYxOV5BMl5BanBnXkFtZTgwODk5NjU3MzI@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3092,7 +3102,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Peter Weir",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNzA3ZjZlNzYtMTdjMy00NjMzLTk5ZGYtMTkyYzNiOGM1YmM3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3113,7 +3123,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Mary Harron",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNzBjM2I5ZjUtNmIzNy00OGNkLWIwZDMtOTAwYWUwMzA2YjdlXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3134,7 +3144,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Frank Darabont",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMTUxMzQyNjA5MF5BMl5BanBnXkFtZTYwOTU2NTY3._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3155,7 +3165,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Todd Phillips",
-      "Your Rating": "",
+      "Your Rating": "5",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNzY3OWQ5NDktNWQ2OC00ZjdlLThkMmItMDhhNDk3NTFiZGU4XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3176,7 +3186,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Ruben Östlund",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYTViNzUyNDUtZTg3Yy00OTY4LWEyMTYtMmUzYjE3ZmZjYzUwXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3197,7 +3207,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Sidney Lumet",
-      "Your Rating": "",
+      "Your Rating": "10",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYjE4NzdmOTYtYjc5Yi00YzBiLWEzNDEtNTgxZGQ2MWVkN2NiXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3218,7 +3228,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "David Fincher",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BY2IzNzMxZjctZjUxZi00YzAxLTk3ZjMtODFjODdhMDU5NDM1XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3239,7 +3249,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Frank Darabont",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMDAyY2FhYjctNDc5OS00MDNlLThiMGUtY2UxYWVkNGY2ZjljXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3260,7 +3270,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Christopher Nolan",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3281,7 +3291,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Sergio Leone",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMWM5ZjQxM2YtNDlmYi00ZDNhLWI4MWUtN2VkYjBlMTY1ZTkwXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3302,7 +3312,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "David Fincher",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BOTgyOGQ1NDItNGU3Ny00MjU3LTg2YWEtNmEyYjBiMjI1Y2M5XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3323,7 +3333,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Robert Zemeckis",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNDYwNzVjMTItZmU5YS00YjQ5LTljYjgtMjY2NDVmYWMyNWFmXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3344,7 +3354,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Steven Spielberg",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNjM1ZDQxYWUtMzQyZS00MTE1LWJmZGYtNGUyNTdlYjM3ZmVmXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3365,7 +3375,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Jonathan Demme",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNDdhOGJhYzctYzYwZC00YmI2LWI0MjctYjg4ODdlMDExYjBlXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3386,7 +3396,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Peter Jackson",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMGQxMDdiOWUtYjc1Ni00YzM1LWE2NjMtZTg3Y2JkMjEzMTJjXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3407,7 +3417,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Lana Wachowski, Lilly Wachowski",
-      "Your Rating": "",
+      "Your Rating": "10",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BN2NmN2VhMTQtMDNiOS00NDlhLTliMjgtODE2ZTY0ODQyNDRhXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3428,7 +3438,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Bong Joon Ho",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYjk1Y2U4MjQtY2ZiNS00OWQyLWI3MmYtZWUwNmRjYWRiNWNhXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3449,7 +3459,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Peter Jackson",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMTZkMjBjNWMtZGI5OC00MGU0LTk4ZTItODg2NWM3NTVmNWQ4XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3470,7 +3480,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Robert Zemeckis",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZmM3ZjE0NzctNjBiOC00MDZmLTgzMTUtNGVlOWFlOTNiZDJiXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3491,7 +3501,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Francis Ford Coppola",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNGEwYjgwOGQtYjg5ZS00Njc1LTk2ZGEtM2QwZWQ2NjdhZTE5XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3512,7 +3522,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Kátia Lund, Fernando Meirelles",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYjY4NGI5OTUtY2ZlZS00Zjk4LTk5N2MtN2JmYWVjNGNmMGRlXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3533,7 +3543,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Brian De Palma",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNDUzYjY0NmUtMDM4OS00Y2Q5LWJiODYtNTk0ZTk0YjZhMTg1XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3554,7 +3564,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Miloš Forman",
-      "Your Rating": "",
+      "Your Rating": "10",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYjBkMjgzMzYtNzRiMS00NDc3LWE4YTUtZjYxYjZhNjNhYzhhXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3575,7 +3585,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Ingmar Bergman",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYTRhNzkzMDktZDNlNi00MDIwLWFiNjAtNTlmYjZjYWZlMTEzXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3596,7 +3606,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Ingmar Bergman",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZDlmYTkzOWUtODQ0MS00MmM4LWE3ZjMtYTEwNGUwMmJkYzIxXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3617,7 +3627,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Stanley Kubrick",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNjU0NDFkMTQtZWY5OS00MmZhLTg3Y2QtZmJhMzMzMWYyYjc2XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3638,7 +3648,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Ridley Scott",
-      "Your Rating": "",
+      "Your Rating": "10",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BOWQ4YTBmNTQtMDYxMC00NGFjLTkwOGQtNzdhNmY1Nzc1MzUxXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3659,7 +3669,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Andrei Tarkovsky",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMDIzMDRiYjgtM2U1Yy00MjlhLTliODMtM2E5NDI5Njc3YmZkXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3680,7 +3690,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Andrei Tarkovsky",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMWFjMGFhYzEtODZkZS00MDRjLWE2NGEtMWRhODcwMzNiN2I1XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3701,7 +3711,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Andrei Tarkovsky",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BY2I4YzZjZDgtNWQzNC00MDdhLWFiZTItZTAwODY2ZmQzMDQwXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3722,7 +3732,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Francis Ford Coppola",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZDhiMTljYjYtODc1Yy00MmEwLTg2OTYtYmE1YTRmNDE4MmEwXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3743,7 +3753,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Martin McDonagh",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BOTkzMWI4OTEtMTk0MS00MTUxLWI4NTYtYmRiNWM4Zjc1MGRhXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3764,7 +3774,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Darren Aronofsky",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYmNhOWMyNTYtNTljNC00NTU3LWFiYmQtMDBhOGU5NWFhNGU5XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3785,7 +3795,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Steven Spielberg",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BNDY5OWY4ZWYtYTM3OC00Zjg5LWFlYzYtYWI5ZGM1MDcxYzY4XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3806,7 +3816,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Ari Aster",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMTdmYmQ5MjctYzU3NS00N2I0LTkwYTYtZWMxNTVhOTRkODA1XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3827,7 +3837,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Hlynur Pálmason",
-      "Your Rating": "",
+      "Your Rating": "7",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYjJkZjhiZjUtYjVlNy00Zjk1LWE0YWUtNDdiMmQ3MzNjMzkwXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3848,7 +3858,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Akira Kurosawa",
-      "Your Rating": "",
+      "Your Rating": "9",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZjliMWExOTMtZDQ3ZS00NWU3LWIyN2EtMjllNzk3ZTNlYzg4XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3869,7 +3879,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Christopher Nolan",
-      "Your Rating": "",
+      "Your Rating": "6",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BN2JkMDc5MGQtZjg3YS00NmFiLWIyZmQtZTJmNTM5MjVmYTQ4XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3890,7 +3900,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Martin Scorsese",
-      "Your Rating": "",
+      "Your Rating": "6",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZWY5ZDVjNTUtODI5Yy00MjFhLWEyM2EtYzZjM2VjZTI0MTBjXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3911,7 +3921,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Alexander Payne",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BOWY3MjUzZTctOTI5ZC00MDA5LTk4ZTMtZWJjNjRmMzE4ZmI2XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3932,11 +3942,181 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Aki Kaurismäki",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZjNkY2M5NWMtZjJiMy00YTZmLWI2NWEtZTI0MjhmNDc4ZThmXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     }
   ],
+  "ratings": {
+    "tt0034583": "8",
+    "tt0042619": "8",
+    "tt0047478": "9",
+    "tt0050083": "10",
+    "tt0050976": "8",
+    "tt0053198": "9",
+    "tt0054215": "9",
+    "tt0056058": "8",
+    "tt0056801": "8",
+    "tt0060107": "9",
+    "tt0060196": "8",
+    "tt0060675": "8",
+    "tt0060827": "8",
+    "tt0061473": "8",
+    "tt0062622": "9",
+    "tt0068182": "8",
+    "tt0068646": "8",
+    "tt0073486": "10",
+    "tt0075314": "9",
+    "tt0078788": "9",
+    "tt0079944": "9",
+    "tt0081505": "8",
+    "tt0083658": "10",
+    "tt0083946": "9",
+    "tt0086022": "8",
+    "tt0086250": "8",
+    "tt0087544": "10",
+    "tt0087843": "10",
+    "tt0088247": "8",
+    "tt0088763": "9",
+    "tt0091251": "8",
+    "tt0092067": "8",
+    "tt0094625": "10",
+    "tt0098202": "7",
+    "tt0098936": "10",
+    "tt0099685": "8",
+    "tt0102926": "9",
+    "tt0105236": "8",
+    "tt0105665": "8",
+    "tt0107048": "10",
+    "tt0108052": "8",
+    "tt0109830": "8",
+    "tt0110413": "9",
+    "tt0110912": "8",
+    "tt0111161": "8",
+    "tt0112159": "8",
+    "tt0112641": "7",
+    "tt0113568": "10",
+    "tt0114369": "8",
+    "tt0116282": "8",
+    "tt0117951": "9",
+    "tt0118715": "7",
+    "tt0119698": "9",
+    "tt0120382": "8",
+    "tt0120689": "8",
+    "tt0120737": "8",
+    "tt0133093": "10",
+    "tt0137523": "8",
+    "tt0144084": "9",
+    "tt0156887": "8",
+    "tt0166924": "9",
+    "tt0167260": "9",
+    "tt0167261": "9",
+    "tt0169858": "8",
+    "tt0208502": "10",
+    "tt0211915": "8",
+    "tt0213338": "10",
+    "tt0245429": "8",
+    "tt0264464": "8",
+    "tt0317248": "8",
+    "tt0318871": "9",
+    "tt0364569": "8",
+    "tt0382932": "8",
+    "tt0477348": "8",
+    "tt0480249": "6",
+    "tt0500092": "9",
+    "tt0758758": "8",
+    "tt0780536": "8",
+    "tt0816692": "9",
+    "tt0903747": "9",
+    "tt0944947": "8",
+    "tt10048342": "8",
+    "tt10399622": "3",
+    "tt10919420": "6",
+    "tt10954984": "5",
+    "tt11126994": "10",
+    "tt11271038": "7",
+    "tt11563598": "10",
+    "tt11813216": "9",
+    "tt1190634": "5",
+    "tt12037194": "6",
+    "tt12299608": "8",
+    "tt12300742": "9",
+    "tt13443470": "8",
+    "tt13521006": "8",
+    "tt13833688": "9",
+    "tt1392190": "8",
+    "tt1392214": "8",
+    "tt14208870": "8",
+    "tt14230458": "8",
+    "tt14364480": "8",
+    "tt14561712": "8",
+    "tt14849194": "8",
+    "tt14905854": "7",
+    "tt1493274": "8",
+    "tt15398776": "6",
+    "tt15765670": "8",
+    "tt1663202": "8",
+    "tt1675434": "9",
+    "tt16968450": "8",
+    "tt17158756": "9",
+    "tt17163970": "8",
+    "tt17526714": "8",
+    "tt18382850": "8",
+    "tt1853728": "8",
+    "tt1856101": "8",
+    "tt1950186": "7",
+    "tt19623228": "7",
+    "tt19760052": "9",
+    "tt21027780": "8",
+    "tt2106476": "9",
+    "tt21454134": "8",
+    "tt21912390": "1",
+    "tt22408160": "8",
+    "tt2278388": "8",
+    "tt2306299": "6",
+    "tt24179294": "9",
+    "tt27497448": "7",
+    "tt27503384": "9",
+    "tt27847051": "9",
+    "tt28607951": "4",
+    "tt28618488": "10",
+    "tt28690468": "1",
+    "tt30144839": "5",
+    "tt30217403": "8",
+    "tt30460310": "6",
+    "tt31688586": "8",
+    "tt31711040": "10",
+    "tt32086077": "3",
+    "tt32149577": "10",
+    "tt32375562": "8",
+    "tt32550889": "7",
+    "tt32565993": "7",
+    "tt32916440": "9",
+    "tt33332385": "7",
+    "tt36243564": "9",
+    "tt36517689": "8",
+    "tt4003440": "8",
+    "tt4154796": "1",
+    "tt4574334": "6",
+    "tt5013056": "8",
+    "tt5040012": "8",
+    "tt5537002": "6",
+    "tt5727208": "9",
+    "tt6587046": "10",
+    "tt6751668": "8",
+    "tt7131622": "7",
+    "tt7160372": "6",
+    "tt7286456": "5",
+    "tt7322224": "8",
+    "tt7342838": "8",
+    "tt7510222": "5",
+    "tt7575046": "10",
+    "tt7767422": "6",
+    "tt7984734": "8",
+    "tt8228288": "8",
+    "tt8999762": "8",
+    "tt9243946": "7"
+  },
   "all": [
     {
       "Position": "1",
@@ -5297,7 +5477,7 @@
       "Num Votes": "43116",
       "Release Date": "2025-10-10",
       "Directors": "Mary Bronstein",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMGRlMjIzMDctNzNkMS00MzEwLTlhZWEtM2FjYmE1ZmFjMzZlXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg",
       "Trailer": "ywFDoT7LBbQ"

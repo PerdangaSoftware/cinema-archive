@@ -167,6 +167,17 @@ def save_json(path, data):
 def safe_json_dumps(obj):
     return json.dumps(obj, ensure_ascii=False).replace('<', '\\u003c').replace('>', '\\u003e')
 
+def parse_valid_ratings(raw):
+    valid = {}
+    if not isinstance(raw, dict):
+        return valid
+    for k, v in raw.items():
+        if isinstance(k, str) and re.match(r'^tt\d{7,10}$', k):
+            s = str(v).strip()
+            if s.isdigit() and 1 <= int(s) <= 10:
+                valid[k] = str(int(s))
+    return valid
+
 def update_index_html(html_path, data):
     if not os.path.exists(html_path):
         return
@@ -179,6 +190,7 @@ def update_index_html(html_path, data):
     all_json = safe_json_dumps(data['all'])
     watched_ids_json = safe_json_dumps(data.get('watched_ids', []))
     watched_arch_json = safe_json_dumps(data.get('watched_archive', []))
+    ratings_json = safe_json_dumps(data.get('ratings', {}))
 
     content = re.sub(r'let favoriteMovies\s*=\s*\[.*?\];', lambda _: f'let favoriteMovies = {fav_json};', content, flags=re.DOTALL)
     content = re.sub(r'let toWatchMovies\s*=\s*\[.*?\];', lambda _: f'let toWatchMovies = {towatch_json};', content, flags=re.DOTALL)
@@ -189,6 +201,10 @@ def update_index_html(html_path, data):
         content = re.sub(r'let watchedArchive\s*=\s*\[.*?\];', lambda _: f'let watchedArchive = {watched_arch_json};', content, flags=re.DOTALL)
     else:
         content = re.sub(r'let watchedMovies\s*=\s*\[.*?\];', lambda _: f'let watchedMovies = {watched_ids_json};\n  let watchedArchive = {watched_arch_json};', content)
+    if 'let userRatings' in content:
+        content = re.sub(r'let userRatings\s*=\s*\{.*?\};', lambda _: f'let userRatings = {ratings_json};', content, flags=re.DOTALL)
+    else:
+        content = re.sub(r'let watchedArchive\s*=\s*\[.*?\];', lambda _: f'let watchedArchive = {watched_arch_json};\n  let userRatings = {ratings_json};', content)
 
     content = re.sub(r'id="badge-all">\d+<', f'id="badge-all">{len(data["all"])}<', content)
     content = re.sub(r'id="metric-all">\d+<', f'id="metric-all">{len(data["all"])}<', content)
@@ -214,6 +230,7 @@ def main():
     parser.add_argument('--ids', help='Comma-separated IMDb Const IDs for Watchlist')
     parser.add_argument('--watched-ids', help='Comma-separated IMDb Const IDs for Watched')
     parser.add_argument('--curated-json', help='JSON string with curated lists')
+    parser.add_argument('--ratings-json', help='JSON map of IMDb Const ID to user rating')
     parser.add_argument('--add', help='Add a single IMDb Const to collection (e.g. tt1234567)')
     parser.add_argument('--add-towatch', help='Add IMDb Const to Ready to Watch')
     parser.add_argument('--add-comingsoon', help='Add IMDb Const to Coming Soon')
@@ -221,14 +238,18 @@ def main():
     parser.add_argument('--random', action='store_true', help='Pick random film from Ready to Watch')
     args = parser.parse_args()
 
-    curated = load_json(CURATED_PATH, {'favorites': [], 'top10_to_watch': [], 'awaiting_digital': [], 'watched': []})
+    curated = load_json(CURATED_PATH, {'favorites': [], 'top10_to_watch': [], 'awaiting_digital': [], 'watched': [], 'ratings': {}})
+    if 'ratings' not in curated or not isinstance(curated['ratings'], dict):
+        curated['ratings'] = {}
     posters = load_json(POSTERS_PATH, {})
-    existing_data = load_json(MOVIES_DATA_PATH, {'favorites': [], 'to_watch': [], 'waiting': [], 'watched_ids': [], 'watched_archive': [], 'all': []})
+    existing_data = load_json(MOVIES_DATA_PATH, {'favorites': [], 'to_watch': [], 'waiting': [], 'watched_ids': [], 'watched_archive': [], 'ratings': {}, 'all': []})
 
     env_ids = os.environ.get('INPUT_IDS', '').strip()
     env_watched_ids = os.environ.get('INPUT_WATCHED_IDS', '').strip()
     env_curated_json = os.environ.get('INPUT_CURATED_JSON', '').strip()
+    env_ratings_json = os.environ.get('INPUT_RATINGS_JSON', '').strip()
 
+    curated_has_ratings = False
     curated_input = args.curated_json or env_curated_json
     if curated_input:
         try:
@@ -245,6 +266,9 @@ def main():
                     curated['awaiting_digital'] = [c for c in raw_w if isinstance(c, str) and re.match(r'^tt\d{7,10}$', c)]
             if 'watched' in parsed and isinstance(parsed['watched'], list):
                 curated['watched'] = [c for c in parsed['watched'] if isinstance(c, str) and re.match(r'^tt\d{7,10}$', c)]
+            if 'ratings' in parsed and isinstance(parsed['ratings'], dict):
+                curated['ratings'] = parse_valid_ratings(parsed['ratings'])
+                curated_has_ratings = True
         except Exception as e:
             print(f'Error parsing curated JSON: {e}')
 
@@ -253,7 +277,19 @@ def main():
         parsed_w = [c.strip() for c in watched_input.split(',') if re.match(r'^tt\d{7,10}$', c.strip())]
         if parsed_w:
             existing_w = curated.get('watched', [])
-            curated['watched'] = list(dict.fromkeys(existing_w + parsed_w))
+            curated['watched'] = list(dict.fromkeys(parsed_w + existing_w))
+
+    ratings_input = args.ratings_json or env_ratings_json
+    if ratings_input:
+        try:
+            parsed_r = parse_valid_ratings(json.loads(ratings_input))
+            if parsed_r:
+                curated['ratings'].update(parsed_r)
+                for k in parsed_r:
+                    if k not in curated.get('watched', []):
+                        curated.setdefault('watched', []).append(k)
+        except Exception as e:
+            print(f'Error parsing ratings JSON: {e}')
 
     if args.random:
         to_watch_list = existing_data.get('to_watch', [])
@@ -366,6 +402,23 @@ def main():
             if meta:
                 all_movies_map[c] = meta
 
+    for c in curated.get('ratings', {}):
+        if c not in all_movies_map:
+            print(f'Fetching metadata for rated film {c}')
+            meta = fetch_movie_meta(c)
+            if meta:
+                all_movies_map[c] = meta
+
+    ratings_map = curated.get('ratings', {})
+    for m in all_movies_map.values():
+        const = m.get('Const')
+        if not const:
+            continue
+        if const in ratings_map:
+            m['Your Rating'] = ratings_map[const]
+        elif curated_has_ratings:
+            m['Your Rating'] = ''
+
     if provided_ids:
         all_movies = [all_movies_map[c] for c in provided_ids if c in all_movies_map]
         for idx, m in enumerate(all_movies, 1):
@@ -436,6 +489,7 @@ def main():
         'waiting': waiting,
         'watched_ids': curated.get('watched', []),
         'watched_archive': watched_archive,
+        'ratings': ratings_map,
         'all': all_movies
     }
 
@@ -450,6 +504,7 @@ def main():
     print(f'- Top 10 to watch: {len(to_watch)}')
     print(f'- Coming soon: {len(waiting)}')
     print(f'- Watched films total: {len(curated.get("watched", []))}')
+    print(f'- User ratings total: {len(ratings_map)}')
     if new_posters_count > 0:
         print(f'- New posters fetched: {new_posters_count}')
 

@@ -17,6 +17,10 @@ on:
         description: 'JSON string of curated lists'
         required: false
         default: ''
+      ratings_json:
+        description: 'JSON map of IMDb Const ID to user rating (1-10)'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -38,6 +42,7 @@ jobs:
           INPUT_IDS: ${{ github.event.inputs.ids }}
           INPUT_WATCHED_IDS: ${{ github.event.inputs.watched_ids }}
           INPUT_CURATED_JSON: ${{ github.event.inputs.curated_json }}
+          INPUT_RATINGS_JSON: ${{ github.event.inputs.ratings_json }}
         run: |
           python sync.py
 
