@@ -1401,6 +1401,15 @@
     const safeConst = escapeHtml(m.Const || '');
     const watchedBtn = `<button class="btn-card-watched ${isWatched ? 'active' : ''}" onclick="toggleWatched('${safeConst}')" title="${isWatched ? 'Unmark as Watched' : 'Mark as Watched'}">${isWatched ? '✓ Watched' : '✓ Watch'}</button>`;
 
+    if (currentTab === 'watched') {
+      return `
+        <div class="card-curate-row">
+          <button class="btn-card-fav" onclick="addToFavorites('${safeConst}')" title="Add to Favorites">★ Fav</button>
+          <button class="btn-card-watched active" onclick="toggleWatched('${safeConst}')" title="Unmark as Watched">✕ Unwatch</button>
+        </div>
+      `;
+    }
+
     if (currentTab === 'favorites' || isFav) {
       return `
         <div class="card-curate-row">
@@ -1429,15 +1438,6 @@
       `;
     }
 
-    if (currentTab === 'watched') {
-      return `
-        <div class="card-curate-row">
-          <button class="btn-card-fav" onclick="addToFavorites('${safeConst}')" title="Add to Favorites">★ Fav</button>
-          <button class="btn-card-watched active" onclick="toggleWatched('${safeConst}')" title="Unmark as Watched">✕ Unwatch</button>
-        </div>
-      `;
-    }
-
     return `
       <div class="card-curate-row">
         <button class="btn-card-curate" onclick="addToWatch('${safeConst}')" title="Add to Ready to Watch">+ Ready</button>
@@ -1459,19 +1459,15 @@
     } else if (currentTab === 'waiting') {
       list = [...waitingMovies];
     } else if (currentTab === 'watched') {
-      list = allMovies.filter(m => watchedMovies.includes(m.Const));
-      favoriteMovies.forEach(f => {
-        if (watchedMovies.includes(f.Const) && !list.some(m => m.Const === f.Const)) {
-          list.push(f);
+      const seenWatched = new Set();
+      watchedMovies.forEach(c => {
+        if (!c || seenWatched.has(c)) return;
+        const item = getMovieByConst(c);
+        if (item) {
+          seenWatched.add(c);
+          list.push(item);
         }
       });
-      if (typeof watchedArchive !== 'undefined' && Array.isArray(watchedArchive)) {
-        watchedArchive.forEach(w => {
-          if (watchedMovies.includes(w.Const) && !list.some(m => m.Const === w.Const)) {
-            list.push(w);
-          }
-        });
-      }
     } else {
       list = [...allMovies];
     }
@@ -1487,31 +1483,33 @@
       });
     }
 
-    list.sort((a, b) => {
-      if (sortBy === 'rating') {
-        const rA = parseFloat(a['IMDb Rating']) || 0;
-        const rB = parseFloat(b['IMDb Rating']) || 0;
-        return rB - rA;
-      }
-      if (sortBy === 'my_rating') {
-        const rA = parseInt(getUserRating(a), 10) || 0;
-        const rB = parseInt(getUserRating(b), 10) || 0;
-        if (rB !== rA) return rB - rA;
-        return (parseFloat(b['IMDb Rating']) || 0) - (parseFloat(a['IMDb Rating']) || 0);
-      }
-      if (sortBy === 'year_desc') {
-        return (parseInt(b.Year, 10) || 0) - (parseInt(a.Year, 10) || 0);
-      }
-      if (sortBy === 'year_asc') {
-        return (parseInt(a.Year, 10) || 0) - (parseInt(b.Year, 10) || 0);
-      }
-      if (sortBy === 'title') {
-        return (a.Title || '').localeCompare(b.Title || '');
-      }
-      const pA = parseInt((a.Position || '').replace(/[^0-9]/g, ''), 10) || 999;
-      const pB = parseInt((b.Position || '').replace(/[^0-9]/g, ''), 10) || 999;
-      return pA - pB;
-    });
+    if (!(currentTab === 'watched' && sortBy === 'spine')) {
+      list.sort((a, b) => {
+        if (sortBy === 'rating') {
+          const rA = parseFloat(a['IMDb Rating']) || 0;
+          const rB = parseFloat(b['IMDb Rating']) || 0;
+          return rB - rA;
+        }
+        if (sortBy === 'my_rating') {
+          const rA = parseInt(getUserRating(a), 10) || 0;
+          const rB = parseInt(getUserRating(b), 10) || 0;
+          if (rB !== rA) return rB - rA;
+          return (parseFloat(b['IMDb Rating']) || 0) - (parseFloat(a['IMDb Rating']) || 0);
+        }
+        if (sortBy === 'year_desc') {
+          return (parseInt(b.Year, 10) || 0) - (parseInt(a.Year, 10) || 0);
+        }
+        if (sortBy === 'year_asc') {
+          return (parseInt(a.Year, 10) || 0) - (parseInt(b.Year, 10) || 0);
+        }
+        if (sortBy === 'title') {
+          return (a.Title || '').localeCompare(b.Title || '');
+        }
+        const pA = parseInt((a.Position || '').replace(/[^0-9]/g, ''), 10) || 999;
+        const pB = parseInt((b.Position || '').replace(/[^0-9]/g, ''), 10) || 999;
+        return pA - pB;
+      });
+    }
 
     if (list.length === 0) {
       grid.innerHTML = '<div class="no-results">No films found matching your search in the archive.</div>';
@@ -1519,11 +1517,12 @@
     }
 
     grid.innerHTML = list.map(m => {
-      const spine = formatSpine(m.Position);
       const isFav = favoriteMovies.some(x => (m.Const && x.Const === m.Const) || x.Title === m.Title);
       const isToWatch = toWatchMovies.some(x => (m.Const && x.Const === m.Const) || x.Title === m.Title);
       const isWaiting = waitingMovies.some(x => (m.Const && x.Const === m.Const) || x.Title === m.Title);
       const isWatched = watchedMovies.includes(m.Const);
+      const showFavSpine = isFav && currentTab !== 'watched';
+      const spine = currentTab === 'watched' ? '' : formatSpine(m.Position);
 
       const safeConst = escapeHtml(m.Const || '');
       const title = escapeHtml(m.Title || 'Untitled');
@@ -1549,7 +1548,7 @@
         statusBadge = '<span class="status-badge waiting">COMING SOON</span>';
       }
 
-      const spineClass = isFav ? 'spine-badge favorite-spine' : 'spine-badge';
+      const spineClass = showFavSpine ? 'spine-badge favorite-spine' : 'spine-badge';
       const spineBadgeHtml = spine ? `<span class="${spineClass}">${escapeHtml(spine)}</span>` : '';
       const topOverlayHtml = `
         <div class="card-top-overlay">
