@@ -1665,6 +1665,33 @@
     });
   }
 
+  function computeDatasetSignature(d) {
+    const allIds = (d.all || []).map(x => x && x.Const).filter(Boolean).join(',');
+    const favIds = (d.favorites || []).map(x => x && x.Const).filter(Boolean).join(',');
+    const twIds = (d.to_watch || []).map(x => x && x.Const).filter(Boolean).join(',');
+    const wIds = (d.waiting || []).map(x => x && x.Const).filter(Boolean).join(',');
+    const watched = (d.watched_ids || []).join(',');
+    const rObj = d.ratings || {};
+    const ratings = Object.keys(rObj).sort().map(k => k + ':' + rObj[k]).join(',');
+    return [allIds, favIds, twIds, wIds, watched, ratings].join('|');
+  }
+
+  let repoSignature = computeDatasetSignature({
+    all: allMovies,
+    favorites: favoriteMovies,
+    to_watch: toWatchMovies,
+    waiting: waitingMovies,
+    watched_ids: watchedMovies,
+    ratings: userRatings
+  });
+
+  function clearCuratedStorage() {
+    localStorage.removeItem('cinema_archive_curated_v1');
+    localStorage.removeItem('cinema_archive_watched_v1');
+    localStorage.removeItem('cinema_archive_ratings_v1');
+    localStorage.removeItem('cinema_archive_repo_sig_v1');
+  }
+
   function buildCuratedPayload() {
     return {
       favorites: favoriteMovies.map(x => x.Const).filter(Boolean),
@@ -1680,10 +1707,24 @@
     localStorage.setItem('cinema_archive_curated_v1', JSON.stringify(payload));
     localStorage.setItem('cinema_archive_watched_v1', JSON.stringify(watchedMovies));
     localStorage.setItem('cinema_archive_ratings_v1', JSON.stringify(userRatings));
+    localStorage.setItem('cinema_archive_repo_sig_v1', repoSignature);
   }
 
   function loadCuratedFromStorage() {
     try {
+      const savedSig = localStorage.getItem('cinema_archive_repo_sig_v1');
+      if (savedSig !== repoSignature) {
+        const hasAnySaved = Boolean(
+          localStorage.getItem('cinema_archive_curated_v1') ||
+          localStorage.getItem('cinema_archive_watched_v1') ||
+          localStorage.getItem('cinema_archive_ratings_v1')
+        );
+        if (hasAnySaved) {
+          clearCuratedStorage();
+          pruneWatchedFromWatchlists();
+          return;
+        }
+      }
       const savedWatched = localStorage.getItem('cinema_archive_watched_v1');
       if (savedWatched) {
         watchedMovies = JSON.parse(savedWatched);
@@ -1980,10 +2021,34 @@
 
   function resetLocalData() {
     if (!confirm('Reset local changes (watched, ratings and curated lists) back to repository defaults?')) return;
-    localStorage.removeItem('cinema_archive_curated_v1');
-    localStorage.removeItem('cinema_archive_watched_v1');
-    localStorage.removeItem('cinema_archive_ratings_v1');
-    location.reload();
+    clearCuratedStorage();
+    location.replace(location.pathname + '?r=' + Date.now());
+  }
+
+  async function syncFreshRepoData() {
+    if (!location.protocol.startsWith('http')) return;
+    try {
+      const resp = await fetch('data/movies_data.json?t=' + Date.now(), { cache: 'no-store' });
+      if (!resp.ok) return;
+      const fresh = await resp.json();
+      if (!fresh || !Array.isArray(fresh.all)) return;
+      const freshSig = computeDatasetSignature(fresh);
+      if (freshSig === repoSignature) return;
+
+      repoSignature = freshSig;
+      allMovies = fresh.all;
+      favoriteMovies = Array.isArray(fresh.favorites) ? fresh.favorites : [];
+      toWatchMovies = Array.isArray(fresh.to_watch) ? fresh.to_watch : [];
+      waitingMovies = Array.isArray(fresh.waiting) ? fresh.waiting : [];
+      watchedMovies = Array.isArray(fresh.watched_ids) ? fresh.watched_ids : [];
+      watchedArchive = Array.isArray(fresh.watched_archive) ? fresh.watched_archive : [];
+      userRatings = (fresh.ratings && typeof fresh.ratings === 'object' && !Array.isArray(fresh.ratings)) ? fresh.ratings : {};
+
+      Object.keys(watchlistRemovedCache).forEach(k => delete watchlistRemovedCache[k]);
+      loadCuratedFromStorage();
+      updateCounts();
+      render();
+    } catch (e) {}
   }
 
   document.addEventListener('keydown', (e) => {
@@ -1993,9 +2058,22 @@
     }
   });
 
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted) {
+      syncFreshRepoData();
+    }
+  });
+
+  if (location.search && new URLSearchParams(location.search).has('r')) {
+    try {
+      history.replaceState(null, '', location.pathname + location.hash);
+    } catch (e) {}
+  }
+
   loadCuratedFromStorage();
   updateCounts();
   render();
+  syncFreshRepoData();
 
 </script>
 
