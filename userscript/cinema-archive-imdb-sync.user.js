@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Cinema Archive — IMDb Auto Sync
+// @name         Cinema Archive — IMDb Sync
 // @namespace    https://github.com/PerdangaSoftware/cinema-archive
-// @version      1.0.3
-// @description  Автоматически синхронизирует Watchlist, Watched и оценки (1–10) с IMDb в Cinema Archive при изменениях на сайте.
+// @version      2.0.0
+// @description  Синхронизирует Watchlist, Watched и оценки (1–10) с IMDb в Cinema Archive по нажатию кнопки.
 // @author       Roman Zhdanov
 // @match        https://www.imdb.com/*
 // @match        https://m.imdb.com/*
@@ -13,11 +13,10 @@
 // @grant        GM_deleteValue
 // @grant        GM_xmlhttpRequest
 // @grant        GM_registerMenuCommand
-// @grant        unsafeWindow
 // @connect      api.github.com
 // @connect      www.imdb.com
 // @connect      m.imdb.com
-// @run-at       document-start
+// @run-at       document-end
 // ==/UserScript==
 
 (function () {
@@ -29,14 +28,8 @@
 
   const KEY_TOKEN = 'ca_github_token';
   const KEY_USER_ID = 'ca_imdb_user_id';
-  const KEY_STATE = 'ca_sync_state_v1';
 
-  const pageWin = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-
-  let syncTimer = null;
   let isSyncing = false;
-  let pendingResync = false;
-  let pendingReason = '';
   let toastHideTimer = null;
   let tokenPromptDismissed = false;
 
@@ -68,14 +61,14 @@
 
     if (!token && promptIfMissing && !tokenPromptDismissed) {
       const entered = prompt(
-        'Cinema Archive Auto Sync: Введите GitHub Personal Access Token (repo + workflow):',
+        'Cinema Archive Sync: Введите GitHub Personal Access Token (repo + workflow):',
         lsToken
       );
       if (entered && entered.trim()) {
         token = entered.trim();
         GM_setValue(KEY_TOKEN, token);
         try { localStorage.setItem('cinema_archive_token', token); } catch (e) {}
-        showToast('<div style="font-weight:600;color:#10b981;">✓ GitHub токен сохранён — автосинк IMDb активен</div>', 3500, '#10b981');
+        showToast('<div style="font-weight:600;color:#10b981;">✓ GitHub токен сохранён</div>', 3500, '#10b981');
       } else {
         tokenPromptDismissed = true;
       }
@@ -88,62 +81,75 @@
     try { localStorage.removeItem('cinema_archive_token'); } catch (e) {}
   }
 
-  function getSyncState() {
-    try {
-      const raw = GM_getValue(KEY_STATE, '');
-      return raw ? JSON.parse(raw) : { watchlistHash: '', ratingsHash: '', lastSyncAt: 0 };
-    } catch (e) {
-      return { watchlistHash: '', ratingsHash: '', lastSyncAt: 0 };
-    }
-  }
-
-  function saveSyncState(state) {
-    GM_setValue(KEY_STATE, JSON.stringify(state));
-  }
-
   function showToast(html, durationMs = 0, borderColor = '#d4a373') {
-    const renderToast = () => {
-      const parent = document.body || document.documentElement;
-      if (!parent) return;
-      let box = document.getElementById('ca-userscript-toast');
-      if (!box) {
-        box = document.createElement('div');
-        box.id = 'ca-userscript-toast';
-        box.style.cssText = [
-          'position:fixed',
-          'bottom:24px',
-          'right:24px',
-          'background:#111114',
-          'color:#f4f4f6',
-          'border:1px solid ' + borderColor,
-          'border-radius:12px',
-          'padding:14px 18px',
-          'font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif',
-          'font-size:13px',
-          'box-shadow:0 12px 32px rgba(0,0,0,0.75)',
-          'z-index:2147483647',
-          'max-width:340px',
-          'line-height:1.45',
-          'transition:opacity 0.2s ease'
-        ].join(';');
-        parent.appendChild(box);
-      }
-      box.style.borderColor = borderColor;
-      box.innerHTML = html;
-      if (toastHideTimer) clearTimeout(toastHideTimer);
-      if (durationMs > 0) {
-        toastHideTimer = setTimeout(() => {
-          const el = document.getElementById('ca-userscript-toast');
-          if (el) el.remove();
-        }, durationMs);
-      }
-    };
-
-    if (document.body) {
-      renderToast();
-    } else {
-      window.addEventListener('DOMContentLoaded', renderToast, { once: true });
+    const parent = document.body || document.documentElement;
+    if (!parent) return;
+    let box = document.getElementById('ca-userscript-toast');
+    if (!box) {
+      box = document.createElement('div');
+      box.id = 'ca-userscript-toast';
+      box.style.cssText = [
+        'position:fixed',
+        'bottom:74px',
+        'right:24px',
+        'background:#111114',
+        'color:#f4f4f6',
+        'border:1px solid ' + borderColor,
+        'border-radius:12px',
+        'padding:14px 18px',
+        'font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif',
+        'font-size:13px',
+        'box-shadow:0 12px 32px rgba(0,0,0,0.75)',
+        'z-index:2147483647',
+        'max-width:350px',
+        'line-height:1.45'
+      ].join(';');
+      parent.appendChild(box);
     }
+    box.style.borderColor = borderColor;
+    box.innerHTML = html;
+    if (toastHideTimer) clearTimeout(toastHideTimer);
+    if (durationMs > 0) {
+      toastHideTimer = setTimeout(() => {
+        const el = document.getElementById('ca-userscript-toast');
+        if (el) el.remove();
+      }, durationMs);
+    }
+  }
+
+  function setFloatingButtonState(loading) {
+    const btn = document.getElementById('ca-sync-floating-btn');
+    if (!btn) return;
+    btn.disabled = loading;
+    btn.textContent = loading ? '⏳ Syncing...' : '🔄 Sync IMDb';
+    btn.style.opacity = loading ? '0.75' : '1';
+  }
+
+  function mountFloatingButton() {
+    if (!document.body || document.getElementById('ca-sync-floating-btn')) return;
+    const btn = document.createElement('button');
+    btn.id = 'ca-sync-floating-btn';
+    btn.type = 'button';
+    btn.textContent = '🔄 Sync IMDb';
+    btn.title = 'Синхронизировать Watchlist, Watched и оценки с Cinema Archive';
+    btn.style.cssText = [
+      'position:fixed',
+      'bottom:24px',
+      'right:24px',
+      'background:#111114',
+      'color:#d4a373',
+      'border:1px solid #d4a373',
+      'border-radius:999px',
+      'padding:10px 16px',
+      'font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif',
+      'font-size:13px',
+      'font-weight:600',
+      'cursor:pointer',
+      'box-shadow:0 8px 24px rgba(0,0,0,0.65)',
+      'z-index:2147483646'
+    ].join(';');
+    btn.addEventListener('click', () => runSync());
+    document.body.appendChild(btn);
   }
 
   function extractFromNextData(doc, isRatingsPage) {
@@ -243,22 +249,6 @@
       }
     });
 
-    if (!domIds.length && !isRatingsPage) {
-      const main = doc.querySelector('main, [role="main"]') || doc.body;
-      if (main) {
-        Array.from(main.querySelectorAll('a[href*="/title/tt"]'))
-          .filter(a => !a.closest('aside, nav, header, footer, .ipc-page-grid__sidebar, [data-testid*="sidebar"]'))
-          .forEach(a => {
-            const href = a.getAttribute('href') || a.href || '';
-            const m = href.match(/tt\d{7,10}/);
-            if (m && !seen.has(m[0])) {
-              seen.add(m[0]);
-              domIds.push(m[0]);
-            }
-          });
-      }
-    }
-
     const nextRes = extractFromNextData(doc, isRatingsPage);
     let totalCount = nextRes.totalCount;
     if (totalCount === null) {
@@ -278,31 +268,58 @@
       doc.querySelector('[data-testid="list-page-mc-total-items"], .ipc-metadata-list, #__NEXT_DATA__')
     );
 
-    const isCompleteList = totalCount === null || ids.length >= totalCount;
+    const isCompleteList = totalCount === null
+      ? ids.length > 0
+      : ids.length >= totalCount;
 
     return { ids, ratings, validPage, totalCount, isCompleteList };
   }
 
   async function fetchImdbList(pathSuffix, isRatingsPage) {
     const userId = getUserId();
-    const url = `${location.origin}/user/${userId}/${pathSuffix}/`;
-    const resp = await fetch(url, { credentials: 'include', cache: 'no-store' });
-    if (!resp.ok) {
-      throw new Error(`IMDb ${pathSuffix} HTTP ${resp.status}`);
+    const baseUrl = `${location.origin}/user/${userId}/${pathSuffix}/`;
+
+    const allIds = [];
+    const seen = new Set();
+    const allRatings = {};
+    let totalCount = null;
+    let validPage = false;
+
+    for (let page = 1; page <= 15; page++) {
+      const url = page === 1 ? baseUrl : `${baseUrl}?page=${page}`;
+      const resp = await fetch(url, { credentials: 'include', cache: 'no-store' });
+      if (!resp.ok) {
+        if (page === 1) throw new Error(`IMDb ${pathSuffix} HTTP ${resp.status}`);
+        break;
+      }
+      const html = await resp.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const parsed = extractFromDocument(doc, isRatingsPage);
+      if (parsed.validPage) validPage = true;
+      if (parsed.totalCount !== null && totalCount === null) {
+        totalCount = parsed.totalCount;
+      }
+
+      let addedOnPage = 0;
+      parsed.ids.forEach(id => {
+        if (!seen.has(id)) {
+          seen.add(id);
+          allIds.push(id);
+          addedOnPage++;
+        }
+      });
+      Object.assign(allRatings, parsed.ratings);
+
+      if (addedOnPage === 0) break;
+      if (totalCount !== null && allIds.length >= totalCount) break;
+      if (parsed.ids.length === 0) break;
     }
-    const html = await resp.text();
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    return extractFromDocument(doc, isRatingsPage);
-  }
 
-  function computeWatchlistHash(ids) {
-    return ids.join(',');
-  }
+    const isCompleteList = totalCount === null
+      ? allIds.length > 0
+      : allIds.length >= totalCount;
 
-  function computeRatingsHash(ids, ratings) {
-    const rKeys = Object.keys(ratings).sort();
-    const rPart = rKeys.map(k => `${k}:${ratings[k]}`).join(',');
-    return `${ids.join(',')}|${rPart}`;
+    return { ids: allIds, ratings: allRatings, validPage, totalCount, isCompleteList };
   }
 
   function dispatchGitHubSync(inputs) {
@@ -315,45 +332,28 @@
     const payload = JSON.stringify({ ref: 'main', inputs });
 
     return new Promise((resolve, reject) => {
-      if (typeof GM_xmlhttpRequest === 'function') {
-        GM_xmlhttpRequest({
-          method: 'POST',
-          url: endpoint,
-          headers: {
-            'Authorization': 'token ' + token,
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-          },
-          data: payload,
-          onload: (res) => resolve({ status: res.status, text: res.responseText || '' }),
-          onerror: () => reject(new Error('Ошибка сети при обращении к GitHub API'))
-        });
-      } else {
-        fetch(endpoint, {
-          method: 'POST',
-          headers: {
-            'Authorization': 'token ' + token,
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-          },
-          body: payload
-        })
-          .then(async res => ({ status: res.status, text: await res.text() }))
-          .then(resolve)
-          .catch(reject);
-      }
+      GM_xmlhttpRequest({
+        method: 'POST',
+        url: endpoint,
+        headers: {
+          'Authorization': 'token ' + token,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
+        },
+        data: payload,
+        onload: (res) => resolve({ status: res.status, text: res.responseText || '' }),
+        onerror: () => reject(new Error('Ошибка сети при обращении к GitHub API'))
+      });
     });
   }
 
-  async function runSync({ force = false, reason = 'Авто-проверка', currentPageOnly = false } = {}) {
-    if (isSyncing) {
-      pendingResync = true;
-      pendingReason = reason;
-      return;
-    }
+  async function runSync() {
+    if (isSyncing) return;
     isSyncing = true;
+    setFloatingButtonState(true);
 
     try {
+      const userId = getUserId();
       const onWatchlist = /\/user\/[^/]+\/watchlist(\/|$|\?)/i.test(location.pathname);
       const onRatings = /\/user\/[^/]+\/ratings(\/|$|\?)/i.test(location.pathname);
 
@@ -362,14 +362,10 @@
 
       if (onWatchlist) {
         watchlistRes = extractFromDocument(document, false);
-        if (!currentPageOnly) {
-          ratingsRes = await fetchImdbList('ratings', true).catch(() => null);
-        }
+        ratingsRes = await fetchImdbList('ratings', true).catch(() => null);
       } else if (onRatings) {
         ratingsRes = extractFromDocument(document, true);
-        if (!currentPageOnly) {
-          watchlistRes = await fetchImdbList('watchlist', false).catch(() => null);
-        }
+        watchlistRes = await fetchImdbList('watchlist', false).catch(() => null);
       } else {
         const [wl, rt] = await Promise.all([
           fetchImdbList('watchlist', false).catch(() => null),
@@ -379,80 +375,70 @@
         ratingsRes = rt;
       }
 
-      const prev = getSyncState();
       const inputs = {};
-      let newWatchlistHash = prev.watchlistHash;
-      let newRatingsHash = prev.ratingsHash;
       const changes = [];
-      let skippedPartialWatchlist = false;
+      const warnings = [];
 
       if (watchlistRes && watchlistRes.validPage && watchlistRes.ids.length > 0) {
-        if (!watchlistRes.isCompleteList && !force) {
-          skippedPartialWatchlist = true;
+        if (watchlistRes.isCompleteList) {
+          inputs.ids = watchlistRes.ids.join(',');
+          changes.push(`Watchlist: <b>${watchlistRes.ids.length}</b>`);
         } else {
-          const h = computeWatchlistHash(watchlistRes.ids);
-          if (force || h !== prev.watchlistHash) {
-            inputs.ids = watchlistRes.ids.join(',');
-            newWatchlistHash = h;
-            changes.push(`Watchlist: <b>${watchlistRes.ids.length}</b>`);
+          const got = watchlistRes.ids.length;
+          const total = watchlistRes.totalCount;
+          if (onWatchlist) {
+            warnings.push(
+              `Watchlist загружен частично (${got} из ${total}) — прокрутите список вниз до конца и нажмите Sync снова.`
+            );
+          } else {
+            warnings.push(
+              `Watchlist в фоне отдал ${got} из ${total} (пропущен, чтобы не обрезать список) — <a href="https://www.imdb.com/user/${encodeURIComponent(userId)}/watchlist/" style="color:#d4a373;text-decoration:underline;">откройте Watchlist</a> и нажмите Sync там.`
+            );
           }
         }
       }
 
       if (ratingsRes && ratingsRes.validPage && ratingsRes.ids.length > 0) {
-        const h = computeRatingsHash(ratingsRes.ids, ratingsRes.ratings);
-        if (force || h !== prev.ratingsHash) {
-          inputs.watched_ids = ratingsRes.ids.join(',');
-          inputs.ratings_json = JSON.stringify(ratingsRes.ratings);
-          newRatingsHash = h;
-          changes.push(`Watched: <b>${ratingsRes.ids.length}</b> (оценок: <b>${Object.keys(ratingsRes.ratings).length}</b>)`);
-        }
+        inputs.watched_ids = ratingsRes.ids.join(',');
+        inputs.ratings_json = JSON.stringify(ratingsRes.ratings);
+        changes.push(`Watched: <b>${ratingsRes.ids.length}</b> (оценок: <b>${Object.keys(ratingsRes.ratings).length}</b>)`);
       }
 
       if (!Object.keys(inputs).length) {
-        if (skippedPartialWatchlist && !onWatchlist) {
-          showToast(
-            '<div style="font-weight:600;color:#d4a373;margin-bottom:4px;">Cinema Archive Sync</div>' +
-            'Watchlist на IMDb подгрузился не полностью в фоне — откройте страницу Watchlist на пару секунд для синхронизации.',
-            4500
-          );
-        } else if (force) {
-          showToast(
-            '<div style="font-weight:600;color:#d4a373;margin-bottom:4px;">Cinema Archive Sync</div>' +
-            'Изменений на IMDb не обнаружено (данные уже актуальны).',
-            3500
-          );
-        }
+        showToast(
+          '<div style="font-weight:600;color:#ef4444;margin-bottom:4px;">Cinema Archive Sync</div>' +
+          (warnings.length ? warnings.join('<br>') : 'Не удалось получить списки с IMDb. Откройте /watchlist/ или /ratings/ и повторите.'),
+          7000,
+          '#ef4444'
+        );
         return;
       }
 
       showToast(
-        `<div style="font-weight:600;color:#d4a373;margin-bottom:4px;">Cinema Archive Sync</div>` +
-        `<div style="color:#9c9ca6;font-size:12px;margin-bottom:4px;">${escapeHtml(reason)}</div>` +
+        '<div style="font-weight:600;color:#d4a373;margin-bottom:4px;">Cinema Archive Sync</div>' +
         changes.join('<br>') +
-        '<br>Обновление базы на GitHub...'
+        '<br>Отправка в GitHub Actions...'
       );
 
       const res = await dispatchGitHubSync(inputs);
 
       if (res.status === 204) {
-        saveSyncState({
-          watchlistHash: newWatchlistHash,
-          ratingsHash: newRatingsHash,
-          lastSyncAt: Date.now()
-        });
+        const warnBlock = warnings.length
+          ? `<div style="margin-top:6px;font-size:12px;color:#fbbf24;">${warnings.join('<br>')}</div>`
+          : '';
         showToast(
-          '<div style="font-weight:600;color:#10b981;margin-bottom:4px;">✓ База Cinema Archive обновлена</div>' +
+          '<div style="font-weight:600;color:#10b981;margin-bottom:4px;">✓ Синхронизация запущена!</div>' +
           changes.join(' &bull; ') +
-          '<br><span style="color:#9c9ca6;font-size:12px;">GitHub Pages обновится через ~30 сек.</span>',
-          5000,
+          warnBlock +
+          '<br><span style="color:#9c9ca6;font-size:12px;">Сайт обновится на GitHub Pages через ~30 секунд.</span>',
+          warnings.length ? 8000 : 5000,
           '#10b981'
         );
       } else if (res.status === 401) {
         clearToken();
         showToast(
           '<div style="font-weight:600;color:#ef4444;margin-bottom:4px;">✕ Неверный GitHub токен (401)</div>' +
-          '<div style="color:#9c9ca6;font-size:12px;">Токен сброшен. Задайте новый через меню Tampermonkey.</div>',
+          '<div style="color:#9c9ca6;font-size:12px;">Токен сброшен. Нажмите Sync ещё раз, чтобы ввести новый.</div>',
           6000,
           '#ef4444'
         );
@@ -478,96 +464,8 @@
       );
     } finally {
       isSyncing = false;
-      if (pendingResync) {
-        const nextReason = pendingReason || 'Повторная проверка изменений';
-        pendingResync = false;
-        pendingReason = '';
-        scheduleFullSync(nextReason, 1200);
-      }
+      setFloatingButtonState(false);
     }
-  }
-
-  function scheduleFullSync(reason, delayMs = 2200, opts = {}) {
-    if (syncTimer) clearTimeout(syncTimer);
-    syncTimer = setTimeout(() => {
-      syncTimer = null;
-      runSync({ reason, ...opts });
-    }, delayMs);
-  }
-
-  function isImdbListOrRatingMutation(bodyStr, url) {
-    const combined = `${url} ${bodyStr}`;
-    return /rating|watchlist|listItem|addItem|removeItem|deleteTitleRating|updateTitleRating/i.test(combined);
-  }
-
-  try {
-    const origFetch = pageWin.fetch;
-    if (typeof origFetch === 'function') {
-      pageWin.fetch = function (input, init) {
-        const url = typeof input === 'string' ? input : (input && input.url) || '';
-        const method = ((init && init.method) || (input && input.method) || 'GET').toUpperCase();
-        const bodyStr = init && typeof init.body === 'string' ? init.body : '';
-        const promise = origFetch.apply(this, arguments);
-        if (/graphql/i.test(url) && method === 'POST' && isImdbListOrRatingMutation(bodyStr, url)) {
-          promise.then(res => {
-            if (res && res.ok) {
-              scheduleFullSync('Обнаружено изменение оценки или Watchlist на IMDb', 2000);
-            }
-          }).catch(() => {});
-        }
-        return promise;
-      };
-    }
-  } catch (e) {}
-
-  document.addEventListener('click', (e) => {
-    const target = e.target && e.target.closest ? e.target.closest(
-      '[data-testid*="watchlist"], [data-testid*="Watchlist"], ' +
-      '[data-testid*="rating"], [data-testid*="rate"], ' +
-      '.ipc-starbar__rating, .ipc-rating-prompt__rating-container button, ' +
-      'button[aria-label*="Watchlist"], button[aria-label*="Rate"], ' +
-      'button[aria-label*="Remove rating"], .wl-ribbon'
-    ) : null;
-    if (!target) return;
-    const isModalOpener = target.matches('[data-testid="hero-rating-bar__user-rating"] > button, [data-testid="rate-button"]');
-    if (!isModalOpener) {
-      scheduleFullSync('Обнаружено действие с оценкой или Watchlist', 2600);
-    }
-  }, true);
-
-  let activeObserver = null;
-
-  function setupPageHooks() {
-    if (activeObserver) {
-      activeObserver.disconnect();
-      activeObserver = null;
-    }
-
-    const path = location.pathname;
-    const isListPage = /\/user\/[^/]+\/(watchlist|ratings)(\/|$|\?)/i.test(path);
-    if (!isListPage) return;
-
-    scheduleFullSync('Проверка списка на странице IMDb', 1800);
-
-    const root = document.querySelector('main') || document.body;
-    if (!root) return;
-
-    activeObserver = new MutationObserver((mutations) => {
-      const relevant = mutations.some(m => {
-        if (m.target && m.target.closest && m.target.closest('#ca-userscript-toast')) return false;
-        const nodes = [...Array.from(m.addedNodes), ...Array.from(m.removedNodes)];
-        return nodes.some(n => {
-          if (n.nodeType !== 1) return false;
-          if (n.id === 'ca-userscript-toast' || (n.closest && n.closest('#ca-userscript-toast'))) return false;
-          return n.matches?.('li.ipc-metadata-list-summary-item, .lister-item') ||
-                 Boolean(n.querySelector?.('li.ipc-metadata-list-summary-item, [data-testid*="ratingGroup"]'));
-        });
-      });
-      if (relevant) {
-        scheduleFullSync('Обнаружено изменение списка на странице', 2200);
-      }
-    });
-    activeObserver.observe(root, { childList: true, subtree: true });
   }
 
   function ensureTokenOnStartup() {
@@ -576,29 +474,13 @@
     }
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      ensureTokenOnStartup();
-      setupPageHooks();
-    }, { once: true });
-  } else {
-    ensureTokenOnStartup();
-    setupPageHooks();
-  }
-
-  let lastPath = location.pathname + location.search;
-  setInterval(() => {
-    const current = location.pathname + location.search;
-    if (current !== lastPath) {
-      lastPath = current;
-      setupPageHooks();
-    }
-  }, 1000);
+  mountFloatingButton();
+  ensureTokenOnStartup();
 
   if (typeof GM_registerMenuCommand === 'function') {
     GM_registerMenuCommand('🔄 Синхронизировать IMDb сейчас', () => {
       tokenPromptDismissed = false;
-      runSync({ force: true, reason: 'Ручной запуск из меню' });
+      runSync();
     });
     GM_registerMenuCommand('🔑 Задать / сменить GitHub токен', () => {
       const entered = prompt('Введите GitHub Personal Access Token (repo + workflow):', GM_getValue(KEY_TOKEN, ''));
