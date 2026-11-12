@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cinema Archive — IMDb Sync
 // @namespace    https://github.com/PerdangaSoftware/cinema-archive
-// @version      2.1.0
+// @version      2.2.0
 // @description  Синхронизирует Watchlist, Watched и оценки (1–10) с IMDb в Cinema Archive по нажатию кнопки.
 // @author       Roman Zhdanov
 // @match        https://www.imdb.com/*
@@ -33,9 +33,10 @@
   const KEY_USER_ID = 'ca_imdb_user_id';
   const KEY_COLLECT_PREFIX = 'ca_collected_';
 
-  const urlParams = new URLSearchParams(location.search);
-  const collectMode = urlParams.get('ca_collect');
-  const collectNonce = urlParams.get('ca_nonce');
+  const hashParams = new URLSearchParams((location.hash || '').replace(/^#/, ''));
+  const searchParams = new URLSearchParams(location.search);
+  const collectMode = hashParams.get('ca_collect') || searchParams.get('ca_collect');
+  const collectNonce = hashParams.get('ca_nonce') || searchParams.get('ca_nonce');
 
   let isSyncing = false;
   let toastHideTimer = null;
@@ -196,10 +197,12 @@
             ids.push(id);
           }
           if (isRatingsPage) {
-            const rawRating =
-              (node && node.userRating && node.userRating.value) ??
-              (titleObj && titleObj.userRating && titleObj.userRating.value) ??
-              (node && node.viewerRating && node.viewerRating.value);
+            const ratingObj =
+              (node && (node.userRating || node.viewerRating || node.authorRating || node.personalRating)) ||
+              (titleObj && (titleObj.userRating || titleObj.viewerRating));
+            const rawRating = (ratingObj && typeof ratingObj === 'object')
+              ? (ratingObj.value ?? ratingObj.rating ?? ratingObj.score)
+              : ratingObj;
             if (rawRating !== undefined && rawRating !== null) {
               const str = String(rawRating).trim();
               if (/^(10|[1-9])$/.test(str)) {
@@ -248,9 +251,14 @@
           if (/^(10|[1-9])$/.test(txt)) rv = txt;
         }
         if (!rv) {
-          const lblEl = el.querySelector('[data-testid="ratingGroup--other-user-rating"], [data-testid="ratingGroup--user-rating"], button[aria-label*="rating"]');
+          const lblEl = el.querySelector(
+            '[data-testid="ratingGroup--other-user-rating"], ' +
+            '[data-testid="ratingGroup--user-rating"], ' +
+            'button[aria-label*="rating"], ' +
+            'button[aria-label*="Rated"]'
+          );
           const lbl = lblEl ? (lblEl.getAttribute('aria-label') || '') : '';
-          const lm = lbl.match(/(?:User|Your)\s+rating:\s*(10|[1-9])\b/i);
+          const lm = lbl.match(/(?:User|Your)\s+rating:\s*(10|[1-9])\b/i) || lbl.match(/Rated\s+(10|[1-9])\b/i);
           if (lm) rv = lm[1];
         }
         if (rv) domRatings[id] = rv;
@@ -280,7 +288,7 @@
       ? ids.length > 0
       : ids.length >= totalCount;
 
-    return { ids, ratings, validPage, totalCount, isCompleteList };
+    return { ids, ratings, validPage, totalCount, isCompleteList, domCount: domIds.length };
   }
 
   async function fetchImdbList(pathSuffix, isRatingsPage) {
@@ -351,12 +359,19 @@
     let lastRatingCount = -1;
     let stableTicks = 0;
 
+    showToast(`<div style="font-weight:600;color:#d4a373;">Cinema Archive Sync</div>Чтение ${escapeHtml(mode)}... вкладка закроется автоматически.`);
+
     const timer = setInterval(() => {
       const res = extractFromDocument(document, isRatings);
       const rCount = Object.keys(res.ratings).length;
       const elapsed = Date.now() - startedAt;
 
-      if (res.totalCount !== null && res.ids.length < res.totalCount && Date.now() - lastExpandAt > 1100) {
+      const needExpand = res.totalCount !== null && (
+        res.ids.length < res.totalCount ||
+        res.domCount < res.totalCount ||
+        (isRatings && rCount < res.totalCount)
+      );
+      if (needExpand && Date.now() - lastExpandAt > 1100) {
         lastExpandAt = Date.now();
         tryExpandListPage();
       }
@@ -368,9 +383,16 @@
         stableTicks = 0;
       }
 
+      showToast(
+        `<div style="font-weight:600;color:#d4a373;">Cinema Archive Sync</div>` +
+        `Загрузка ${escapeHtml(mode)}: <b>${Math.max(res.ids.length, res.domCount)}</b>` +
+        (res.totalCount !== null ? ` / ${res.totalCount}` : '') +
+        (isRatings ? ` (оценок: <b>${rCount}</b>)` : '')
+      );
+
       const itemsReady = res.validPage && res.ids.length > 0 && res.isCompleteList;
-      const ratingsReady = !isRatings || rCount >= res.ids.length || (rCount > 0 && stableTicks >= 5);
-      const timedOut = elapsed >= 25000;
+      const ratingsReady = !isRatings || (rCount >= res.ids.length) || (rCount > 0 && (!needExpand || stableTicks >= 6));
+      const timedOut = elapsed >= 22000;
 
       if ((itemsReady && ratingsReady) || timedOut) {
         clearInterval(timer);
@@ -379,6 +401,7 @@
           timestamp: Date.now(),
           ...res
         }));
+        try { window.close(); } catch (e) {}
       }
     }, 450);
   }
@@ -391,7 +414,7 @@
     const userId = getUserId();
     const nonce = Date.now() + '_' + Math.random().toString(36).slice(2, 8);
     const key = KEY_COLLECT_PREFIX + pathSuffix;
-    const url = `${location.origin}/user/${userId}/${pathSuffix}/?ca_collect=${encodeURIComponent(pathSuffix)}&ca_nonce=${encodeURIComponent(nonce)}`;
+    const url = `${location.origin}/user/${userId}/${pathSuffix}/#ca_collect=${encodeURIComponent(pathSuffix)}&ca_nonce=${encodeURIComponent(nonce)}`;
 
     return new Promise((resolve) => {
       let settled = false;
@@ -432,9 +455,9 @@
         checkRaw(GM_getValue(key, ''));
       }, 450);
 
-      timeoutId = setTimeout(() => finish(null), 28000);
+      timeoutId = setTimeout(() => finish(null), 25000);
 
-      tabHandle = GM_openInTab(url, { active: false, insert: true, setParent: true });
+      tabHandle = GM_openInTab(url, { active: true, insert: true, setParent: true });
     });
   }
 
@@ -488,13 +511,15 @@
       const needWatchlistTab = !onWatchlist && (!watchlistRes || !watchlistRes.validPage || !watchlistRes.isCompleteList);
       const needRatingsTab = !onRatings && (!ratingsRes || !ratingsRes.validPage || !ratingsRes.isCompleteList || Object.keys(ratingsRes.ratings || {}).length === 0);
 
-      if (needWatchlistTab || needRatingsTab) {
-        showToast('<div style="font-weight:600;color:#d4a373;margin-bottom:4px;">Cinema Archive Sync</div>Подгрузка полных списков и оценок в фоне...');
-        const [wlBg, rtBg] = await Promise.all([
-          needWatchlistTab ? collectViaBackgroundTab('watchlist') : Promise.resolve(watchlistRes),
-          needRatingsTab ? collectViaBackgroundTab('ratings') : Promise.resolve(ratingsRes)
-        ]);
+      if (needWatchlistTab) {
+        showToast('<div style="font-weight:600;color:#d4a373;margin-bottom:4px;">Cinema Archive Sync</div>Загрузка полного Watchlist во временной вкладке...');
+        const wlBg = await collectViaBackgroundTab('watchlist');
         if (wlBg) watchlistRes = wlBg;
+      }
+
+      if (needRatingsTab) {
+        showToast('<div style="font-weight:600;color:#d4a373;margin-bottom:4px;">Cinema Archive Sync</div>Загрузка оценок Ratings во временной вкладке...');
+        const rtBg = await collectViaBackgroundTab('ratings');
         if (rtBg) ratingsRes = rtBg;
       }
 
@@ -526,7 +551,7 @@
           changes.push(`Watched: <b>${ratingsRes.ids.length}</b> (оценок: <b>${ratingsCount}</b>)`);
         } else {
           warnings.push(
-            `Не удалось прочитать оценки со страницы Ratings — <a href="https://www.imdb.com/user/${encodeURIComponent(userId)}/ratings/" style="color:#d4a373;text-decoration:underline;">откройте Ratings</a> и нажмите Sync.`
+            `Не удалось прочитать оценки (найдено тайтлов: ${ratingsRes.ids.length}, оценок: 0) — <a href="https://www.imdb.com/user/${encodeURIComponent(userId)}/ratings/" style="color:#d4a373;text-decoration:underline;">откройте Ratings</a> и нажмите Sync.`
           );
         }
       }
