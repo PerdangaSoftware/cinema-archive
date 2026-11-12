@@ -1358,10 +1358,6 @@
       }
       allMovies.splice(allIdx, 1);
     }
-    const tIdx = toWatchMovies.findIndex(m => m && m.Const === constId);
-    if (tIdx >= 0) toWatchMovies.splice(tIdx, 1);
-    const wIdx = waitingMovies.findIndex(m => m && m.Const === constId);
-    if (wIdx >= 0) waitingMovies.splice(wIdx, 1);
 
     if (sourceMovie && typeof watchedArchive !== 'undefined' && Array.isArray(watchedArchive)) {
       const inFav = favoriteMovies.some(f => f && f.Const === constId);
@@ -1390,6 +1386,8 @@
     } else {
       watchedMovies.push(constId);
       removeWatchedFromWatchlists(constId);
+      const tIdx = toWatchMovies.findIndex(m => m && m.Const === constId);
+      if (tIdx >= 0) toWatchMovies.splice(tIdx, 1);
       showToast('Marked as Watched ✓');
     }
     saveCuratedToStorage();
@@ -1701,14 +1699,14 @@
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed.top10_to_watch) {
-          toWatchMovies = parsed.top10_to_watch.map(c => allMovies.find(m => m.Const === c)).filter(Boolean);
+          toWatchMovies = parsed.top10_to_watch.map(c => getMovieByConst(c)).filter(Boolean);
         }
         if (parsed.awaiting_digital) {
-          waitingMovies = parsed.awaiting_digital.map(c => allMovies.find(m => m.Const === c)).filter(Boolean);
+          waitingMovies = parsed.awaiting_digital.map(c => getMovieByConst(c)).filter(Boolean);
         }
         if (parsed.favorites) {
           parsed.favorites = parsed.favorites.map(c => c === 'tt0062310' ? 'tt36243564' : c);
-          favoriteMovies = parsed.favorites.map(c => allMovies.find(m => m.Const === c) || favoriteMovies.find(m => m.Const === c)).filter(Boolean);
+          favoriteMovies = parsed.favorites.map(c => getMovieByConst(c)).filter(Boolean);
         }
         if (parsed.watched && (!watchedMovies || !watchedMovies.length)) {
           watchedMovies = parsed.watched;
@@ -1722,7 +1720,6 @@
   }
 
   function addToWatch(constId) {
-    if (watchedMovies.includes(constId)) return;
     const target = getMovieByConst(constId);
     if (!target) return;
     if (!toWatchMovies.some(m => m.Const === constId)) {

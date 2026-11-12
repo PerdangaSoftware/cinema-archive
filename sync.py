@@ -335,6 +335,18 @@ def main():
         if const and const not in all_movies_map:
             all_movies_map[const] = m
 
+    for m in existing_data.get('to_watch', []):
+        const = m.get('Const')
+        if const and const not in all_movies_map:
+            all_movies_map[const] = m
+
+    for m in existing_data.get('waiting', []):
+        const = m.get('Const')
+        if const and const not in all_movies_map:
+            all_movies_map[const] = m
+
+    preserved_movies_map = dict(all_movies_map)
+
     raw_ids = args.ids or env_ids
     provided_ids = []
     if raw_ids:
@@ -449,18 +461,10 @@ def main():
             posters[const] = m['Poster']
 
     all_const_set = set(m['Const'] for m in all_movies if m.get('Const'))
-    curated['top10_to_watch'] = [
-        c for c in curated.get('top10_to_watch', [])
-        if c not in watched_set and (not provided_ids or c in all_const_set)
-    ]
-    curated['awaiting_digital'] = [
-        c for c in curated.get('awaiting_digital', [])
-        if c not in watched_set and (not provided_ids or c in all_const_set)
-    ]
 
     fav_ids = curated.get('favorites', [])
-    to_watch_ids = curated['top10_to_watch']
-    waiting_ids = curated['awaiting_digital']
+    to_watch_ids = curated.get('top10_to_watch', [])
+    waiting_ids = curated.get('awaiting_digital', [])
 
     existing_fav_map = {m['Const']: m for m in existing_data.get('favorites', []) if m.get('Const')}
     favorites = []
@@ -474,16 +478,22 @@ def main():
             favorites.append(fav_item)
 
     to_watch = []
-    for const in to_watch_ids:
-        item = all_movies_map.get(const)
-        if item:
-            to_watch.append(item)
-
     waiting = []
-    for const in waiting_ids:
-        item = all_movies_map.get(const)
-        if item:
-            waiting.append(item)
+    for id_list, target_list in ((to_watch_ids, to_watch), (waiting_ids, waiting)):
+        for const in id_list:
+            item = all_movies_map.get(const) or preserved_movies_map.get(const)
+            if not item:
+                print(f'Fetching metadata for curated film {const}')
+                item = fetch_movie_meta(const)
+            if item:
+                curated_item = dict(item)
+                if const in ratings_map:
+                    curated_item['Your Rating'] = ratings_map[const]
+                elif curated_has_ratings:
+                    curated_item['Your Rating'] = ''
+                if not curated_item.get('Poster') and const in posters:
+                    curated_item['Poster'] = posters[const]
+                target_list.append(curated_item)
 
     fav_const_set = set(m['Const'] for m in favorites if m.get('Const'))
     watched_archive = []
