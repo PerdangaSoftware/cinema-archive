@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cinema Archive — IMDb Sync
 // @namespace    https://github.com/PerdangaSoftware/cinema-archive
-// @version      2.0.0
+// @version      2.1.0
 // @description  Синхронизирует Watchlist, Watched и оценки (1–10) с IMDb в Cinema Archive по нажатию кнопки.
 // @author       Roman Zhdanov
 // @match        https://www.imdb.com/*
@@ -13,6 +13,9 @@
 // @grant        GM_deleteValue
 // @grant        GM_xmlhttpRequest
 // @grant        GM_registerMenuCommand
+// @grant        GM_openInTab
+// @grant        GM_addValueChangeListener
+// @grant        GM_removeValueChangeListener
 // @connect      api.github.com
 // @connect      www.imdb.com
 // @connect      m.imdb.com
@@ -28,6 +31,11 @@
 
   const KEY_TOKEN = 'ca_github_token';
   const KEY_USER_ID = 'ca_imdb_user_id';
+  const KEY_COLLECT_PREFIX = 'ca_collected_';
+
+  const urlParams = new URLSearchParams(location.search);
+  const collectMode = urlParams.get('ca_collect');
+  const collectNonce = urlParams.get('ca_nonce');
 
   let isSyncing = false;
   let toastHideTimer = null;
@@ -240,7 +248,7 @@
           if (/^(10|[1-9])$/.test(txt)) rv = txt;
         }
         if (!rv) {
-          const lblEl = el.querySelector('[data-testid="ratingGroup--other-user-rating"], [data-testid="ratingGroup--user-rating"]');
+          const lblEl = el.querySelector('[data-testid="ratingGroup--other-user-rating"], [data-testid="ratingGroup--user-rating"], button[aria-label*="rating"]');
           const lbl = lblEl ? (lblEl.getAttribute('aria-label') || '') : '';
           const lm = lbl.match(/(?:User|Your)\s+rating:\s*(10|[1-9])\b/i);
           if (lm) rv = lm[1];
@@ -322,6 +330,114 @@
     return { ids: allIds, ratings: allRatings, validPage, totalCount, isCompleteList };
   }
 
+  function tryExpandListPage() {
+    const seeMoreBtn = Array.from(document.querySelectorAll('main button, .ipc-see-more button')).find(btn => {
+      const txt = (btn.textContent || '').trim();
+      return /^(?:see\s+all|see\s+more|load\s+more|\d+\s+more|all)$/i.test(txt) && !btn.disabled;
+    });
+    if (seeMoreBtn) {
+      seeMoreBtn.click();
+      return true;
+    }
+    window.scrollTo(0, document.body.scrollHeight);
+    return false;
+  }
+
+  function runBackgroundCollector(mode, nonce) {
+    const isRatings = mode === 'ratings';
+    const key = KEY_COLLECT_PREFIX + mode;
+    const startedAt = Date.now();
+    let lastExpandAt = 0;
+    let lastRatingCount = -1;
+    let stableTicks = 0;
+
+    const timer = setInterval(() => {
+      const res = extractFromDocument(document, isRatings);
+      const rCount = Object.keys(res.ratings).length;
+      const elapsed = Date.now() - startedAt;
+
+      if (res.totalCount !== null && res.ids.length < res.totalCount && Date.now() - lastExpandAt > 1100) {
+        lastExpandAt = Date.now();
+        tryExpandListPage();
+      }
+
+      if (rCount === lastRatingCount && rCount > 0) {
+        stableTicks++;
+      } else {
+        lastRatingCount = rCount;
+        stableTicks = 0;
+      }
+
+      const itemsReady = res.validPage && res.ids.length > 0 && res.isCompleteList;
+      const ratingsReady = !isRatings || rCount >= res.ids.length || (rCount > 0 && stableTicks >= 5);
+      const timedOut = elapsed >= 25000;
+
+      if ((itemsReady && ratingsReady) || timedOut) {
+        clearInterval(timer);
+        GM_setValue(key, JSON.stringify({
+          nonce,
+          timestamp: Date.now(),
+          ...res
+        }));
+      }
+    }, 450);
+  }
+
+  function collectViaBackgroundTab(pathSuffix) {
+    if (typeof GM_openInTab !== 'function') {
+      return Promise.resolve(null);
+    }
+
+    const userId = getUserId();
+    const nonce = Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+    const key = KEY_COLLECT_PREFIX + pathSuffix;
+    const url = `${location.origin}/user/${userId}/${pathSuffix}/?ca_collect=${encodeURIComponent(pathSuffix)}&ca_nonce=${encodeURIComponent(nonce)}`;
+
+    return new Promise((resolve) => {
+      let settled = false;
+      let listenerId = null;
+      let pollId = null;
+      let timeoutId = null;
+      let tabHandle = null;
+
+      const finish = (result) => {
+        if (settled) return;
+        settled = true;
+        if (pollId) clearInterval(pollId);
+        if (timeoutId) clearTimeout(timeoutId);
+        if (listenerId !== null && typeof GM_removeValueChangeListener === 'function') {
+          try { GM_removeValueChangeListener(listenerId); } catch (e) {}
+        }
+        if (tabHandle && typeof tabHandle.close === 'function') {
+          try { tabHandle.close(); } catch (e) {}
+        }
+        resolve(result);
+      };
+
+      const checkRaw = (raw) => {
+        if (!raw) return;
+        try {
+          const parsed = JSON.parse(raw);
+          if (parsed && parsed.nonce === nonce) {
+            finish(parsed);
+          }
+        } catch (e) {}
+      };
+
+      if (typeof GM_addValueChangeListener === 'function') {
+        listenerId = GM_addValueChangeListener(key, (_name, _oldVal, newVal) => checkRaw(newVal));
+      }
+
+      pollId = setInterval(() => {
+        checkRaw(GM_getValue(key, ''));
+      }, 450);
+
+      timeoutId = setTimeout(() => finish(null), 28000);
+
+      tabHandle = GM_openInTab(url, { active: false, insert: true, setParent: true });
+    });
+  }
+
   function dispatchGitHubSync(inputs) {
     const token = getToken(true);
     if (!token) {
@@ -357,22 +473,29 @@
       const onWatchlist = /\/user\/[^/]+\/watchlist(\/|$|\?)/i.test(location.pathname);
       const onRatings = /\/user\/[^/]+\/ratings(\/|$|\?)/i.test(location.pathname);
 
-      let watchlistRes = null;
-      let ratingsRes = null;
+      let watchlistRes = onWatchlist ? extractFromDocument(document, false) : null;
+      let ratingsRes = onRatings ? extractFromDocument(document, true) : null;
 
-      if (onWatchlist) {
-        watchlistRes = extractFromDocument(document, false);
-        ratingsRes = await fetchImdbList('ratings', true).catch(() => null);
-      } else if (onRatings) {
-        ratingsRes = extractFromDocument(document, true);
-        watchlistRes = await fetchImdbList('watchlist', false).catch(() => null);
-      } else {
-        const [wl, rt] = await Promise.all([
-          fetchImdbList('watchlist', false).catch(() => null),
-          fetchImdbList('ratings', true).catch(() => null)
+      showToast('<div style="font-weight:600;color:#d4a373;margin-bottom:4px;">Cinema Archive Sync</div>Чтение Watchlist и Ratings с IMDb...');
+
+      const [wlFetch, rtFetch] = await Promise.all([
+        onWatchlist ? Promise.resolve(watchlistRes) : fetchImdbList('watchlist', false).catch(() => null),
+        onRatings ? Promise.resolve(ratingsRes) : fetchImdbList('ratings', true).catch(() => null)
+      ]);
+      watchlistRes = wlFetch;
+      ratingsRes = rtFetch;
+
+      const needWatchlistTab = !onWatchlist && (!watchlistRes || !watchlistRes.validPage || !watchlistRes.isCompleteList);
+      const needRatingsTab = !onRatings && (!ratingsRes || !ratingsRes.validPage || !ratingsRes.isCompleteList || Object.keys(ratingsRes.ratings || {}).length === 0);
+
+      if (needWatchlistTab || needRatingsTab) {
+        showToast('<div style="font-weight:600;color:#d4a373;margin-bottom:4px;">Cinema Archive Sync</div>Подгрузка полных списков и оценок в фоне...');
+        const [wlBg, rtBg] = await Promise.all([
+          needWatchlistTab ? collectViaBackgroundTab('watchlist') : Promise.resolve(watchlistRes),
+          needRatingsTab ? collectViaBackgroundTab('ratings') : Promise.resolve(ratingsRes)
         ]);
-        watchlistRes = wl;
-        ratingsRes = rt;
+        if (wlBg) watchlistRes = wlBg;
+        if (rtBg) ratingsRes = rtBg;
       }
 
       const inputs = {};
@@ -386,22 +509,26 @@
         } else {
           const got = watchlistRes.ids.length;
           const total = watchlistRes.totalCount;
-          if (onWatchlist) {
-            warnings.push(
-              `Watchlist загружен частично (${got} из ${total}) — прокрутите список вниз до конца и нажмите Sync снова.`
-            );
-          } else {
-            warnings.push(
-              `Watchlist в фоне отдал ${got} из ${total} (пропущен, чтобы не обрезать список) — <a href="https://www.imdb.com/user/${encodeURIComponent(userId)}/watchlist/" style="color:#d4a373;text-decoration:underline;">откройте Watchlist</a> и нажмите Sync там.`
-            );
-          }
+          warnings.push(
+            `Watchlist загружен частично (${got} из ${total}) — <a href="https://www.imdb.com/user/${encodeURIComponent(userId)}/watchlist/" style="color:#d4a373;text-decoration:underline;">откройте Watchlist</a>, прокрутите до конца и нажмите Sync.`
+          );
         }
       }
 
       if (ratingsRes && ratingsRes.validPage && ratingsRes.ids.length > 0) {
-        inputs.watched_ids = ratingsRes.ids.join(',');
-        inputs.ratings_json = JSON.stringify(ratingsRes.ratings);
-        changes.push(`Watched: <b>${ratingsRes.ids.length}</b> (оценок: <b>${Object.keys(ratingsRes.ratings).length}</b>)`);
+        const ratingsCount = Object.keys(ratingsRes.ratings || {}).length;
+        if (ratingsCount > 0) {
+          inputs.watched_ids = ratingsRes.ids.join(',');
+          inputs.ratings_json = JSON.stringify(ratingsRes.ratings);
+          if (ratingsRes.isCompleteList && ratingsCount >= Math.floor(ratingsRes.ids.length * 0.9)) {
+            inputs.replace_ratings = 'true';
+          }
+          changes.push(`Watched: <b>${ratingsRes.ids.length}</b> (оценок: <b>${ratingsCount}</b>)`);
+        } else {
+          warnings.push(
+            `Не удалось прочитать оценки со страницы Ratings — <a href="https://www.imdb.com/user/${encodeURIComponent(userId)}/ratings/" style="color:#d4a373;text-decoration:underline;">откройте Ratings</a> и нажмите Sync.`
+          );
+        }
       }
 
       if (!Object.keys(inputs).length) {
@@ -472,6 +599,11 @@
     if (!GM_getValue(KEY_TOKEN, '')) {
       setTimeout(() => getToken(true), 400);
     }
+  }
+
+  if (collectMode && collectNonce) {
+    runBackgroundCollector(collectMode, collectNonce);
+    return;
   }
 
   mountFloatingButton();

@@ -626,8 +626,7 @@
     "tt15398776",
     "tt5537002",
     "tt14849194",
-    "tt21027780",
-    "tt34384661"
+    "tt21027780"
   ],
   "watched_archive": [
     {
@@ -647,7 +646,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Lance Oppenheim",
-      "Your Rating": "",
+      "Your Rating": "10",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMTcyZGI2NWQtOTU3NS00NTEyLTliNDItNTQyNmFkMGZmZGQzXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -668,7 +667,7 @@
       "Num Votes": "",
       "Release Date": "",
       "Directors": "Curry Barker",
-      "Your Rating": "",
+      "Your Rating": "10",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BYzc1NWUwMDgtNGZlMS00ZmYzLWIzMzktNmMxMmY1MTUzNWExXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
@@ -3990,27 +3989,6 @@
       "Your Rating": "8",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZjNkY2M5NWMtZjJiMy00YTZmLWI2NWEtZTI0MjhmNDc4ZThmXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
-    },
-    {
-      "Position": "",
-      "Const": "tt34384661",
-      "Created": "",
-      "Modified": "",
-      "Description": "",
-      "Title": "Godzilla Minus Zero",
-      "Original Title": "",
-      "URL": "https://www.imdb.com/title/tt34384661/",
-      "Title Type": "Movie",
-      "IMDb Rating": "",
-      "Runtime (mins)": "135",
-      "Year": "2026",
-      "Genres": "Action, Adventure, Drama",
-      "Num Votes": "",
-      "Release Date": "",
-      "Directors": "Takashi Yamazaki",
-      "Your Rating": "8",
-      "Date Rated": "",
-      "Poster": "https://m.media-amazon.com/images/M/MV5BYzY2OWFhMTgtODJhMi00NDIyLWIzNTQtYjc4MjE4YTBjYzllXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     }
   ],
   "ratings": {
@@ -4182,7 +4160,8 @@
     "tt8228288": "8",
     "tt8999762": "8",
     "tt9243946": "7",
-    "tt34384661": "8"
+    "tt34206385": "10",
+    "tt37287335": "10"
   },
   "all": [
     {

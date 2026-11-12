@@ -231,6 +231,7 @@ def main():
     parser.add_argument('--watched-ids', help='Comma-separated IMDb Const IDs for Watched')
     parser.add_argument('--curated-json', help='JSON string with curated lists')
     parser.add_argument('--ratings-json', help='JSON map of IMDb Const ID to user rating')
+    parser.add_argument('--replace-ratings', action='store_true', help='Replace watched and ratings lists completely')
     parser.add_argument('--add', help='Add a single IMDb Const to collection (e.g. tt1234567)')
     parser.add_argument('--add-towatch', help='Add IMDb Const to Ready to Watch')
     parser.add_argument('--add-comingsoon', help='Add IMDb Const to Coming Soon')
@@ -248,6 +249,7 @@ def main():
     env_watched_ids = os.environ.get('INPUT_WATCHED_IDS', '').strip()
     env_curated_json = os.environ.get('INPUT_CURATED_JSON', '').strip()
     env_ratings_json = os.environ.get('INPUT_RATINGS_JSON', '').strip()
+    replace_ratings = args.replace_ratings or (os.environ.get('INPUT_REPLACE_RATINGS', '').strip().lower() == 'true')
 
     curated_has_ratings = False
     curated_input = args.curated_json or env_curated_json
@@ -276,15 +278,22 @@ def main():
     if watched_input:
         parsed_w = [c.strip() for c in watched_input.split(',') if re.match(r'^tt\d{7,10}$', c.strip())]
         if parsed_w:
-            existing_w = curated.get('watched', [])
-            curated['watched'] = list(dict.fromkeys(parsed_w + existing_w))
+            if replace_ratings:
+                curated['watched'] = list(dict.fromkeys(parsed_w))
+            else:
+                existing_w = curated.get('watched', [])
+                curated['watched'] = list(dict.fromkeys(parsed_w + existing_w))
 
     ratings_input = args.ratings_json or env_ratings_json
     if ratings_input:
         try:
             parsed_r = parse_valid_ratings(json.loads(ratings_input))
             if parsed_r:
-                curated['ratings'].update(parsed_r)
+                if replace_ratings:
+                    curated['ratings'] = parsed_r
+                    curated_has_ratings = True
+                else:
+                    curated['ratings'].update(parsed_r)
                 for k in parsed_r:
                     if k not in curated.get('watched', []):
                         curated.setdefault('watched', []).append(k)

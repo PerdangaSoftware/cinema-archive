@@ -21,6 +21,10 @@ on:
         description: 'JSON map of IMDb Const ID to user rating (1-10)'
         required: false
         default: ''
+      replace_ratings:
+        description: 'Replace watched and ratings lists completely (true/false)'
+        required: false
+        default: 'false'
 
 permissions:
   contents: write
@@ -43,6 +47,7 @@ jobs:
           INPUT_WATCHED_IDS: ${{ github.event.inputs.watched_ids }}
           INPUT_CURATED_JSON: ${{ github.event.inputs.curated_json }}
           INPUT_RATINGS_JSON: ${{ github.event.inputs.ratings_json }}
+          INPUT_REPLACE_RATINGS: ${{ github.event.inputs.replace_ratings }}
         run: |
           python sync.py
 
