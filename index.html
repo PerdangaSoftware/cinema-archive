@@ -420,14 +420,14 @@
     }
     .card-ratings-row {
       gap: 5px;
-      margin: 6px 0 10px 0;
+      margin: 0;
     }
     .rating-chip {
       height: 24px;
       padding: 0 5px;
       font-size: 10px;
     }
-    .chip-label {
+    .chip-imdb-tag {
       font-size: 8px;
       padding: 1px 3px;
     }
@@ -702,100 +702,117 @@
   .card-ratings-row {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin: 6px 0 12px 0;
+    gap: 6px;
+    margin: 0;
     width: 100%;
   }
 
   .rating-chip {
     flex: 1 1 0;
     min-width: 0;
-    height: 26px;
+    height: 28px;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 3px;
+    border-radius: 4px;
     display: inline-flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 6px;
     padding: 0 8px;
     font-family: var(--font-mono);
     font-size: 11px;
-    color: var(--text-secondary);
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none;
     box-sizing: border-box;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .rating-chip.imdb-chip {
     border-color: rgba(245, 197, 24, 0.2);
     background: rgba(245, 197, 24, 0.03);
+    color: #f5c518;
+    cursor: pointer;
   }
 
   .rating-chip.imdb-chip:hover {
-    border-color: rgba(245, 197, 24, 0.4);
-    background: rgba(245, 197, 24, 0.06);
+    border-color: rgba(245, 197, 24, 0.45);
+    background: rgba(245, 197, 24, 0.08);
+    transform: translateY(-1px);
   }
 
-  .chip-label {
-    font-size: 9px;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding: 1px 4px;
-    border-radius: 2px;
-    line-height: 1.1;
-  }
-
-  .chip-label.imdb-label {
+  .chip-imdb-tag {
     background: #f5c518;
     color: #000;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    padding: 1.5px 4px;
+    border-radius: 2px;
+    line-height: 1;
+    display: inline-block;
   }
 
-  .chip-label.user-label {
-    background: rgba(197, 160, 89, 0.18);
-    color: var(--accent-gold);
-    border: 1px solid rgba(197, 160, 89, 0.35);
-  }
-
-  .chip-value {
+  .chip-imdb-val {
     font-weight: 700;
     font-size: 11px;
+    color: #f5c518;
+    white-space: nowrap;
     display: inline-flex;
     align-items: center;
     gap: 2px;
-    white-space: nowrap;
-  }
-
-  .imdb-chip .chip-value {
-    color: #f5c518;
   }
 
   .rating-chip.user-chip {
     cursor: pointer;
     border-color: var(--border-light);
     color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.02);
   }
 
   .rating-chip.user-chip:hover {
-    border-color: var(--accent-gold);
-    color: var(--accent-gold);
-    background: rgba(197, 160, 89, 0.08);
+    border-color: rgba(59, 130, 246, 0.4);
+    color: #60a5fa;
+    background: rgba(59, 130, 246, 0.08);
+    transform: translateY(-1px);
   }
 
   .rating-chip.user-chip.rated {
-    border-color: rgba(197, 160, 89, 0.35);
-    background: rgba(197, 160, 89, 0.08);
-    color: var(--accent-gold);
+    border-color: rgba(59, 130, 246, 0.35);
+    background: rgba(37, 99, 235, 0.12);
+    color: #60a5fa;
   }
 
-  .rating-chip.user-chip.rated .chip-value {
-    color: var(--accent-gold);
-    text-shadow: 0 0 8px rgba(197, 160, 89, 0.3);
+  .rating-chip.user-chip.rated:hover {
+    border-color: rgba(59, 130, 246, 0.6);
+    background: rgba(37, 99, 235, 0.2);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.25);
   }
 
-  .chip-max {
+  .chip-user-val {
+    font-weight: 700;
+    font-size: 11px;
+    color: #60a5fa;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .chip-user-max {
     font-size: 9px;
     opacity: 0.65;
     font-weight: 400;
+  }
+
+  .chip-user-unrated {
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    transition: color 0.15s ease;
+  }
+
+  .rating-chip.user-chip:hover .chip-user-unrated {
+    color: #60a5fa;
   }
 
   .no-results {
@@ -1891,21 +1908,22 @@
       const runtime = m['Runtime (mins)'] ? `${escapeHtml(m['Runtime (mins)'])} MIN` : '—';
       const ratingVal = m['IMDb Rating'];
       const myRating = getUserRating(m);
+      const imdbUrl = escapeHtml(m.URL || ('https://www.imdb.com/title/' + (m.Const || '') + '/'));
       const ratingsRowHtml = `
         <div class="card-ratings-row">
-          <div class="rating-chip imdb-chip" title="IMDb Rating: ${ratingVal ? escapeHtml(ratingVal) + ' / 10' : 'No rating'}">
-            <span class="chip-label imdb-label">IMDb</span>
-            <span class="chip-value">${ratingVal ? '★ ' + escapeHtml(ratingVal) : '—'}</span>
-          </div>
-          <button type="button" class="rating-chip user-chip ${myRating ? 'rated' : ''}" onclick="openRateModal('${safeConst}')" title="${myRating ? 'My Rating: ' + escapeHtml(myRating) + '/10 (Click to change)' : 'Rate film 1–10'}">
-            <span class="chip-label user-label">MY</span>
-            <span class="chip-value">${myRating ? '★ ' + escapeHtml(myRating) + '<span class="chip-max">/10</span>' : '☆ Rate'}</span>
+          <a href="${imdbUrl}" target="_blank" rel="noopener noreferrer" class="rating-chip imdb-chip" title="IMDb Rating: ${ratingVal ? escapeHtml(ratingVal) + ' / 10' : 'No rating'}">
+            <span class="chip-imdb-tag">IMDb</span>
+            <span class="chip-imdb-val">${ratingVal ? '★ ' + escapeHtml(ratingVal) : '—'}</span>
+          </a>
+          <button type="button" class="rating-chip user-chip ${myRating ? 'rated' : ''}" onclick="openRateModal('${safeConst}')" title="${myRating ? 'Your Rating: ' + escapeHtml(myRating) + '/10 (Click to change)' : 'Rate film 1–10'}">
+            ${myRating
+              ? `<span class="chip-user-val">★ ${escapeHtml(myRating)}<span class="chip-user-max">/10</span></span>`
+              : `<span class="chip-user-unrated">☆ Rate</span>`}
           </button>
         </div>
       `;
       const genres = escapeHtml(m.Genres || 'Drama');
       const posterSrc = escapeHtml(formatPoster(m.Poster || ''));
-      const imdbUrl = escapeHtml(m.URL || ('https://www.imdb.com/title/' + (m.Const || '') + '/'));
 
       let statusBadge = '';
       if (isWatched) {
@@ -1960,9 +1978,9 @@
               <div class="card-director">${director}</div>
               <div class="card-specs">${year} &bull; ${runtime}</div>
               <div class="card-genres">${genres}</div>
-              ${ratingsRowHtml}
             </div>
             <div class="card-action-bar ${isFavOnly ? 'fav-action-bar' : ''}">
+              ${ratingsRowHtml}
               ${actionsHtml}
               <div class="card-footer-meta">
                 <button class="trailer-link-btn" onclick="openTrailer('${encodeURIComponent(m.Const || '')}', '${encodeURIComponent(m.Title || '')}', '${encodeURIComponent(m.Year || '')}', '${encodeURIComponent(m.Directors || '')}')" title="Watch Trailer">
