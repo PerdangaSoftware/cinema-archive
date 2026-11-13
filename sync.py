@@ -512,6 +512,10 @@ def main():
                     curated_item['Your Rating'] = ''
                 if not curated_item.get('Poster') and const in posters:
                     curated_item['Poster'] = posters[const]
+                elif curated_item.get('Poster') and const not in posters:
+                    posters[const] = curated_item['Poster']
+                if const not in all_movies_map:
+                    all_movies_map[const] = curated_item
                 target_list.append(curated_item)
 
     fav_const_set = set(m['Const'] for m in favorites if m.get('Const'))

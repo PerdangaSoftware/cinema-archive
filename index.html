@@ -408,8 +408,20 @@
       grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       gap: 16px;
     }
-    .card-curate-row > button {
-      flex: 1 1 100%;
+    .card-curate-row {
+      gap: 4px;
+    }
+    .btn-card-curate,
+    .btn-card-curate-soon,
+    .btn-card-fav,
+    .btn-card-watched,
+    .btn-card-remove,
+    .btn-card-list {
+      font-size: 8.5px;
+      padding: 5px 3px;
+    }
+    .btn-card-fav {
+      flex: 0 0 28px;
     }
   }
 
@@ -626,13 +638,20 @@
 
   .card-curate-row {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     gap: 6px;
     width: 100%;
   }
 
-  .card-curate-row > button {
-    flex: 1 1 calc(50% - 3px);
+  .card-curate-row > button,
+  .card-curate-row > .card-list-dropdown {
+    min-width: 0;
+  }
+
+  .card-curate-row > .btn-card-watched,
+  .card-curate-row > .btn-card-curate,
+  .card-curate-row > .btn-card-remove {
+    flex: 1 1 auto;
   }
 
   .card-footer-meta {
@@ -845,19 +864,29 @@
   }
 
 
+  .btn-control.btn-add-soon {
+    border-color: rgba(245, 158, 11, 0.4);
+    color: var(--badge-amber);
+  }
+  .btn-control.btn-add-soon:hover {
+    border-color: var(--badge-amber);
+    background: rgba(245, 158, 11, 0.12);
+    color: #fbbf24;
+  }
+
   .btn-card-curate,
   .btn-card-curate-soon,
   .btn-card-fav,
   .btn-card-watched,
-  .btn-card-remove {
-    flex: 1;
+  .btn-card-remove,
+  .btn-card-list {
     min-width: 0;
     background: transparent;
     border: 1px solid var(--border-light);
     color: var(--text-secondary);
     font-family: var(--font-mono);
     font-size: 9.5px;
-    padding: 5px 4px;
+    padding: 5px 6px;
     border-radius: 2px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -870,6 +899,12 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .btn-card-fav {
+    flex: 0 0 32px;
+    font-size: 11px;
+    padding: 5px 0;
   }
 
   .btn-card-curate:hover {
@@ -890,6 +925,13 @@
     background: rgba(197, 160, 89, 0.08);
   }
 
+  .btn-card-fav.active {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+    background: rgba(197, 160, 89, 0.16);
+    box-shadow: 0 0 8px rgba(197, 160, 89, 0.25);
+  }
+
   .btn-card-watched:hover {
     border-color: var(--badge-green);
     color: var(--badge-green);
@@ -907,6 +949,220 @@
     border-color: #ef4444;
     color: #ef4444;
     background: rgba(239, 68, 68, 0.08);
+  }
+
+  .card-list-dropdown {
+    position: relative;
+    display: inline-flex;
+    flex: 0 0 auto;
+  }
+
+  .btn-card-list {
+    gap: 3px;
+  }
+
+  .btn-card-list:hover {
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+  }
+
+  .btn-card-list.in-ready {
+    border-color: var(--badge-green);
+    color: var(--badge-green);
+    background: rgba(16, 185, 129, 0.1);
+  }
+
+  .btn-card-list.in-soon {
+    border-color: var(--badge-amber);
+    color: var(--badge-amber);
+    background: rgba(245, 158, 11, 0.1);
+  }
+
+  .card-list-menu {
+    position: absolute;
+    bottom: calc(100% + 4px);
+    right: 0;
+    min-width: 155px;
+    background: #141416;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.65);
+    padding: 4px;
+    z-index: 60;
+    display: none;
+  }
+
+  .card-list-menu.open {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .card-list-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    letter-spacing: 0.03em;
+  }
+
+  .card-list-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+  }
+
+  .card-list-item.active {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .card-list-item .list-item-check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    color: var(--accent-gold);
+    font-size: 11px;
+  }
+
+  .add-soon-modal-card {
+    max-width: 540px;
+    width: 90%;
+  }
+
+  .add-soon-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    color: var(--text-primary);
+    margin: 4px 0 14px 0;
+    font-weight: 400;
+  }
+
+  .add-soon-input-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .add-soon-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-light);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    padding: 9px 12px;
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .add-soon-input:focus {
+    border-color: var(--badge-amber);
+    box-shadow: 0 0 0 1px var(--badge-amber);
+  }
+
+  .add-soon-results {
+    max-height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+    padding-right: 4px;
+  }
+
+  .add-soon-results::-webkit-scrollbar {
+    width: 4px;
+  }
+  .add-soon-results::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+  }
+
+  .add-soon-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 2px;
+    transition: background 0.15s;
+  }
+
+  .add-soon-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .add-soon-thumb {
+    width: 38px;
+    height: 54px;
+    object-fit: cover;
+    border-radius: 2px;
+    background: #141416;
+    flex-shrink: 0;
+  }
+
+  .add-soon-meta {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .add-soon-item-title {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .add-soon-item-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .add-soon-item-badge {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--badge-amber);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .btn-add-soon-action {
+    background: transparent;
+    border: 1px solid var(--badge-amber);
+    color: var(--badge-amber);
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    padding: 5px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .btn-add-soon-action:hover {
+    background: var(--badge-amber);
+    color: #000;
   }
 
   .modal-overlay {
@@ -1221,7 +1477,7 @@
           <span class="metric-lbl">Ready to Watch</span>
         </div>
         <div class="metric">
-          <span class="metric-val" id="metric-waiting">4</span>
+          <span class="metric-val" id="metric-waiting">8</span>
           <span class="metric-lbl">Coming Soon</span>
         </div>
         <div class="metric">
@@ -1250,7 +1506,7 @@
         Ready to Watch <span class="tab-badge" id="badge-towatch">10</span>
       </button>
       <button class="filter-tab" id="tab-waiting" onclick="setTab('waiting')">
-        Coming Soon <span class="tab-badge" id="badge-waiting">4</span>
+        Coming Soon <span class="tab-badge" id="badge-waiting">8</span>
       </button>
       <button class="filter-tab emerald-accent" id="tab-watched" onclick="setTab('watched')">
         Watched <span class="tab-badge" id="badge-watched">168</span>
@@ -1276,6 +1532,10 @@
         Random Pick
       </button>
 
+      <button class="btn-control btn-add-soon" id="btnAddComingSoon" onclick="openAddComingSoonModal()" title="Add film to Coming Soon" style="display: none;">
+        ＋ Add Film
+      </button>
+
       <button class="btn-control btn-publish" id="btnPublish" onclick="publishCuratedToGitHub()" title="Publish all changes (Watched, Favorites, Ready to Watch) to GitHub repository">
         ☁ Publish to GitHub
       </button>
@@ -1297,7 +1557,7 @@
   const trailersData = {"tt0042619": "SsnxjJgHFao", "tt29141112": "PaGMdANhmrw", "tt23736044": "cOpWDxxiwoE", "tt0095327": "lhlh7JVcTt8", "tt0044741": "2VeLN3IDjzQ", "tt21097228": "_9CmC5Rmsdw", "tt18346498": "Pn7VdmcCjcA", "tt30804400": "7mz5WLB5l_A", "tt10370812": "rdy--tzaUeo", "tt27816866": "i___5NO1KnY", "tt26315142": "3zTLbBUJTeE", "tt28131427": "igM9-Gt3A24", "tt20212786": "CfoZeIaSFMc", "tt27180099": "oN0wM9QLu3c", "tt10236164": "Mo8VcGW7qvs", "tt27989261": "eAZ2SNnuy4E", "tt0086979": "TFzPVLdGtAg", "tt0084628": "0K8j3MU9dw4", "tt0249241": "-tJVdq_G_Go", "tt0113824": "0pVkiod6V0U", "tt0096283": "92a7Hj0ijLs", "tt0052357": "Z5jvQwwHQNY", "tt0073198": "iuP1MN6RNJU", "tt29439114": "FLHSOFsZICk", "tt32249940": "lD3J2jznG34", "tt26625693": "pPZaOB4ea-0", "tt0062229": "GuhPR3xeJm0", "tt0165798": "ZhR6jWWpUj0", "tt0115736": "ToCMwdOaWh4", "tt0058625": "7kX4h_sEBiI", "tt0093058": "n2i917l5RFc", "tt0082933": "aLXW-oVbTxE", "tt15435876": "sfJG6IiA_s8", "tt0017136": "ZAvzaOxDt2c", "tt0042876": "xCZ9TguVOIA", "tt0119008": "omIiE9KKj2o", "tt28093628": "AVL918qZg2k", "tt30840798": "GEuMnPl2WI4", "tt36491653": "Y7X9sSZ0nYw", "tt36667493": "Z7dOWWLczN0", "tt27714581": "Gb1sSfWb1Og", "tt29002950": "62EUwsiXYXY", "tt9362736": "2jzXHW6Qe70", "tt22852560": "FFVFBwoyrZg", "tt36724209": "zrsAX2iWjnQ", "tt0111403": "B-R4pG58_bc", "tt32880120": "QV1WkzXn0FA", "tt1312221": "8aulMPhE12g", "tt27811632": "TaRZnpAmtJk", "tt37814864": "aJxTLOErs5g", "tt1333644": "cXA3Zgsky18", "tt1527793": "HKZpuG_ezvY", "tt34819091": "Rb0ZhiDD9J0", "tt32283654": "2yqXG3OcpNQ", "tt14883538": "e4RrOe8IbI8", "tt0064115": "YdJW2UxvSFQ", "tt26581740": "OpThntO9ixc", "tt0082776": "DN8dH41a69U", "tt29567915": "WvAy9C-bipY", "tt29768334": "_Nk8TrBHOrA", "tt6938828": "T77PDm3e1iE", "tt0353969": "0n_HQwQU8ls", "tt33455099": "HYspKk4yVXk", "tt18382850": "ywFDoT7LBbQ", "tt0076162": "WQ_Yo06kIIA", "tt15047880": "SCYT8vb2siQ", "tt31450459": "qORTe1wW3Wg", "tt35514120": "cmjpadVj-Vk", "tt20426466": "mdX7HqeeaBs", "tt15005870": "FCUdBGoU5KI", "tt15799564": "Haw_sznA5aQ", "tt37024725": "7hIy3nQPCqg", "tt21303934": "JMWsjsZGZnk", "tt14142060": "n0pqP6ClcE8", "tt29355505": "c51ND9Hdbw0", "tt0058006": "06lr4b9vA60", "tt0082912": "NvQy1Q7GuR8", "tt0022080": "l8E2TzQmsKg", "tt0063291": "FGcBNmiCdxw", "tt0060138": "eL8MuxXB_Eg", "tt0074486": "7WAzFWu2tVw", "tt0057869": "TM0lC2QCiSU", "tt0083922": "tDlA_QZmqkM", "tt0059592": "TVvhJrrgfs0", "tt35538033": "mNd1gb19A-c", "tt36834996": "6qqMre2T32Q", "tt27369017": "mYRc2Gl7geY", "tt0123948": "Kr0LzE4VRkQ", "tt2076220": "NWu9WjEcdbk", "tt32890033": "exJJbMUcd1g", "tt1855199": "9mQYxib26FM", "tt39094466": "ILBDFlYMGAY", "tt41240964": "PfgNjb-H9OE", "tt37803364": "zd3qXH9qN70", "tt39602215": "dY5kXykdbLo", "tt19637052": "BF_J3-DmiS0", "tt43704164": "i0-lYHCHzi8", "tt39239726": "ATjUWojp42k", "tt41802342": "hOFq7J4fmhY", "tt37815334": "39-C_3DTROg", "tt0053198": "i89oN8v7RdY", "tt0075314": "T5IligQP7Fo", "tt0098936": "rFuKtJjhBCQ", "tt0083946": "xWeb7i8IjYs", "tt7575046": "V9RhW4hE5gU", "tt28618488": "veSSKsfx-N4", "tt36243564": "Wz47ooKCOu8", "tt0094625": "nA8KmHC2Z-g", "tt31711040": "wkRR2VUsWfU", "tt0208502": "4X9LM3aTiyY"};
   let favoriteMovies = [{"Position": "FAV 01", "Const": "tt0053198", "Created": "", "Modified": "", "Description": "", "Title": "The 400 Blows", "Original Title": "", "URL": "https://www.imdb.com/title/tt0053198/", "Title Type": "Movie", "IMDb Rating": "8.0", "Runtime (mins)": "99", "Year": "1959", "Genres": "Crime, Drama", "Num Votes": "", "Release Date": "", "Directors": "François Truffaut", "Your Rating": "9", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BOTU3YTM0YzQtMmFlOS00OTIxLWFmZjctMDJkOGQxNTVhODM3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 02", "Const": "tt0075314", "Created": "", "Modified": "", "Description": "", "Title": "Taxi Driver", "Original Title": "", "URL": "https://www.imdb.com/title/tt0075314/", "Title Type": "Movie", "IMDb Rating": "8.2", "Runtime (mins)": "114", "Year": "1976", "Genres": "Crime, Drama", "Num Votes": "", "Release Date": "", "Directors": "Martin Scorsese", "Your Rating": "9", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZDNhMGYwM2UtMTdlZS00MGQ1LWI2YzAtODY5YWI1MjYyNzRmXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 03", "Const": "tt0098936", "Created": "", "Modified": "", "Description": "", "Title": "Twin Peaks", "Original Title": "", "URL": "https://www.imdb.com/title/tt0098936/", "Title Type": "Movie", "IMDb Rating": "8.7", "Runtime (mins)": "1", "Year": "1990–1991", "Genres": "Crime, Drama, Mystery", "Num Votes": "", "Release Date": "", "Directors": "Mark Frost, David Lynch", "Your Rating": "10", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMTExNzk2NjcxNTNeQTJeQWpwZ15BbWU4MDcxOTczOTIx._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 04", "Const": "tt0083946", "Created": "", "Modified": "", "Description": "", "Title": "Fitzcarraldo", "Original Title": "", "URL": "https://www.imdb.com/title/tt0083946/", "Title Type": "Movie", "IMDb Rating": "7.9", "Runtime (mins)": "157", "Year": "1982", "Genres": "Adventure, Drama, Music", "Num Votes": "", "Release Date": "", "Directors": "Werner Herzog", "Your Rating": "9", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYzJjNTRkNjUtZGE4MC00YmRlLWI0ODYtMzJjNGZkYWMzNTJhXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 05", "Const": "tt7575046", "Created": "", "Modified": "", "Description": "", "Title": "Riddle of Fire", "Original Title": "", "URL": "https://www.imdb.com/title/tt7575046/", "Title Type": "Movie", "IMDb Rating": "6.6", "Runtime (mins)": "114", "Year": "2023", "Genres": "Action, Adventure, Comedy", "Num Votes": "", "Release Date": "", "Directors": "Weston Razooli", "Your Rating": "10", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZDA0MDcyNWQtNjZhMi00ZWQ2LWI4MDktYTA3MDkwODQ3NDA5XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 06", "Const": "tt28618488", "Created": "", "Modified": "", "Description": "", "Title": "Vermiglio", "Original Title": "", "URL": "https://www.imdb.com/title/tt28618488/", "Title Type": "Movie", "IMDb Rating": "6.9", "Runtime (mins)": "119", "Year": "2025", "Genres": "Drama, History", "Num Votes": "", "Release Date": "", "Directors": "Maura Delpero", "Your Rating": "10", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNjdhZTg5NjUtYjg5Ny00NDc3LWI2NzUtYjY4NDMxZjQ4NjVmXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 07", "Const": "tt36243564", "Created": "", "Modified": "", "Description": "", "Title": "The Stranger", "Original Title": "", "URL": "https://www.imdb.com/title/tt36243564/", "Title Type": "Movie", "IMDb Rating": "7.1", "Runtime (mins)": "122", "Year": "2025", "Genres": "Crime, Drama", "Num Votes": "", "Release Date": "", "Directors": "François Ozon", "Your Rating": "9", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BOGE5ODZjNjgtNTdhZS00ZmM0LWI2NDYtYTBiYWY2NmI4YWMzXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 08", "Const": "tt0094625", "Created": "", "Modified": "", "Description": "", "Title": "Akira", "Original Title": "", "URL": "https://www.imdb.com/title/tt0094625/", "Title Type": "Movie", "IMDb Rating": "8.0", "Runtime (mins)": "124", "Year": "1988", "Genres": "Animation, Action, Drama", "Num Votes": "", "Release Date": "", "Directors": "Katsuhiro Otomo", "Your Rating": "10", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNzlhZGRmZGEtM2ZjNC00MWRmLTk0MDctYzU1NzAzODIxYzEyXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 09", "Const": "tt31711040", "Created": "", "Modified": "", "Description": "", "Title": "Look Back", "Original Title": "", "URL": "https://www.imdb.com/title/tt31711040/", "Title Type": "Movie", "IMDb Rating": "7.8", "Runtime (mins)": "58", "Year": "2024", "Genres": "Animation, Drama", "Num Votes": "", "Release Date": "", "Directors": "Kiyotaka Oshiyama", "Your Rating": "10", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BOTVhN2ZlNmUtZTY1Mi00OTUwLWIxNzEtYzgwZjg2ZTlhNWU1XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 10", "Const": "tt0208502", "Created": "", "Modified": "", "Description": "", "Title": "Angel's Egg", "Original Title": "", "URL": "https://www.imdb.com/title/tt0208502/", "Title Type": "Movie", "IMDb Rating": "7.7", "Runtime (mins)": "73", "Year": "1985", "Genres": "Animation, Drama, Fantasy, Horror, Mystery, Sci-Fi", "Num Votes": "", "Release Date": "", "Directors": "Mamoru Oshii", "Your Rating": "10", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYmU1ZDEyNzEtMWYyZi00OTc2LTgxMmEtZWU3YzMxNTUwM2YzXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 11", "Const": "tt31688586", "Created": "", "Modified": "", "Description": "", "Title": "Nouvelle Vague", "Original Title": "", "URL": "https://www.imdb.com/title/tt31688586/", "Title Type": "Movie", "IMDb Rating": "7.3", "Runtime (mins)": "106", "Year": "2025", "Genres": "Biography, Comedy, Drama", "Num Votes": "", "Release Date": "", "Directors": "Richard Linklater", "Your Rating": "8", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZGUyNWRjMTMtYTgxZS00YWI4LTg2MDAtNzEwZDgyZjk4YzMzXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 12", "Const": "tt27847051", "Created": "", "Modified": "", "Description": "", "Title": "The Secret Agent", "Original Title": "", "URL": "https://www.imdb.com/title/tt27847051/", "Title Type": "Movie", "IMDb Rating": "7.2", "Runtime (mins)": "161", "Year": "2025", "Genres": "Crime, Drama, Mystery", "Num Votes": "", "Release Date": "", "Directors": "Kleber Mendonça Filho", "Your Rating": "9", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNDlkMzNhYzgtNTk1Yi00M2I1LTlkOTMtY2RmZGU3YzVmMzE2XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 13", "Const": "tt0113568", "Created": "", "Modified": "", "Description": "", "Title": "Ghost in the Shell", "Original Title": "", "URL": "https://www.imdb.com/title/tt0113568/", "Title Type": "Movie", "IMDb Rating": "7.9", "Runtime (mins)": "83", "Year": "1996", "Genres": "Animation, Action, Crime", "Num Votes": "", "Release Date": "", "Directors": "Mamoru Oshii", "Your Rating": "10", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNzljMjA3MTQtMjM1OS00OGJjLWJiYzctZDRiMTk1NWI5YzQ5XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 14", "Const": "tt14561712", "Created": "", "Modified": "", "Description": "", "Title": "La Chimera", "Original Title": "", "URL": "https://www.imdb.com/title/tt14561712/", "Title Type": "Movie", "IMDb Rating": "7.3", "Runtime (mins)": "131", "Year": "2024", "Genres": "Adventure, Comedy, Drama", "Num Votes": "", "Release Date": "", "Directors": "Alice Rohrwacher", "Your Rating": "8", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMjk5ZDRjNjAtZTgwYi00NzE5LWEzMTItODM3Y2NmNGFmYTdiXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 15", "Const": "tt0087843", "Created": "", "Modified": "", "Description": "", "Title": "Once Upon a Time in America", "Original Title": "", "URL": "https://www.imdb.com/title/tt0087843/", "Title Type": "Movie", "IMDb Rating": "8.3", "Runtime (mins)": "139", "Year": "1984", "Genres": "Crime, Drama", "Num Votes": "", "Release Date": "", "Directors": "Sergio Leone", "Your Rating": "10", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMDQ0ZTg2OGUtZjMyOC00M2M5LThkMmItZmM2MmUzMmIxMWJhXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 16", "Const": "tt0050083", "Created": "", "Modified": "", "Description": "", "Title": "12 Angry Men", "Original Title": "", "URL": "https://www.imdb.com/title/tt0050083/", "Title Type": "Movie", "IMDb Rating": "9.0", "Runtime (mins)": "97", "Year": "1957", "Genres": "Crime, Drama", "Num Votes": "", "Release Date": "", "Directors": "Sidney Lumet", "Your Rating": "10", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYjE4NzdmOTYtYjc5Yi00YzBiLWEzNDEtNTgxZGQ2MWVkN2NiXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 17", "Const": "tt0060107", "Created": "", "Modified": "", "Description": "", "Title": "Andrei Rublev", "Original Title": "", "URL": "https://www.imdb.com/title/tt0060107/", "Title Type": "Movie", "IMDb Rating": "8.0", "Runtime (mins)": "183", "Year": "1966", "Genres": "Biography, Drama, History", "Num Votes": "", "Release Date": "", "Directors": "Andrei Tarkovsky", "Your Rating": "9", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BY2I4YzZjZDgtNWQzNC00MDdhLWFiZTItZTAwODY2ZmQzMDQwXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 18", "Const": "tt0078788", "Created": "", "Modified": "", "Description": "", "Title": "Apocalypse Now", "Original Title": "", "URL": "https://www.imdb.com/title/tt0078788/", "Title Type": "Movie", "IMDb Rating": "8.4", "Runtime (mins)": "147", "Year": "1979", "Genres": "Drama, Mystery, War", "Num Votes": "", "Release Date": "", "Directors": "Francis Ford Coppola", "Your Rating": "9", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZDhiMTljYjYtODc1Yy00MmEwLTg2OTYtYmE1YTRmNDE4MmEwXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 19", "Const": "tt0087544", "Created": "", "Modified": "", "Description": "", "Title": "Nausicaä of the Valley of the Wind", "Original Title": "", "URL": "https://www.imdb.com/title/tt0087544/", "Title Type": "Movie", "IMDb Rating": "8.0", "Runtime (mins)": "95", "Year": "1987", "Genres": "Animation, Adventure, Sci-Fi", "Num Votes": "", "Release Date": "", "Directors": "Hayao Miyazaki", "Your Rating": "10", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BODBhMTI3YzMtNTRjYS00OTFkLWJmODUtNjJiNzcwYTVkNDhiXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 20", "Const": "tt0083658", "Created": "", "Modified": "", "Description": "", "Title": "Blade Runner", "Original Title": "", "URL": "https://www.imdb.com/title/tt0083658/", "Title Type": "Movie", "IMDb Rating": "8.1", "Runtime (mins)": "118", "Year": "1982", "Genres": "Action, Drama, Sci-Fi", "Num Votes": "", "Release Date": "", "Directors": "Ridley Scott", "Your Rating": "10", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BOWQ4YTBmNTQtMDYxMC00NGFjLTkwOGQtNzdhNmY1Nzc1MzUxXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 21", "Const": "tt6587046", "Created": "", "Modified": "", "Description": "", "Title": "The Boy and the Heron", "Original Title": "", "URL": "https://www.imdb.com/title/tt6587046/", "Title Type": "Movie", "IMDb Rating": "7.3", "Runtime (mins)": "124", "Year": "2023", "Genres": "Animation, Adventure, Drama", "Num Votes": "", "Release Date": "", "Directors": "Hayao Miyazaki", "Your Rating": "10", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMzA5Zjg3MTAtM2FhZS00NTNjLTg3NjEtNWQ4MTRhZjhiNzVmXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "FAV 22", "Const": "tt11813216", "Created": "", "Modified": "", "Description": "", "Title": "The Banshees of Inisherin", "Original Title": "", "URL": "https://www.imdb.com/title/tt11813216/", "Title Type": "Movie", "IMDb Rating": "7.6", "Runtime (mins)": "114", "Year": "2022", "Genres": "Comedy, Drama", "Num Votes": "", "Release Date": "", "Directors": "Martin McDonagh", "Your Rating": "9", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BOTkzMWI4OTEtMTk0MS00MTUxLWI4NTYtYmRiNWM4Zjc1MGRhXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}];
   let toWatchMovies = [{"Position": "13", "Const": "tt10236164", "Created": "2024-05-26", "Modified": "2024-05-26", "Description": "", "Title": "The Girl with the Needle", "Original Title": "Pigen med nålen", "URL": "https://www.imdb.com/title/tt10236164/", "Title Type": "Movie", "IMDb Rating": "7.5", "Runtime (mins)": "123", "Year": "2024", "Genres": "Crime, Drama, History", "Num Votes": "21404", "Release Date": "2025-01-24", "Directors": "Magnus von Horn", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNzdhMzMzMjMtOWVmYy00MWExLTlhZTAtYjQyNzY3YTY2ZWJkXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "Mo8VcGW7qvs"}, {"Position": "40", "Const": "tt29002950", "Created": "2025-05-26", "Modified": "2025-05-26", "Description": "", "Title": "Resurrection", "Original Title": "Kuang ye shi dai", "URL": "https://www.imdb.com/title/tt29002950/", "Title Type": "Movie", "IMDb Rating": "7.2", "Runtime (mins)": "160", "Year": "2025", "Genres": "Drama, Sci-Fi", "Num Votes": "6136", "Release Date": "2025-11-22", "Directors": "Bi Gan", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZGQ2ODE0M2QtODUzMS00OGIyLTlmZWItZGMwM2E2MDg5YWUxXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "62EUwsiXYXY"}, {"Position": "42", "Const": "tt22852560", "Created": "2025-05-26", "Modified": "2025-05-26", "Description": "", "Title": "The Disappearance of Josef Mengele", "Original Title": "Das Verschwinden des Josef Mengele", "URL": "https://www.imdb.com/title/tt22852560/", "Title Type": "Movie", "IMDb Rating": "6.9", "Runtime (mins)": "135", "Year": "2025", "Genres": "Biography, Drama, History", "Num Votes": "2169", "Release Date": "2025-10-22", "Directors": "Kirill Serebrennikov", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYTUzYTZlMWQtOGIyNy00Njk2LWFjMDMtYTViYzk5NWNkNzdlXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "FFVFBwoyrZg"}, {"Position": "47", "Const": "tt27811632", "Created": "2025-09-09", "Modified": "2025-09-09", "Description": "", "Title": "Silent Friend", "Original Title": "Stille Freundin", "URL": "https://www.imdb.com/title/tt27811632/", "Title Type": "Movie", "IMDb Rating": "7.3", "Runtime (mins)": "147", "Year": "2025", "Genres": "Biography, Drama, History", "Num Votes": "4150", "Release Date": "2026", "Directors": "Ildikó Enyedi", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZDFmM2I1NWItYzdlNi00NTk0LWExNGMtMWMxZGEyN2E1NTUyXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "TaRZnpAmtJk"}, {"Position": "52", "Const": "tt32283654", "Created": "2025-09-09", "Modified": "2025-09-09", "Description": "", "Title": "Short Summer", "Original Title": "Short Summer", "URL": "https://www.imdb.com/title/tt32283654/", "Title Type": "Movie", "IMDb Rating": "5.8", "Runtime (mins)": "101", "Year": "2025", "Genres": "Drama", "Num Votes": "111", "Release Date": "2025-10-19", "Directors": "Nastia Korkia", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNzg2Yjc4MWEtM2U3Yi00ZWE2LWI4YjMtOGU3YWJiOTdjMTI0XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "2yqXG3OcpNQ"}, {"Position": "55", "Const": "tt26581740", "Created": "2025-09-29", "Modified": "2025-09-29", "Description": "", "Title": "Weapons", "Original Title": "Weapons", "URL": "https://www.imdb.com/title/tt26581740/", "Title Type": "Movie", "IMDb Rating": "7.4", "Runtime (mins)": "128", "Year": "2025", "Genres": "Horror, Mystery", "Num Votes": "424330", "Release Date": "2025-08-08", "Directors": "Zach Cregger", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNTBhNWJjZWItYzY3NS00M2NkLThmOWYtYTlmNzBmN2UxZWFjXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "OpThntO9ixc"}, {"Position": "77", "Const": "tt0060138", "Created": "2026-04-01", "Modified": "2026-04-01", "Description": "", "Title": "Au hasard Balthazar", "Original Title": "Au hasard Balthazar", "URL": "https://www.imdb.com/title/tt0060138/", "Title Type": "Movie", "IMDb Rating": "7.7", "Runtime (mins)": "95", "Year": "1966", "Genres": "Drama", "Num Votes": "25311", "Release Date": "1966-05-25", "Directors": "Robert Bresson", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNmM3MGMyNzQtNmJhMC00OWMyLWJmNDktOTU5YmFmNGQ1ZGIwXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "eL8MuxXB_Eg"}, {"Position": "82", "Const": "tt35538033", "Created": "2026-04-30", "Modified": "2026-04-30", "Description": "", "Title": "Resident Evil", "Original Title": "Resident Evil", "URL": "https://www.imdb.com/title/tt35538033/", "Title Type": "Movie", "IMDb Rating": "7.4", "Runtime (mins)": "94", "Year": "2026", "Genres": "Horror", "Num Votes": "154129", "Release Date": "2026-09-18", "Directors": "Zach Cregger", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BOGZjZWI1NTItOGUwZC00YWZkLWIxZWEtNzE2ZTIxODdjNmZmXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "mNd1gb19A-c"}, {"Position": "85", "Const": "tt0123948", "Created": "2026-06-21", "Modified": "2026-06-21", "Description": "", "Title": "Cure", "Original Title": "Cure", "URL": "https://www.imdb.com/title/tt0123948/", "Title Type": "Movie", "IMDb Rating": "7.5", "Runtime (mins)": "111", "Year": "1997", "Genres": "Crime, Horror, Mystery, Thriller", "Num Votes": "42724", "Release Date": "2001-07-08", "Directors": "Kiyoshi Kurosawa", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNDcyMTRiMWQtMjA4MS00OTk3LTkxYmMtMjI4ODAyNGVlZTU0XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "Kr0LzE4VRkQ"}, {"Position": "17", "Const": "tt0249241", "Created": "2024-06-10", "Modified": "2024-06-10", "Description": "", "Title": "Werckmeister Harmonies", "Original Title": "Werckmeister harmóniák", "URL": "https://www.imdb.com/title/tt0249241/", "Title Type": "Movie", "IMDb Rating": "7.9", "Runtime (mins)": "145", "Year": "2000", "Genres": "Drama, Mystery", "Num Votes": "18560", "Release Date": "2001-02-01", "Directors": "Béla Tarr, Ágnes Hranitzky", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BODVkYTVhMjMtYTlkZS00YjZiLTkxZDctMzk2ZGNjNGQ0MjFlXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "-tJVdq_G_Go"}];
-  let waitingMovies = [{"Position": "64", "Const": "tt31450459", "Created": "2026-02-02", "Modified": "2026-02-02", "Description": "", "Title": "Digger", "Original Title": "Digger", "URL": "https://www.imdb.com/title/tt31450459/", "Title Type": "Movie", "IMDb Rating": "7.5", "Runtime (mins)": "128", "Year": "2026", "Genres": "Comedy, Drama", "Num Votes": "47315", "Release Date": "2026-10-02", "Directors": "Alejandro G. Iñárritu", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BN2E0YTg1M2YtOGQyYi00NDFkLTk3NzUtYmEyNTZhYThhZDQ0XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "qORTe1wW3Wg"}, {"Position": "65", "Const": "tt35514120", "Created": "2026-02-02", "Modified": "2026-02-02", "Description": "", "Title": "Werwulf", "Original Title": "Werwulf", "URL": "https://www.imdb.com/title/tt35514120/", "Title Type": "Movie", "IMDb Rating": "", "Runtime (mins)": "120", "Year": "2026", "Genres": "Horror, Thriller", "Num Votes": "0", "Release Date": "2026-12-25", "Directors": "Robert Eggers", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMDVhOGE4MzItMmEyYi00ZWNiLTk0YTUtODM1YWIwNmVmMWIyXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "cmjpadVj-Vk"}, {"Position": "68", "Const": "tt15799564", "Created": "2026-02-02", "Modified": "2026-02-02", "Description": "", "Title": "Wild Horse Nine", "Original Title": "Wild Horse Nine", "URL": "https://www.imdb.com/title/tt15799564/", "Title Type": "Movie", "IMDb Rating": "8.1", "Runtime (mins)": "116", "Year": "2026", "Genres": "Action, Comedy, Crime, Drama, Thriller", "Num Votes": "10014", "Release Date": "2026-11-06", "Directors": "Martin McDonagh", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BOTlkOGFlYWYtN2VlNC00NjNhLWIxYmMtNDVhZTQ4YmQ4ZTdiXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "Haw_sznA5aQ"}, {"Position": "83", "Const": "tt36834996", "Created": "2026-05-25", "Modified": "2026-05-25", "Description": "", "Title": "All of a Sudden", "Original Title": "Soudain", "URL": "https://www.imdb.com/title/tt36834996/", "Title Type": "Movie", "IMDb Rating": "8.0", "Runtime (mins)": "196", "Year": "2026", "Genres": "Drama", "Num Votes": "1821", "Release Date": "2026-11-25", "Directors": "Ryūsuke Hamaguchi", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZTY1ZjUwYzctY2E5My00MGRlLWI3N2MtZWRmYjlmNGY0MjcyXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "6qqMre2T32Q"}];
+  let waitingMovies = [{"Position": "64", "Const": "tt31450459", "Created": "2026-02-02", "Modified": "2026-02-02", "Description": "", "Title": "Digger", "Original Title": "Digger", "URL": "https://www.imdb.com/title/tt31450459/", "Title Type": "Movie", "IMDb Rating": "7.5", "Runtime (mins)": "128", "Year": "2026", "Genres": "Comedy, Drama", "Num Votes": "47315", "Release Date": "2026-10-02", "Directors": "Alejandro G. Iñárritu", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BN2E0YTg1M2YtOGQyYi00NDFkLTk3NzUtYmEyNTZhYThhZDQ0XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "qORTe1wW3Wg"}, {"Position": "65", "Const": "tt35514120", "Created": "2026-02-02", "Modified": "2026-02-02", "Description": "", "Title": "Werwulf", "Original Title": "Werwulf", "URL": "https://www.imdb.com/title/tt35514120/", "Title Type": "Movie", "IMDb Rating": "", "Runtime (mins)": "120", "Year": "2026", "Genres": "Horror, Thriller", "Num Votes": "0", "Release Date": "2026-12-25", "Directors": "Robert Eggers", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMDVhOGE4MzItMmEyYi00ZWNiLTk0YTUtODM1YWIwNmVmMWIyXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "cmjpadVj-Vk"}, {"Position": "68", "Const": "tt15799564", "Created": "2026-02-02", "Modified": "2026-02-02", "Description": "", "Title": "Wild Horse Nine", "Original Title": "Wild Horse Nine", "URL": "https://www.imdb.com/title/tt15799564/", "Title Type": "Movie", "IMDb Rating": "8.1", "Runtime (mins)": "116", "Year": "2026", "Genres": "Action, Comedy, Crime, Drama, Thriller", "Num Votes": "10014", "Release Date": "2026-11-06", "Directors": "Martin McDonagh", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BOTlkOGFlYWYtN2VlNC00NjNhLWIxYmMtNDVhZTQ4YmQ4ZTdiXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "Haw_sznA5aQ"}, {"Position": "83", "Const": "tt36834996", "Created": "2026-05-25", "Modified": "2026-05-25", "Description": "", "Title": "All of a Sudden", "Original Title": "Soudain", "URL": "https://www.imdb.com/title/tt36834996/", "Title Type": "Movie", "IMDb Rating": "8.0", "Runtime (mins)": "196", "Year": "2026", "Genres": "Drama", "Num Votes": "1821", "Release Date": "2026-11-25", "Directors": "Ryūsuke Hamaguchi", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZTY1ZjUwYzctY2E5My00MGRlLWI3N2MtZWRmYjlmNGY0MjcyXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "6qqMre2T32Q"}, {"Position": "92", "Const": "tt39602215", "Created": "2026-09-13", "Modified": "2026-09-13", "Description": "", "Title": "The Samurai and the Prisoner", "Original Title": "Kokurôjô", "URL": "https://www.imdb.com/title/tt39602215/", "Title Type": "Movie", "IMDb Rating": "7.1", "Runtime (mins)": "147", "Year": "2026", "Genres": "Drama, History, Mystery, Thriller, War", "Num Votes": "1016", "Release Date": "2026-08", "Directors": "Kiyoshi Kurosawa", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYTg0MWVmMTAtZWZkNS00ZjM3LTkxODgtMDQzZjJiYWNjZDUzXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "dY5kXykdbLo"}, {"Position": "", "Const": "tt36408401", "Created": "", "Modified": "", "Description": "", "Title": "THE FURTHER MIS-ADVENTURES OF CLIFF BOOTH", "Original Title": "", "URL": "https://www.imdb.com/title/tt36408401/", "Title Type": "Movie", "IMDb Rating": "", "Runtime (mins)": "", "Year": "2026", "Genres": "Drama, Comedy, Thriller, Crime", "Num Votes": "", "Release Date": "", "Directors": "David Fincher", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMDgzOWExNGMtOWVhNy00ZGVlLTg1MDQtODA4NWFjOTM5MzE1XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "", "Const": "tt18270542", "Created": "", "Modified": "", "Description": "", "Title": "Ray Gunn", "Original Title": "", "URL": "https://www.imdb.com/title/tt18270542/", "Title Type": "Movie", "IMDb Rating": "7.5", "Runtime (mins)": "119", "Year": "2026", "Genres": "Animation, Science Fiction, Crime, Mystery", "Num Votes": "", "Release Date": "", "Directors": "Brad Bird", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZTE5OTkyYzYtOWVmZS00Y2E2LTk2NmMtZmE4Y2NkYTI2M2ZmXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}, {"Position": "89", "Const": "tt39094466", "Created": "2026-09-13", "Modified": "2026-09-13", "Description": "", "Title": "Look Back", "Original Title": "Rukku Bakku", "URL": "https://www.imdb.com/title/tt39094466/", "Title Type": "Movie", "IMDb Rating": "7.6", "Runtime (mins)": "100", "Year": "2026", "Genres": "Drama", "Num Votes": "945", "Release Date": "2027-01-15", "Directors": "Hirokazu Koreeda", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYTI1MTM4NDktOWQ1Yy00NGRmLWExMDEtMzJlN2RhZjc4MDJhXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "ILBDFlYMGAY"}];
   let allMovies = [{"Position": "1", "Const": "tt29141112", "Created": "2024-02-26", "Modified": "2024-02-26", "Description": "", "Title": "The Devil's Bath", "Original Title": "Des Teufels Bad", "URL": "https://www.imdb.com/title/tt29141112/", "Title Type": "Movie", "IMDb Rating": "6.6", "Runtime (mins)": "121", "Year": "2024", "Genres": "Drama, History, Horror, Thriller", "Num Votes": "8829", "Release Date": "2024-03-08", "Directors": "Severin Fiala, Veronika Franz", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNGFmYzY4YTEtMjU4OS00NmY1LWFiOTYtNGUzMGU5ZTllNjc1XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "PaGMdANhmrw"}, {"Position": "2", "Const": "tt23736044", "Created": "2024-02-26", "Modified": "2024-02-26", "Description": "", "Title": "Monster", "Original Title": "Kaibutsu", "URL": "https://www.imdb.com/title/tt23736044/", "Title Type": "Movie", "IMDb Rating": "7.8", "Runtime (mins)": "127", "Year": "2023", "Genres": "Drama, Mystery, Thriller", "Num Votes": "44352", "Release Date": "2023-11-22", "Directors": "Hirokazu Koreeda", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMGJjYzVhYjEtNWYwMy00YTk5LWExMjYtNTdjODMyZTU3MzQwXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "cOpWDxxiwoE"}, {"Position": "3", "Const": "tt0095327", "Created": "2024-03-01", "Modified": "2024-03-01", "Description": "", "Title": "Grave of the Fireflies", "Original Title": "Hotaru no haka", "URL": "https://www.imdb.com/title/tt0095327/", "Title Type": "Movie", "IMDb Rating": "8.5", "Runtime (mins)": "88", "Year": "1988", "Genres": "Animation, Drama, War", "Num Votes": "401028", "Release Date": "1989-07-26", "Directors": "Isao Takahata", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNTY5MmE2OGMtN2IxNC00MDY4LTkwMGEtZDUzOTYyNWE0ZTNjXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "lhlh7JVcTt8"}, {"Position": "4", "Const": "tt0044741", "Created": "2024-03-01", "Modified": "2024-03-01", "Description": "", "Title": "Ikiru", "Original Title": "Ikiru", "URL": "https://www.imdb.com/title/tt0044741/", "Title Type": "Movie", "IMDb Rating": "8.3", "Runtime (mins)": "143", "Year": "1952", "Genres": "Drama", "Num Votes": "104682", "Release Date": "1956-03-25", "Directors": "Akira Kurosawa", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BOGU1YTBlN2ItMDAxNy00NjM5LWE4MTAtNTBhZmY4ZTgzYTlkXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "2VeLN3IDjzQ"}, {"Position": "5", "Const": "tt21097228", "Created": "2024-05-17", "Modified": "2024-05-17", "Description": "", "Title": "A Different Man", "Original Title": "A Different Man", "URL": "https://www.imdb.com/title/tt21097228/", "Title Type": "Movie", "IMDb Rating": "6.8", "Runtime (mins)": "112", "Year": "2024", "Genres": "Drama, Thriller", "Num Votes": "40638", "Release Date": "2024-10-04", "Directors": "Aaron Schimberg", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYTQ0NDI2NzItZjNiOC00ZDc0LWJiNGMtMzZmMGM2NmVjMmJkXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "_9CmC5Rmsdw"}, {"Position": "6", "Const": "tt18346498", "Created": "2024-05-17", "Modified": "2024-05-17", "Description": "", "Title": "Architecton", "Original Title": "Architecton", "URL": "https://www.imdb.com/title/tt18346498/", "Title Type": "Movie", "IMDb Rating": "6.4", "Runtime (mins)": "98", "Year": "2024", "Genres": "Documentary", "Num Votes": "1047", "Release Date": "2024-10-03", "Directors": "Victor Kossakovsky", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYjA0NDRmM2EtNjQzMy00ZTNmLWExOGQtMjUwNmEwNjEyMjc2XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "Pn7VdmcCjcA"}, {"Position": "7", "Const": "tt30804400", "Created": "2024-05-17", "Modified": "2024-05-17", "Description": "", "Title": "Shambhala", "Original Title": "Shambhala", "URL": "https://www.imdb.com/title/tt30804400/", "Title Type": "Movie", "IMDb Rating": "7.1", "Runtime (mins)": "150", "Year": "2024", "Genres": "Drama", "Num Votes": "1666", "Release Date": "2024-09-13", "Directors": "Min Bahadur Bham", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYjdmZTk0YjgtZjFmNC00ODI2LTk1ZDYtODI0OWEyNGFiNzdiXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "7mz5WLB5l_A"}, {"Position": "8", "Const": "tt10370812", "Created": "2024-05-17", "Modified": "2024-05-17", "Description": "", "Title": "The Settlers", "Original Title": "Los colonos", "URL": "https://www.imdb.com/title/tt10370812/", "Title Type": "Movie", "IMDb Rating": "6.9", "Runtime (mins)": "97", "Year": "2023", "Genres": "Crime, Drama, History", "Num Votes": "7138", "Release Date": "2024-03-29", "Directors": "Felipe Gálvez", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYjdiMjdhYjAtYWRkNC00ZDRhLTliMTUtMTU5ZTdhMDBkYmVhXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "rdy--tzaUeo"}, {"Position": "9", "Const": "tt27816866", "Created": "2024-05-17", "Modified": "2024-05-17", "Description": "", "Title": "City of Wind", "Original Title": "Sèr sèr salhi", "URL": "https://www.imdb.com/title/tt27816866/", "Title Type": "Movie", "IMDb Rating": "6.6", "Runtime (mins)": "104", "Year": "2023", "Genres": "Drama", "Num Votes": "606", "Release Date": "2024-04-24", "Directors": "Lkhagvadulam Purev-Ochir", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYjM2OTUzMjMtYTc1Yy00OTA3LTgxZTYtMDI3MTk5M2RiNTU1XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "i___5NO1KnY"}, {"Position": "10", "Const": "tt26315142", "Created": "2024-05-17", "Modified": "2024-05-17", "Description": "", "Title": "Totem", "Original Title": "Tótem", "URL": "https://www.imdb.com/title/tt26315142/", "Title Type": "Movie", "IMDb Rating": "7.0", "Runtime (mins)": "95", "Year": "2023", "Genres": "Drama", "Num Votes": "4299", "Release Date": "2024-04-23", "Directors": "Lila Avilés", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BY2IwNzA2NDktYjM2Ni00MTIyLWFhM2ItYjk5NzI1YjI5MTExXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "3zTLbBUJTeE"}, {"Position": "11", "Const": "tt28131427", "Created": "2024-05-26", "Modified": "2024-05-26", "Description": "", "Title": "Black Dog", "Original Title": "Gouzhen", "URL": "https://www.imdb.com/title/tt28131427/", "Title Type": "Movie", "IMDb Rating": "7.1", "Runtime (mins)": "116", "Year": "2024", "Genres": "Drama, Thriller", "Num Votes": "6141", "Release Date": "2025-02-11", "Directors": "Guan Hu", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BOGYxNjEwMTAtOGQ0Yi00ZjI0LWFkNTktNTk4ZGU5Nzg2ZTgzXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "igM9-Gt3A24"}, {"Position": "12", "Const": "tt27180099", "Created": "2024-05-26", "Modified": "2024-05-26", "Description": "", "Title": "Grand Tour", "Original Title": "Grand Tour", "URL": "https://www.imdb.com/title/tt27180099/", "Title Type": "Movie", "IMDb Rating": "6.5", "Runtime (mins)": "129", "Year": "2024", "Genres": "Drama, History, Romance", "Num Votes": "2951", "Release Date": "2025-04-18", "Directors": "Miguel Gomes", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMzBhYTU3MzItMDc3ZC00M2Q4LWI4ZmYtMDFlYjQyZjQ2OGZhXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "oN0wM9QLu3c"}, {"Position": "13", "Const": "tt10236164", "Created": "2024-05-26", "Modified": "2024-05-26", "Description": "", "Title": "The Girl with the Needle", "Original Title": "Pigen med nålen", "URL": "https://www.imdb.com/title/tt10236164/", "Title Type": "Movie", "IMDb Rating": "7.5", "Runtime (mins)": "123", "Year": "2024", "Genres": "Crime, Drama, History", "Num Votes": "21404", "Release Date": "2025-01-24", "Directors": "Magnus von Horn", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNzdhMzMzMjMtOWVmYy00MWExLTlhZTAtYjQyNzY3YTY2ZWJkXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "Mo8VcGW7qvs"}, {"Position": "14", "Const": "tt27989261", "Created": "2024-05-26", "Modified": "2024-05-26", "Description": "", "Title": "It's Not Me", "Original Title": "C'est pas moi", "URL": "https://www.imdb.com/title/tt27989261/", "Title Type": "Short", "IMDb Rating": "6.8", "Runtime (mins)": "41", "Year": "2024", "Genres": "Short, Biography, Drama", "Num Votes": "1246", "Release Date": "2024-06-12", "Directors": "Leos Carax", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNzJmODhkNTQtMTk5ZC00MTg1LWEwZjAtYjg1MWNjOTdlZjgzXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "eAZ2SNnuy4E"}, {"Position": "15", "Const": "tt0086979", "Created": "2024-06-10", "Modified": "2024-06-10", "Description": "", "Title": "Blood Simple", "Original Title": "Blood Simple", "URL": "https://www.imdb.com/title/tt0086979/", "Title Type": "Movie", "IMDb Rating": "7.5", "Runtime (mins)": "99", "Year": "1984", "Genres": "Crime, Drama, Thriller", "Num Votes": "115753", "Release Date": "1985-01-18", "Directors": "Joel Coen, Ethan Coen", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNTYxNWY5ODktYWRkOC00NDdkLWIwOGQtOWY5YWQ1N2Q3OWViXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "TFzPVLdGtAg"}, {"Position": "16", "Const": "tt0084628", "Created": "2024-06-10", "Modified": "2024-06-10", "Description": "", "Title": "Sans Soleil", "Original Title": "Sans soleil", "URL": "https://www.imdb.com/title/tt0084628/", "Title Type": "Movie", "IMDb Rating": "7.7", "Runtime (mins)": "100", "Year": "1983", "Genres": "Documentary, Drama", "Num Votes": "13334", "Release Date": "1983-03-02", "Directors": "Chris Marker", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNjNhOTg4YjQtNDVkYi00MWQxLTg5NzQtNjk4MmJhZWIzMmM0XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "0K8j3MU9dw4"}, {"Position": "17", "Const": "tt0249241", "Created": "2024-06-10", "Modified": "2024-06-10", "Description": "", "Title": "Werckmeister Harmonies", "Original Title": "Werckmeister harmóniák", "URL": "https://www.imdb.com/title/tt0249241/", "Title Type": "Movie", "IMDb Rating": "7.9", "Runtime (mins)": "145", "Year": "2000", "Genres": "Drama, Mystery", "Num Votes": "18560", "Release Date": "2001-02-01", "Directors": "Béla Tarr, Ágnes Hranitzky", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BODVkYTVhMjMtYTlkZS00YjZiLTkxZDctMzk2ZGNjNGQ0MjFlXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "-tJVdq_G_Go"}, {"Position": "18", "Const": "tt0113824", "Created": "2024-07-03", "Modified": "2024-07-03", "Description": "", "Title": "Whisper of the Heart", "Original Title": "Mimi o sumaseba", "URL": "https://www.imdb.com/title/tt0113824/", "Title Type": "Movie", "IMDb Rating": "7.8", "Runtime (mins)": "111", "Year": "1995", "Genres": "Animation, Drama, Family, Romance", "Num Votes": "85554", "Release Date": "1996-12-13", "Directors": "Yoshifumi Kondō", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZWVlOGNlYjgtYWE4Yi00MjdiLWE1MTEtZTRmNzI1ODk5NzMzXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "0pVkiod6V0U"}, {"Position": "19", "Const": "tt0096283", "Created": "2024-07-03", "Modified": "2024-07-03", "Description": "", "Title": "My Neighbor Totoro", "Original Title": "Tonari no Totoro", "URL": "https://www.imdb.com/title/tt0096283/", "Title Type": "Movie", "IMDb Rating": "8.1", "Runtime (mins)": "86", "Year": "1988", "Genres": "Animation, Adventure, Comedy, Family, Fantasy", "Num Votes": "443110", "Release Date": "1990-07-13", "Directors": "Hayao Miyazaki", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYWM3MDE3YjEtMzIzZC00ODE5LTgxNTItNmUyMTBkM2M2NmNiXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "92a7Hj0ijLs"}, {"Position": "20", "Const": "tt0052357", "Created": "2024-07-12", "Modified": "2024-07-12", "Description": "", "Title": "Vertigo", "Original Title": "Vertigo", "URL": "https://www.imdb.com/title/tt0052357/", "Title Type": "Movie", "IMDb Rating": "8.2", "Runtime (mins)": "128", "Year": "1958", "Genres": "Mystery, Romance, Thriller", "Num Votes": "464927", "Release Date": "1958-05-28", "Directors": "Alfred Hitchcock", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNzEyZTUxMWItMGVhYy00Y2NlLTljYTMtYzBmMzI1YmUyMDBkXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "Z5jvQwwHQNY"}, {"Position": "21", "Const": "tt0073198", "Created": "2024-08-14", "Modified": "2024-08-14", "Description": "", "Title": "Jeanne Dielman, 23, quai du Commerce, 1080 Bruxelles", "Original Title": "Jeanne Dielman, 23, quai du Commerce, 1080 Bruxelles", "URL": "https://www.imdb.com/title/tt0073198/", "Title Type": "Movie", "IMDb Rating": "7.5", "Runtime (mins)": "202", "Year": "1975", "Genres": "Drama", "Num Votes": "18067", "Release Date": "1976-01-21", "Directors": "Chantal Akerman", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMDNlYWVhYjctNTIzNi00NGJhLWFmNzYtZTVmOWUxNmYwM2IyXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "iuP1MN6RNJU"}, {"Position": "22", "Const": "tt29439114", "Created": "2024-09-10", "Modified": "2024-09-10", "Description": "", "Title": "The Room Next Door", "Original Title": "The Room Next Door", "URL": "https://www.imdb.com/title/tt29439114/", "Title Type": "Movie", "IMDb Rating": "6.7", "Runtime (mins)": "107", "Year": "2024", "Genres": "Drama", "Num Votes": "29743", "Release Date": "2024-10-18", "Directors": "Pedro Almodóvar", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYzk2MjI1YTgtOTcxYS00OTUyLTgyOTAtMGE0OGYyMjc0MTc3XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "FLHSOFsZICk"}, {"Position": "23", "Const": "tt32249940", "Created": "2024-09-10", "Modified": "2024-09-10", "Description": "", "Title": "Riefenstahl", "Original Title": "Riefenstahl", "URL": "https://www.imdb.com/title/tt32249940/", "Title Type": "Movie", "IMDb Rating": "7.2", "Runtime (mins)": "115", "Year": "2024", "Genres": "Documentary, Biography, History, War", "Num Votes": "2230", "Release Date": "2025-10-21", "Directors": "Andres Veiel", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMTljOTA3NWItZjRlOC00NDg2LWJiZDQtMGIxYmRlZTg0NTJmXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "lD3J2jznG34"}, {"Position": "24", "Const": "tt26625693", "Created": "2024-09-10", "Modified": "2024-09-10", "Description": "", "Title": "The Order", "Original Title": "The Order", "URL": "https://www.imdb.com/title/tt26625693/", "Title Type": "Movie", "IMDb Rating": "6.8", "Runtime (mins)": "116", "Year": "2024", "Genres": "Crime, Drama, Thriller", "Num Votes": "65922", "Release Date": "2025-04-18", "Directors": "Justin Kurzel", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZWIxOGQyYjYtOGEwOC00YWNjLWJmNTktZjJlM2RmNTdjMmVlXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "pPZaOB4ea-0"}, {"Position": "25", "Const": "tt0062229", "Created": "2024-09-16", "Modified": "2024-09-16", "Description": "", "Title": "Le Samouraï", "Original Title": "Le Samouraï", "URL": "https://www.imdb.com/title/tt0062229/", "Title Type": "Movie", "IMDb Rating": "8.0", "Runtime (mins)": "101", "Year": "1967", "Genres": "Crime, Drama, Thriller", "Num Votes": "67805", "Release Date": "1967-10-25", "Directors": "Jean-Pierre Melville", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYjM2ZjhkNmUtZTNlMi00YTc1LThlN2MtZDc3NDIyZTk4OGIwXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "GuhPR3xeJm0"}, {"Position": "26", "Const": "tt0165798", "Created": "2024-11-12", "Modified": "2024-11-12", "Description": "", "Title": "Ghost Dog: The Way of the Samurai", "Original Title": "Ghost Dog: The Way of the Samurai", "URL": "https://www.imdb.com/title/tt0165798/", "Title Type": "Movie", "IMDb Rating": "7.5", "Runtime (mins)": "116", "Year": "1999", "Genres": "Crime, Drama", "Num Votes": "104227", "Release Date": "2000-03-24", "Directors": "Jim Jarmusch", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYmIzNWI3MTMtNGY4Zi00YWIwLWEyMmQtZjcxOTdhNTQ0ZTE5XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "ZhR6jWWpUj0"}, {"Position": "27", "Const": "tt0115736", "Created": "2024-11-12", "Modified": "2024-11-12", "Description": "", "Title": "Bound", "Original Title": "Bound", "URL": "https://www.imdb.com/title/tt0115736/", "Title Type": "Movie", "IMDb Rating": "7.3", "Runtime (mins)": "109", "Year": "1996", "Genres": "Crime, Thriller", "Num Votes": "68780", "Release Date": "1996-10-04", "Directors": "Lana Wachowski, Lilly Wachowski", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNjY0OWFmODctNmEwNy00Njc2LWFkYTAtNmI4OWIzY2ZkYjJlXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "ToCMwdOaWh4"}, {"Position": "28", "Const": "tt0058625", "Created": "2024-11-12", "Modified": "2024-11-12", "Description": "", "Title": "Woman in the Dunes", "Original Title": "Suna no onna", "URL": "https://www.imdb.com/title/tt0058625/", "Title Type": "Movie", "IMDb Rating": "8.4", "Runtime (mins)": "147", "Year": "1964", "Genres": "Drama, Thriller", "Num Votes": "27102", "Release Date": "1964-10-25", "Directors": "Hiroshi Teshigahara", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BM2E1ZjY5MjItZTUxZS00NTI1LWEwMmEtODhlMDAyMzUyOTRmXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "7kX4h_sEBiI"}, {"Position": "29", "Const": "tt0093058", "Created": "2024-11-12", "Modified": "2024-11-12", "Description": "", "Title": "Full Metal Jacket", "Original Title": "Full Metal Jacket", "URL": "https://www.imdb.com/title/tt0093058/", "Title Type": "Movie", "IMDb Rating": "8.2", "Runtime (mins)": "116", "Year": "1987", "Genres": "Drama, War", "Num Votes": "864153", "Release Date": "1987-07-10", "Directors": "Stanley Kubrick", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYWUzNzZkNzUtNDdiYy00Nzk5LTgxMmItNTk0MjRjNjdjNDA0XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "n2i917l5RFc"}, {"Position": "30", "Const": "tt0082933", "Created": "2024-11-12", "Modified": "2024-11-12", "Description": "", "Title": "Possession", "Original Title": "Possession", "URL": "https://www.imdb.com/title/tt0082933/", "Title Type": "Movie", "IMDb Rating": "7.2", "Runtime (mins)": "124", "Year": "1981", "Genres": "Drama, Horror", "Num Votes": "61985", "Release Date": "1983-10-28", "Directors": "Andrzej Żuławski", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMTAzNjczNmItMGJkMS00YzVhLTg4NzEtOGQyYWUzNDA0ZmNlXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "aLXW-oVbTxE"}, {"Position": "31", "Const": "tt15435876", "Created": "2024-11-23", "Modified": "2024-11-23", "Description": "", "Title": "The Penguin", "Original Title": "The Penguin", "URL": "https://www.imdb.com/title/tt15435876/", "Title Type": "TV Mini Series", "IMDb Rating": "8.6", "Runtime (mins)": "60", "Year": "2024", "Genres": "Crime, Drama", "Num Votes": "254245", "Release Date": "2024-09-19", "Directors": "", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYmU3MzYzOWEtOTdkZi00YzA1LTliMzQtNDdiZDBjY2FiNmFlXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "sfJG6IiA_s8"}, {"Position": "32", "Const": "tt0017136", "Created": "2025-01-26", "Modified": "2025-01-26", "Description": "", "Title": "Metropolis", "Original Title": "Metropolis", "URL": "https://www.imdb.com/title/tt0017136/", "Title Type": "Movie", "IMDb Rating": "8.2", "Runtime (mins)": "150", "Year": "1927", "Genres": "Drama, Sci-Fi", "Num Votes": "204041", "Release Date": "1927-03-13", "Directors": "Fritz Lang", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMjhjMGYyMjAtMzJkYy00NzhlLWIwY2MtMWQ2ODIxZDUyOGYyXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "ZAvzaOxDt2c"}, {"Position": "33", "Const": "tt0042876", "Created": "2025-01-26", "Modified": "2025-01-26", "Description": "", "Title": "Rashomon", "Original Title": "Rashômon", "URL": "https://www.imdb.com/title/tt0042876/", "Title Type": "Movie", "IMDb Rating": "8.1", "Runtime (mins)": "88", "Year": "1950", "Genres": "Crime, Drama, Mystery", "Num Votes": "199682", "Release Date": "1951-12-26", "Directors": "Akira Kurosawa", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMTk1MDU5MjQ5NF5BMl5BanBnXkFtZTgwMDM2OTE4MzE@._V1_FMjpg_UX600_.jpg", "Trailer": "xCZ9TguVOIA"}, {"Position": "34", "Const": "tt0119008", "Created": "2025-04-27", "Modified": "2025-04-27", "Description": "", "Title": "Donnie Brasco", "Original Title": "Donnie Brasco", "URL": "https://www.imdb.com/title/tt0119008/", "Title Type": "Movie", "IMDb Rating": "7.7", "Runtime (mins)": "127", "Year": "1997", "Genres": "Biography, Crime, Drama", "Num Votes": "362570", "Release Date": "1997-02-28", "Directors": "Mike Newell", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZWZkNDA2YTctZWJhZS00OTAzLThlODMtY2QyMzg1MTEwYjU2XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "omIiE9KKj2o"}, {"Position": "35", "Const": "tt28093628", "Created": "2025-05-05", "Modified": "2025-05-05", "Description": "", "Title": "Common Side Effects", "Original Title": "Common Side Effects", "URL": "https://www.imdb.com/title/tt28093628/", "Title Type": "TV Series", "IMDb Rating": "8.5", "Runtime (mins)": "", "Year": "2024", "Genres": "Animation, Comedy, Drama, Thriller", "Num Votes": "22937", "Release Date": "2025-02-02", "Directors": "", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNDMwOTFhMTUtYTYwOS00NDQwLTk1YTAtN2E2MzdiMWNkOWQ5XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "AVL918qZg2k"}, {"Position": "36", "Const": "tt30840798", "Created": "2025-05-26", "Modified": "2025-05-26", "Description": "", "Title": "The Phoenician Scheme", "Original Title": "The Phoenician Scheme", "URL": "https://www.imdb.com/title/tt30840798/", "Title Type": "Movie", "IMDb Rating": "6.6", "Runtime (mins)": "101", "Year": "2025", "Genres": "Action, Comedy, Crime, Drama, Thriller", "Num Votes": "75017", "Release Date": "2025-06-06", "Directors": "Wes Anderson", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNTJmODQzYmItNTZlMy00Mjg0LTk1NjctYjM4ZGI0NTM3ZTVjXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "GEuMnPl2WI4"}, {"Position": "37", "Const": "tt36491653", "Created": "2025-05-26", "Modified": "2025-05-26", "Description": "", "Title": "It Was Just an Accident", "Original Title": "Yek tasadof-e sadeh", "URL": "https://www.imdb.com/title/tt36491653/", "Title Type": "Movie", "IMDb Rating": "7.4", "Runtime (mins)": "103", "Year": "2025", "Genres": "Crime, Drama, Mystery, Thriller", "Num Votes": "40722", "Release Date": "2025-10-15", "Directors": "Jafar Panahi", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMWJkZmZlNjUtM2Q1OC00MmNjLWFkOWEtNjRhN2FkM2ZlMjI3XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "Y7X9sSZ0nYw"}, {"Position": "38", "Const": "tt36667493", "Created": "2025-05-26", "Modified": "2025-05-26", "Description": "", "Title": "Yes", "Original Title": "Ken", "URL": "https://www.imdb.com/title/tt36667493/", "Title Type": "Movie", "IMDb Rating": "6.4", "Runtime (mins)": "151", "Year": "2025", "Genres": "Comedy, Drama", "Num Votes": "987", "Release Date": "2026-04-03", "Directors": "Nadav Lapid", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZDRkMGQ4YmMtZGFmOS00NWY0LWIyMWEtMTYwNzhmNjJhNTMxXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "Z7dOWWLczN0"}, {"Position": "39", "Const": "tt27714581", "Created": "2025-05-26", "Modified": "2025-05-26", "Description": "", "Title": "Sentimental Value", "Original Title": "Affeksjonsverdi", "URL": "https://www.imdb.com/title/tt27714581/", "Title Type": "Movie", "IMDb Rating": "7.7", "Runtime (mins)": "135", "Year": "2025", "Genres": "Drama", "Num Votes": "93313", "Release Date": "2025-08-20", "Directors": "Joachim Trier", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNTMwMTk0Y2QtY2VhNy00OGYwLThkMjMtZjkwMGI3MTJiMjAyXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "Gb1sSfWb1Og"}, {"Position": "40", "Const": "tt29002950", "Created": "2025-05-26", "Modified": "2025-05-26", "Description": "", "Title": "Resurrection", "Original Title": "Kuang ye shi dai", "URL": "https://www.imdb.com/title/tt29002950/", "Title Type": "Movie", "IMDb Rating": "7.2", "Runtime (mins)": "160", "Year": "2025", "Genres": "Drama, Sci-Fi", "Num Votes": "6136", "Release Date": "2025-11-22", "Directors": "Bi Gan", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZGQ2ODE0M2QtODUzMS00OGIyLTlmZWItZGMwM2E2MDg5YWUxXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "62EUwsiXYXY"}, {"Position": "41", "Const": "tt9362736", "Created": "2025-05-26", "Modified": "2025-05-26", "Description": "", "Title": "Die My Love", "Original Title": "Die My Love", "URL": "https://www.imdb.com/title/tt9362736/", "Title Type": "Movie", "IMDb Rating": "6.0", "Runtime (mins)": "118", "Year": "2025", "Genres": "Drama, Thriller", "Num Votes": "51131", "Release Date": "2025-11-07", "Directors": "Lynne Ramsay", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYjc5OWZlZmYtMTg3Yy00YzFmLTg0YTgtNjVjN2M2ZWJjOWM1XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "2jzXHW6Qe70"}, {"Position": "42", "Const": "tt22852560", "Created": "2025-05-26", "Modified": "2025-05-26", "Description": "", "Title": "The Disappearance of Josef Mengele", "Original Title": "Das Verschwinden des Josef Mengele", "URL": "https://www.imdb.com/title/tt22852560/", "Title Type": "Movie", "IMDb Rating": "6.9", "Runtime (mins)": "135", "Year": "2025", "Genres": "Biography, Drama, History", "Num Votes": "2169", "Release Date": "2025-10-22", "Directors": "Kirill Serebrennikov", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYTUzYTZlMWQtOGIyNy00Njk2LWFjMDMtYTViYzk5NWNkNzdlXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "FFVFBwoyrZg"}, {"Position": "43", "Const": "tt36724209", "Created": "2025-05-26", "Modified": "2025-05-26", "Description": "", "Title": "Winter in March", "Original Title": "Winter in March", "URL": "https://www.imdb.com/title/tt36724209/", "Title Type": "Short", "IMDb Rating": "7.5", "Runtime (mins)": "16", "Year": "2025", "Genres": "Short", "Num Votes": "46", "Release Date": "2026-04", "Directors": "Natalia Mirzoyan", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMjU3ZmU0MGMtODU4ZS00NTAxLWJjMzUtMmI4NTYwYzg3YzA5XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "zrsAX2iWjnQ"}, {"Position": "44", "Const": "tt0111403", "Created": "2025-08-02", "Modified": "2025-08-02", "Description": "", "Title": "The Tit and the Moon", "Original Title": "La teta y la luna", "URL": "https://www.imdb.com/title/tt0111403/", "Title Type": "Movie", "IMDb Rating": "6.3", "Runtime (mins)": "90", "Year": "1994", "Genres": "Comedy, Romance", "Num Votes": "3808", "Release Date": "1995-03-29", "Directors": "Bigas Luna", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMTkzYjI3MGMtNzc4Zi00NTY2LWEzNDYtZDI0ZWQwYjk1NDhmXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "B-R4pG58_bc"}, {"Position": "45", "Const": "tt32880120", "Created": "2025-09-09", "Modified": "2025-09-09", "Description": "", "Title": "Kada je zazvonio telefon", "Original Title": "Kada je zazvonio telefon", "URL": "https://www.imdb.com/title/tt32880120/", "Title Type": "Movie", "IMDb Rating": "6.3", "Runtime (mins)": "73", "Year": "2024", "Genres": "Drama", "Num Votes": "101", "Release Date": "2025-03-14", "Directors": "Iva Radivojevic", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNTI3ZTEwMTEtYzRlZS00YjNiLTg1NGYtYjgzY2I1ZDE1OTZmXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "QV1WkzXn0FA"}, {"Position": "46", "Const": "tt1312221", "Created": "2025-09-09", "Modified": "2025-09-09", "Description": "", "Title": "Frankenstein", "Original Title": "Frankenstein", "URL": "https://www.imdb.com/title/tt1312221/", "Title Type": "Movie", "IMDb Rating": "7.4", "Runtime (mins)": "149", "Year": "2025", "Genres": "Drama, Fantasy, Horror, Sci-Fi", "Num Votes": "346874", "Release Date": "2025-11-07", "Directors": "Guillermo del Toro", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYzYzNDYxMTQtMTU4OS00MTdlLThhMTQtZjI4NGJmMTZmNmRiXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "8aulMPhE12g"}, {"Position": "47", "Const": "tt27811632", "Created": "2025-09-09", "Modified": "2025-09-09", "Description": "", "Title": "Silent Friend", "Original Title": "Stille Freundin", "URL": "https://www.imdb.com/title/tt27811632/", "Title Type": "Movie", "IMDb Rating": "7.3", "Runtime (mins)": "147", "Year": "2025", "Genres": "Biography, Drama, History", "Num Votes": "4150", "Release Date": "2026", "Directors": "Ildikó Enyedi", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZDFmM2I1NWItYzdlNi00NTk0LWExNGMtMWMxZGEyN2E1NTUyXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "TaRZnpAmtJk"}, {"Position": "48", "Const": "tt37814864", "Created": "2025-09-09", "Modified": "2025-09-09", "Description": "", "Title": "Memory", "Original Title": "Memory", "URL": "https://www.imdb.com/title/tt37814864/", "Title Type": "Movie", "IMDb Rating": "7.1", "Runtime (mins)": "98", "Year": "2025", "Genres": "Documentary, Drama", "Num Votes": "178", "Release Date": "2026-07-16", "Directors": "Vladlena Sandu", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYzQ4NjYyNjMtMTgzNC00NGYzLThhM2UtMjAyYjlkMDY4Mjc0XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "aJxTLOErs5g"}, {"Position": "49", "Const": "tt1333644", "Created": "2025-09-09", "Modified": "2025-09-09", "Description": "", "Title": "In the Hand of Dante", "Original Title": "In the Hand of Dante", "URL": "https://www.imdb.com/title/tt1333644/", "Title Type": "Movie", "IMDb Rating": "4.9", "Runtime (mins)": "150", "Year": "2025", "Genres": "Crime, Drama, Mystery, Thriller", "Num Votes": "4953", "Release Date": "2026-06-24", "Directors": "Julian Schnabel", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZTE4YWI4YTItMzQ2MS00YjQ0LWEwY2QtYmVjZjlkYmY4Mjk4XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "cXA3Zgsky18"}, {"Position": "50", "Const": "tt1527793", "Created": "2025-09-09", "Modified": "2025-09-09", "Description": "", "Title": "No Other Choice", "Original Title": "Eo-jjeol su-ga eop-da", "URL": "https://www.imdb.com/title/tt1527793/", "Title Type": "Movie", "IMDb Rating": "7.5", "Runtime (mins)": "139", "Year": "2025", "Genres": "Comedy, Crime, Drama, Thriller", "Num Votes": "79011", "Release Date": "2026-01-16", "Directors": "Park Chan-wook", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMjg3NzY0N2ItZGFlMy00NzAzLTk2NjItMDk2YTU3ZWU0MDA1XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "HKZpuG_ezvY"}, {"Position": "51", "Const": "tt34819091", "Created": "2025-09-09", "Modified": "2025-09-09", "Description": "", "Title": "The Testament of Ann Lee", "Original Title": "The Testament of Ann Lee", "URL": "https://www.imdb.com/title/tt34819091/", "Title Type": "Movie", "IMDb Rating": "6.4", "Runtime (mins)": "136", "Year": "2025", "Genres": "Biography, Drama, History, Musical", "Num Votes": "11213", "Release Date": "2026-01-23", "Directors": "Mona Fastvold", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMTU3Y2U1MTQtYjA1NS00YmJlLTk3NDktZGViYTAwY2I0NDM1XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "Rb0ZhiDD9J0"}, {"Position": "52", "Const": "tt32283654", "Created": "2025-09-09", "Modified": "2025-09-09", "Description": "", "Title": "Short Summer", "Original Title": "Short Summer", "URL": "https://www.imdb.com/title/tt32283654/", "Title Type": "Movie", "IMDb Rating": "5.8", "Runtime (mins)": "101", "Year": "2025", "Genres": "Drama", "Num Votes": "111", "Release Date": "2025-10-19", "Directors": "Nastia Korkia", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNzg2Yjc4MWEtM2U3Yi00ZWE2LWI4YjMtOGU3YWJiOTdjMTI0XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "2yqXG3OcpNQ"}, {"Position": "53", "Const": "tt14883538", "Created": "2025-09-15", "Modified": "2025-09-15", "Description": "", "Title": "Arco", "Original Title": "Arco", "URL": "https://www.imdb.com/title/tt14883538/", "Title Type": "Movie", "IMDb Rating": "7.2", "Runtime (mins)": "88", "Year": "2025", "Genres": "Animation, Adventure, Fantasy, Sci-Fi", "Num Votes": "9766", "Release Date": "2025-11-14", "Directors": "Ugo Bienvenu", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BM2IzNjdiNzUtNTJjMy00Mjk5LTg3MzItNzA2ZjYzOWE2MGIyXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "e4RrOe8IbI8"}, {"Position": "54", "Const": "tt0064115", "Created": "2025-09-17", "Modified": "2025-09-17", "Description": "", "Title": "Butch Cassidy and the Sundance Kid", "Original Title": "Butch Cassidy and the Sundance Kid", "URL": "https://www.imdb.com/title/tt0064115/", "Title Type": "Movie", "IMDb Rating": "8.0", "Runtime (mins)": "110", "Year": "1969", "Genres": "Adventure, Biography, Crime, Drama, Western", "Num Votes": "240482", "Release Date": "1969-09-24", "Directors": "George Roy Hill", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMTkyMTM2NDk5Nl5BMl5BanBnXkFtZTgwNzY1NzEyMDE@._V1_FMjpg_UX600_.jpg", "Trailer": "YdJW2UxvSFQ"}, {"Position": "55", "Const": "tt26581740", "Created": "2025-09-29", "Modified": "2025-09-29", "Description": "", "Title": "Weapons", "Original Title": "Weapons", "URL": "https://www.imdb.com/title/tt26581740/", "Title Type": "Movie", "IMDb Rating": "7.4", "Runtime (mins)": "128", "Year": "2025", "Genres": "Horror, Mystery", "Num Votes": "424330", "Release Date": "2025-08-08", "Directors": "Zach Cregger", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNTBhNWJjZWItYzY3NS00M2NkLThmOWYtYTlmNzBmN2UxZWFjXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "OpThntO9ixc"}, {"Position": "56", "Const": "tt0082776", "Created": "2025-10-26", "Modified": "2025-10-26", "Description": "", "Title": "Ms .45", "Original Title": "Ms .45", "URL": "https://www.imdb.com/title/tt0082776/", "Title Type": "Movie", "IMDb Rating": "6.8", "Runtime (mins)": "80", "Year": "1981", "Genres": "Crime, Drama, Thriller", "Num Votes": "15774", "Release Date": "1981-04-24", "Directors": "Abel Ferrara", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMjI1MDU1NjYzOV5BMl5BanBnXkFtZTgwOTk3MjY2MDE@._V1_FMjpg_UX600_.jpg", "Trailer": "DN8dH41a69U"}, {"Position": "57", "Const": "tt29567915", "Created": "2025-11-08", "Modified": "2025-11-08", "Description": "", "Title": "Nuremberg", "Original Title": "Nuremberg", "URL": "https://www.imdb.com/title/tt29567915/", "Title Type": "Movie", "IMDb Rating": "7.3", "Runtime (mins)": "148", "Year": "2025", "Genres": "Biography, Drama, History, Thriller, War", "Num Votes": "124425", "Release Date": "2025-11-07", "Directors": "James Vanderbilt", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMWUzODNkYWUtMmMzOC00NzZjLTlkMTctOTkwM2I2ZWI1MTlmXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "WvAy9C-bipY"}, {"Position": "58", "Const": "tt29768334", "Created": "2025-11-25", "Modified": "2025-11-25", "Description": "", "Title": "Train Dreams", "Original Title": "Train Dreams", "URL": "https://www.imdb.com/title/tt29768334/", "Title Type": "Movie", "IMDb Rating": "7.5", "Runtime (mins)": "102", "Year": "2025", "Genres": "Drama", "Num Votes": "119013", "Release Date": "2025-11-21", "Directors": "Clint Bentley", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZDkzNzkyNTktYzNhMi00YjhiLWI5YmUtZjliMTY0ZDc5NmMyXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "_Nk8TrBHOrA"}, {"Position": "59", "Const": "tt6938828", "Created": "2025-12-15", "Modified": "2025-12-15", "Description": "", "Title": "At Eternity's Gate", "Original Title": "At Eternity's Gate", "URL": "https://www.imdb.com/title/tt6938828/", "Title Type": "Movie", "IMDb Rating": "6.9", "Runtime (mins)": "111", "Year": "2018", "Genres": "Biography, Drama, History", "Num Votes": "45335", "Release Date": "2019-02-15", "Directors": "Julian Schnabel", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZWJkOWMyNTUtNTFmZi00ZmUyLWExZGQtMjYwOGRlNTQ1YTkwXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "T77PDm3e1iE"}, {"Position": "60", "Const": "tt0353969", "Created": "2025-12-19", "Modified": "2025-12-19", "Description": "", "Title": "Memories of Murder", "Original Title": "Salinui chueok", "URL": "https://www.imdb.com/title/tt0353969/", "Title Type": "Movie", "IMDb Rating": "8.1", "Runtime (mins)": "131", "Year": "2003", "Genres": "Crime, Drama, Mystery, Thriller", "Num Votes": "278614", "Release Date": "2003-05-02", "Directors": "Bong Joon Ho", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYmRjOWE5NmMtYTdkYS00ODFlLWJiMTMtYzE2NDZlZjlkZDQ0XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "0n_HQwQU8ls"}, {"Position": "61", "Const": "tt33455099", "Created": "2025-12-29", "Modified": "2025-12-29", "Description": "", "Title": "The Mastermind", "Original Title": "The Mastermind", "URL": "https://www.imdb.com/title/tt33455099/", "Title Type": "Movie", "IMDb Rating": "6.2", "Runtime (mins)": "110", "Year": "2025", "Genres": "Crime, Drama", "Num Votes": "14722", "Release Date": "2025-10-17", "Directors": "Kelly Reichardt", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYmEzYzMwZDUtMjdiYi00YmRlLWJiNjYtYzY2N2E3ZWZjOTcxXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "HYspKk4yVXk"}, {"Position": "62", "Const": "tt0076162", "Created": "2026-01-03", "Modified": "2026-01-03", "Description": "", "Title": "House", "Original Title": "Hausu", "URL": "https://www.imdb.com/title/tt0076162/", "Title Type": "Movie", "IMDb Rating": "7.2", "Runtime (mins)": "88", "Year": "1977", "Genres": "Comedy, Horror", "Num Votes": "41254", "Release Date": "1977-09", "Directors": "Nobuhiko Ōbayashi", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BOGI5OGIwOGUtMzM4MC00MTZkLWI0MWMtZDkzNzE2ZjYxYWZlXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "WQ_Yo06kIIA"}, {"Position": "63", "Const": "tt15047880", "Created": "2026-02-02", "Modified": "2026-02-02", "Description": "", "Title": "Disclosure Day", "Original Title": "Disclosure Day", "URL": "https://www.imdb.com/title/tt15047880/", "Title Type": "Movie", "IMDb Rating": "6.4", "Runtime (mins)": "145", "Year": "2026", "Genres": "Action, Mystery, Sci-Fi, Thriller", "Num Votes": "182888", "Release Date": "2026-06-12", "Directors": "Steven Spielberg", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZDVkYjkxMzMtZjEzYS00N2ZmLTg1YzQtN2NiNmQwYTkxNzhiXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "SCYT8vb2siQ"}, {"Position": "64", "Const": "tt31450459", "Created": "2026-02-02", "Modified": "2026-02-02", "Description": "", "Title": "Digger", "Original Title": "Digger", "URL": "https://www.imdb.com/title/tt31450459/", "Title Type": "Movie", "IMDb Rating": "7.5", "Runtime (mins)": "128", "Year": "2026", "Genres": "Comedy, Drama", "Num Votes": "47315", "Release Date": "2026-10-02", "Directors": "Alejandro G. Iñárritu", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BN2E0YTg1M2YtOGQyYi00NDFkLTk3NzUtYmEyNTZhYThhZDQ0XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "qORTe1wW3Wg"}, {"Position": "65", "Const": "tt35514120", "Created": "2026-02-02", "Modified": "2026-02-02", "Description": "", "Title": "Werwulf", "Original Title": "Werwulf", "URL": "https://www.imdb.com/title/tt35514120/", "Title Type": "Movie", "IMDb Rating": "", "Runtime (mins)": "120", "Year": "2026", "Genres": "Horror, Thriller", "Num Votes": "0", "Release Date": "2026-12-25", "Directors": "Robert Eggers", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMDVhOGE4MzItMmEyYi00ZWNiLTk0YTUtODM1YWIwNmVmMWIyXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "cmjpadVj-Vk"}, {"Position": "66", "Const": "tt20426466", "Created": "2026-02-02", "Modified": "2026-02-02", "Description": "", "Title": "The Entertainment System Is Down", "Original Title": "The Entertainment System Is Down", "URL": "https://www.imdb.com/title/tt20426466/", "Title Type": "Movie", "IMDb Rating": "", "Runtime (mins)": "", "Year": "", "Genres": "Comedy, Drama", "Num Votes": "0", "Release Date": "", "Directors": "Ruben Östlund", "Your Rating": "", "Date Rated": "", "Poster": "", "Trailer": "mdX7HqeeaBs"}, {"Position": "67", "Const": "tt15005870", "Created": "2026-02-02", "Modified": "2026-02-02", "Description": "", "Title": "Butterfly Jam", "Original Title": "Butterfly Jam", "URL": "https://www.imdb.com/title/tt15005870/", "Title Type": "Movie", "IMDb Rating": "5.4", "Runtime (mins)": "102", "Year": "2026", "Genres": "Drama", "Num Votes": "109", "Release Date": "2026-10-07", "Directors": "Kantemir Balagov", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BY2U2Mjk0ZWQtNTZhMS00ODI4LWJiMWEtZjRjOGYyOWNiZWJlXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "FCUdBGoU5KI"}, {"Position": "68", "Const": "tt15799564", "Created": "2026-02-02", "Modified": "2026-02-02", "Description": "", "Title": "Wild Horse Nine", "Original Title": "Wild Horse Nine", "URL": "https://www.imdb.com/title/tt15799564/", "Title Type": "Movie", "IMDb Rating": "8.1", "Runtime (mins)": "116", "Year": "2026", "Genres": "Action, Comedy, Crime, Drama, Thriller", "Num Votes": "10014", "Release Date": "2026-11-06", "Directors": "Martin McDonagh", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BOTlkOGFlYWYtN2VlNC00NjNhLWIxYmMtNDVhZTQ4YmQ4ZTdiXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "Haw_sznA5aQ"}, {"Position": "69", "Const": "tt37024725", "Created": "2026-02-02", "Modified": "2026-02-02", "Description": "", "Title": "Jack of Spades", "Original Title": "Jack of Spades", "URL": "https://www.imdb.com/title/tt37024725/", "Title Type": "Movie", "IMDb Rating": "", "Runtime (mins)": "", "Year": "2027", "Genres": "Drama, Mystery", "Num Votes": "0", "Release Date": "2027", "Directors": "Joel Coen", "Your Rating": "", "Date Rated": "", "Poster": "", "Trailer": "7hIy3nQPCqg"}, {"Position": "70", "Const": "tt21303934", "Created": "2026-02-09", "Modified": "2026-02-09", "Description": "", "Title": "Nekrokosm", "Original Title": "Nekrokosm", "URL": "https://www.imdb.com/title/tt21303934/", "Title Type": "Movie", "IMDb Rating": "", "Runtime (mins)": "", "Year": "", "Genres": "Fantasy, Horror, Sci-Fi", "Num Votes": "0", "Release Date": "", "Directors": "Panos Cosmatos", "Your Rating": "", "Date Rated": "", "Poster": "", "Trailer": "JMWsjsZGZnk"}, {"Position": "71", "Const": "tt14142060", "Created": "2026-02-11", "Modified": "2026-02-11", "Description": "", "Title": "Rental Family", "Original Title": "Rental Family", "URL": "https://www.imdb.com/title/tt14142060/", "Title Type": "Movie", "IMDb Rating": "7.5", "Runtime (mins)": "109", "Year": "2025", "Genres": "Comedy, Drama", "Num Votes": "69368", "Release Date": "2025-11-21", "Directors": "Hikari", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMzFiNTViOTQtOTUxNi00ODczLWI0MTgtNDE1ZWU5YmIzMjY2XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "n0pqP6ClcE8"}, {"Position": "72", "Const": "tt29355505", "Created": "2026-02-17", "Modified": "2026-02-17", "Description": "", "Title": "Toy Story 5", "Original Title": "Toy Story 5", "URL": "https://www.imdb.com/title/tt29355505/", "Title Type": "Movie", "IMDb Rating": "7.3", "Runtime (mins)": "102", "Year": "2026", "Genres": "Animation, Adventure, Comedy, Family, Fantasy", "Num Votes": "107142", "Release Date": "2026-06-19", "Directors": "Andrew Stanton, McKenna Harris", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZTI1YTBiNmEtYWUxZi00YzFkLWIzNjMtMmZjMmY2NzM0ZWMzXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "c51ND9Hdbw0"}, {"Position": "73", "Const": "tt0058006", "Created": "2026-03-16", "Modified": "2026-03-16", "Description": "", "Title": "Black God, White Devil", "Original Title": "Deus e o Diabo na Terra do Sol", "URL": "https://www.imdb.com/title/tt0058006/", "Title Type": "Movie", "IMDb Rating": "7.1", "Runtime (mins)": "120", "Year": "1964", "Genres": "Adventure, Crime, Drama, Western", "Num Votes": "6508", "Release Date": "1964-07-10", "Directors": "Glauber Rocha", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BN2Y3OGVmZGYtODBjMC00YmY3LWJjMzAtYWYxZGQ1MzA0ZjhiXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "06lr4b9vA60"}, {"Position": "74", "Const": "tt0082912", "Created": "2026-03-16", "Modified": "2026-03-16", "Description": "", "Title": "Pixote", "Original Title": "Pixote: A Lei do Mais Fraco", "URL": "https://www.imdb.com/title/tt0082912/", "Title Type": "Movie", "IMDb Rating": "7.9", "Runtime (mins)": "128", "Year": "1980", "Genres": "Crime, Drama", "Num Votes": "11266", "Release Date": "1981-09-18", "Directors": "Hector Babenco", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BM2QxZmYxNGUtZTJiZS00NDI1LTliMjMtYzkyN2U1N2I4NzVkXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "NvQy1Q7GuR8"}, {"Position": "75", "Const": "tt0022080", "Created": "2026-03-16", "Modified": "2026-03-16", "Description": "", "Title": "Limit", "Original Title": "Limite", "URL": "https://www.imdb.com/title/tt0022080/", "Title Type": "Movie", "IMDb Rating": "7.0", "Runtime (mins)": "114", "Year": "1931", "Genres": "Drama, Romance", "Num Votes": "3397", "Release Date": "1931-10", "Directors": "Mario Peixoto", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMjYzMmRmOWMtN2MzOC00MTVlLWJjYzItYTM2ZDBlZjBmMDU3XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "l8E2TzQmsKg"}, {"Position": "76", "Const": "tt0063291", "Created": "2026-03-16", "Modified": "2026-03-16", "Description": "", "Title": "Memories of Underdevelopment", "Original Title": "Memorias del subdesarrollo", "URL": "https://www.imdb.com/title/tt0063291/", "Title Type": "Movie", "IMDb Rating": "7.6", "Runtime (mins)": "97", "Year": "1968", "Genres": "Drama", "Num Votes": "5520", "Release Date": "1973-05-17", "Directors": "Tomás Gutiérrez Alea", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMTczNzY4MjI0MV5BMl5BanBnXkFtZTgwOTc1ODEzMTE@._V1_FMjpg_UX600_.jpg", "Trailer": "FGcBNmiCdxw"}, {"Position": "77", "Const": "tt0060138", "Created": "2026-04-01", "Modified": "2026-04-01", "Description": "", "Title": "Au hasard Balthazar", "Original Title": "Au hasard Balthazar", "URL": "https://www.imdb.com/title/tt0060138/", "Title Type": "Movie", "IMDb Rating": "7.7", "Runtime (mins)": "95", "Year": "1966", "Genres": "Drama", "Num Votes": "25311", "Release Date": "1966-05-25", "Directors": "Robert Bresson", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNmM3MGMyNzQtNmJhMC00OWMyLWJmNDktOTU5YmFmNGQ1ZGIwXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "eL8MuxXB_Eg"}, {"Position": "78", "Const": "tt0074486", "Created": "2026-04-05", "Modified": "2026-04-05", "Description": "", "Title": "Eraserhead", "Original Title": "Eraserhead", "URL": "https://www.imdb.com/title/tt0074486/", "Title Type": "Movie", "IMDb Rating": "7.2", "Runtime (mins)": "89", "Year": "1977", "Genres": "Fantasy, Horror", "Num Votes": "146699", "Release Date": "1978-02-03", "Directors": "David Lynch", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNGYxNzZkYzAtMDExMS00MzE1LTg5ZGItMTgzMzJhZWMyNTBjXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "7WAzFWu2tVw"}, {"Position": "79", "Const": "tt0057869", "Created": "2026-04-23", "Modified": "2026-04-23", "Description": "", "Title": "Band of Outsiders", "Original Title": "Bande à part", "URL": "https://www.imdb.com/title/tt0057869/", "Title Type": "Movie", "IMDb Rating": "7.6", "Runtime (mins)": "95", "Year": "1964", "Genres": "Comedy, Crime, Drama", "Num Votes": "29389", "Release Date": "1964-08-05", "Directors": "Jean-Luc Godard", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMjIyOTA0Njk3Ml5BMl5BanBnXkFtZTgwMzY0NTA2ODE@._V1_FMjpg_UX600_.jpg", "Trailer": "TM0lC2QCiSU"}, {"Position": "80", "Const": "tt0083922", "Created": "2026-04-23", "Modified": "2026-04-23", "Description": "", "Title": "Fanny and Alexander", "Original Title": "Fanny och Alexander", "URL": "https://www.imdb.com/title/tt0083922/", "Title Type": "Movie", "IMDb Rating": "8.1", "Runtime (mins)": "188", "Year": "1982", "Genres": "Drama", "Num Votes": "72093", "Release Date": "1982-12-17", "Directors": "Ingmar Bergman", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNjIwMzRhZWUtOTA0YS00MmFmLWI4ZjgtNjNlZmU3M2Q1Y2NhXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "tDlA_QZmqkM"}, {"Position": "81", "Const": "tt0059592", "Created": "2026-04-23", "Modified": "2026-04-23", "Description": "", "Title": "Pierrot le fou", "Original Title": "Pierrot le fou", "URL": "https://www.imdb.com/title/tt0059592/", "Title Type": "Movie", "IMDb Rating": "7.4", "Runtime (mins)": "110", "Year": "1965", "Genres": "Crime, Drama, Romance", "Num Votes": "40761", "Release Date": "1969-01-08", "Directors": "Jean-Luc Godard", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMTQ0OTc4MDcxMl5BMl5BanBnXkFtZTgwNjIzMjA0NzE@._V1_FMjpg_UX600_.jpg", "Trailer": "TVvhJrrgfs0"}, {"Position": "82", "Const": "tt35538033", "Created": "2026-04-30", "Modified": "2026-04-30", "Description": "", "Title": "Resident Evil", "Original Title": "Resident Evil", "URL": "https://www.imdb.com/title/tt35538033/", "Title Type": "Movie", "IMDb Rating": "7.4", "Runtime (mins)": "94", "Year": "2026", "Genres": "Horror", "Num Votes": "154129", "Release Date": "2026-09-18", "Directors": "Zach Cregger", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BOGZjZWI1NTItOGUwZC00YWZkLWIxZWEtNzE2ZTIxODdjNmZmXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "mNd1gb19A-c"}, {"Position": "83", "Const": "tt36834996", "Created": "2026-05-25", "Modified": "2026-05-25", "Description": "", "Title": "All of a Sudden", "Original Title": "Soudain", "URL": "https://www.imdb.com/title/tt36834996/", "Title Type": "Movie", "IMDb Rating": "8.0", "Runtime (mins)": "196", "Year": "2026", "Genres": "Drama", "Num Votes": "1821", "Release Date": "2026-11-25", "Directors": "Ryūsuke Hamaguchi", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZTY1ZjUwYzctY2E5My00MGRlLWI3N2MtZWRmYjlmNGY0MjcyXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "6qqMre2T32Q"}, {"Position": "84", "Const": "tt27369017", "Created": "2026-05-25", "Modified": "2026-05-25", "Description": "", "Title": "Hope", "Original Title": "Hopeu", "URL": "https://www.imdb.com/title/tt27369017/", "Title Type": "Movie", "IMDb Rating": "6.6", "Runtime (mins)": "157", "Year": "2026", "Genres": "Action, Horror, Sci-Fi, Thriller", "Num Votes": "32601", "Release Date": "2026-09-09", "Directors": "Na Hong-jin", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZjE3ZDI0MmItMDIyMC00NzU2LTk2OTQtZTUxYTlkMjlkNmY3XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "mYRc2Gl7geY"}, {"Position": "85", "Const": "tt0123948", "Created": "2026-06-21", "Modified": "2026-06-21", "Description": "", "Title": "Cure", "Original Title": "Cure", "URL": "https://www.imdb.com/title/tt0123948/", "Title Type": "Movie", "IMDb Rating": "7.5", "Runtime (mins)": "111", "Year": "1997", "Genres": "Crime, Horror, Mystery, Thriller", "Num Votes": "42724", "Release Date": "2001-07-08", "Directors": "Kiyoshi Kurosawa", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNDcyMTRiMWQtMjA4MS00OTk3LTkxYmMtMjI4ODAyNGVlZTU0XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "Kr0LzE4VRkQ"}, {"Position": "86", "Const": "tt2076220", "Created": "2026-06-21", "Modified": "2026-06-21", "Description": "", "Title": "Holy Motors", "Original Title": "Holy Motors", "URL": "https://www.imdb.com/title/tt2076220/", "Title Type": "Movie", "IMDb Rating": "7.0", "Runtime (mins)": "115", "Year": "2012", "Genres": "Drama, Fantasy", "Num Votes": "51852", "Release Date": "2012-07-04", "Directors": "Leos Carax", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BODk2MDc4MDk2OF5BMl5BanBnXkFtZTcwMTcyODY1OA@@._V1_FMjpg_UX600_.jpg", "Trailer": "NWu9WjEcdbk"}, {"Position": "87", "Const": "tt32890033", "Created": "2026-06-29", "Modified": "2026-06-29", "Description": "", "Title": "Minions & Monsters", "Original Title": "Minions & Monsters", "URL": "https://www.imdb.com/title/tt32890033/", "Title Type": "Movie", "IMDb Rating": "6.3", "Runtime (mins)": "90", "Year": "2026", "Genres": "Animation, Adventure, Comedy, Family", "Num Votes": "37481", "Release Date": "2026-07-01", "Directors": "Pierre Coffin, Patrick Delage", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYzBjMDg4YjctYzg3ZS00ZDFmLWI1YjctM2RkZGVjZWEyYWQ0XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "exJJbMUcd1g"}, {"Position": "88", "Const": "tt1855199", "Created": "2026-09-04", "Modified": "2026-09-04", "Description": "", "Title": "End of Watch", "Original Title": "End of Watch", "URL": "https://www.imdb.com/title/tt1855199/", "Title Type": "Movie", "IMDb Rating": "7.6", "Runtime (mins)": "109", "Year": "2012", "Genres": "Action, Crime, Drama, Thriller", "Num Votes": "298096", "Release Date": "2012-09-21", "Directors": "David Ayer", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMjMxNjU0ODU5Ml5BMl5BanBnXkFtZTcwNjI4MzAyOA@@._V1_FMjpg_UX600_.jpg", "Trailer": "9mQYxib26FM"}, {"Position": "89", "Const": "tt39094466", "Created": "2026-09-13", "Modified": "2026-09-13", "Description": "", "Title": "Look Back", "Original Title": "Rukku Bakku", "URL": "https://www.imdb.com/title/tt39094466/", "Title Type": "Movie", "IMDb Rating": "7.6", "Runtime (mins)": "100", "Year": "2026", "Genres": "Drama", "Num Votes": "945", "Release Date": "2027-01-15", "Directors": "Hirokazu Koreeda", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYTI1MTM4NDktOWQ1Yy00NGRmLWExMDEtMzJlN2RhZjc4MDJhXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "ILBDFlYMGAY"}, {"Position": "90", "Const": "tt41240964", "Created": "2026-09-13", "Modified": "2026-09-13", "Description": "", "Title": "Mr. Nelson, Did You Kill People?", "Original Title": "Nelson-san, anata wa hito o koro shimashita ka?", "URL": "https://www.imdb.com/title/tt41240964/", "Title Type": "Movie", "IMDb Rating": "7.0", "Runtime (mins)": "116", "Year": "2026", "Genres": "Action, Biography, Drama, History, War", "Num Votes": "164", "Release Date": "2026-09-11", "Directors": "Shin'ya Tsukamoto", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNWU4NWQ3MWItMzA2MC00OGZjLTgxZmUtNTE3ODg5ZWQwYWRlXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "PfgNjb-H9OE"}, {"Position": "91", "Const": "tt37803364", "Created": "2026-09-13", "Modified": "2026-09-13", "Description": "", "Title": "Possible Love", "Original Title": "Ganeunghan sarang", "URL": "https://www.imdb.com/title/tt37803364/", "Title Type": "Movie", "IMDb Rating": "7.8", "Runtime (mins)": "164", "Year": "2026", "Genres": "Drama, Romance", "Num Votes": "2845", "Release Date": "2026-11-06", "Directors": "Lee Chang-dong", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMTk4NjU5NjQtZjQxOS00OGIwLThhM2MtYWU1OTc4Y2M4NGVmXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "zd3qXH9qN70"}, {"Position": "92", "Const": "tt39602215", "Created": "2026-09-13", "Modified": "2026-09-13", "Description": "", "Title": "The Samurai and the Prisoner", "Original Title": "Kokurôjô", "URL": "https://www.imdb.com/title/tt39602215/", "Title Type": "Movie", "IMDb Rating": "7.1", "Runtime (mins)": "147", "Year": "2026", "Genres": "Drama, History, Mystery, Thriller, War", "Num Votes": "1016", "Release Date": "2026-08", "Directors": "Kiyoshi Kurosawa", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BYTg0MWVmMTAtZWZkNS00ZjM3LTkxODgtMDQzZjJiYWNjZDUzXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "dY5kXykdbLo"}, {"Position": "93", "Const": "tt19637052", "Created": "2026-09-13", "Modified": "2026-09-13", "Description": "", "Title": "Love Lies Bleeding", "Original Title": "Love Lies Bleeding", "URL": "https://www.imdb.com/title/tt19637052/", "Title Type": "Movie", "IMDb Rating": "6.6", "Runtime (mins)": "104", "Year": "2024", "Genres": "Crime, Drama, Mystery, Romance, Thriller", "Num Votes": "66078", "Release Date": "2024-05-03", "Directors": "Rose Glass", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNWUxZTliMDgtOWVkZS00MjkwLWI5ZWUtNTZmMjhlYTFlN2I5XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "BF_J3-DmiS0"}, {"Position": "94", "Const": "tt43704164", "Created": "2026-09-14", "Modified": "2026-09-14", "Description": "", "Title": "Let Us Through, Dear Ancestors", "Original Title": "Makikiraan po", "URL": "https://www.imdb.com/title/tt43704164/", "Title Type": "Movie", "IMDb Rating": "7.4", "Runtime (mins)": "147", "Year": "2026", "Genres": "Drama, History", "Num Votes": "45", "Release Date": "2026-10-23", "Directors": "Lav Diaz", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMTYyY2FlNDItMWFmZi00MjU1LTk4YjktNTEyM2E1YjNhYzEyXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "i0-lYHCHzi8"}, {"Position": "95", "Const": "tt39239726", "Created": "2026-09-14", "Modified": "2026-09-14", "Description": "", "Title": "Ritorno a Buenos Aires", "Original Title": "Ritorno a Buenos Aires", "URL": "https://www.imdb.com/title/tt39239726/", "Title Type": "Movie", "IMDb Rating": "7.0", "Runtime (mins)": "104", "Year": "2026", "Genres": "Drama, Thriller", "Num Votes": "145", "Release Date": "2026-09-17", "Directors": "Marco Bechis", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BNTJlZWRkNGQtYjExNi00ZDI3LWJiNmEtNWViMzQ4ZGRlZGRkXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "ATjUWojp42k"}, {"Position": "96", "Const": "tt41802342", "Created": "2026-09-14", "Modified": "2026-09-14", "Description": "", "Title": "A Good Little Soldier", "Original Title": "Un bon petit soldat", "URL": "https://www.imdb.com/title/tt41802342/", "Title Type": "Movie", "IMDb Rating": "7.3", "Runtime (mins)": "102", "Year": "2026", "Genres": "Drama", "Num Votes": "194", "Release Date": "2026-11-25", "Directors": "Stéphane Brizé", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BODViYzVkNDItMWY2Ni00ODdlLTlkZmQtNzRjODU2NzU4YTljXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "hOFq7J4fmhY"}, {"Position": "97", "Const": "tt37815334", "Created": "2026-10-16", "Modified": "2026-10-16", "Description": "", "Title": "The Eyes of Ghana", "Original Title": "The Eyes of Ghana", "URL": "https://www.imdb.com/title/tt37815334/", "Title Type": "Movie", "IMDb Rating": "7.2", "Runtime (mins)": "90", "Year": "2025", "Genres": "Documentary, Biography", "Num Votes": "117", "Release Date": "2026-10-28", "Directors": "Ben Proudfoot", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BZmM3ODQ0OWItNzcyOC00MmRhLTlhNjAtYjgyNTY2OTVmMjg4XkEyXkFqcGc@._V1_FMjpg_UX600_.jpg", "Trailer": "39-C_3DTROg"}, {"Position": "98", "Const": "tt45368240", "Created": "", "Modified": "", "Description": "", "Title": "You Can See Everything", "Original Title": "", "URL": "https://www.imdb.com/title/tt45368240/", "Title Type": "Movie", "IMDb Rating": "9.1", "Runtime (mins)": "174", "Year": "2026", "Genres": "Documentary, Biography", "Num Votes": "", "Release Date": "", "Directors": "Nathan Fielder, Lance Oppenheim", "Your Rating": "", "Date Rated": "", "Poster": "https://m.media-amazon.com/images/M/MV5BMDkwNGRiNjYtZTQ4MC00MWFhLWI3MjYtNzk1MDY2ZTNiY2Q4XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"}];
 
   let watchedMovies = ["tt18382850", "tt0208502", "tt0500092", "tt36517689", "tt36243564", "tt32565993", "tt32550889", "tt4574334", "tt1190634", "tt33332385", "tt0098202", "tt30460310", "tt15765670", "tt17158756", "tt31688586", "tt0060675", "tt14905854", "tt0056801", "tt28690468", "tt24179294", "tt1493274", "tt27497448", "tt32916440", "tt32086077", "tt27847051", "tt7342838", "tt14364480", "tt4003440", "tt30144839", "tt17526714", "tt12300742", "tt12299608", "tt21912390", "tt0068182", "tt30217403", "tt13443470", "tt31711040", "tt28618488", "tt32149577", "tt11563598", "tt0042619", "tt8999762", "tt28607951", "tt5040012", "tt0105665", "tt0098936", "tt17163970", "tt12037194", "tt11126994", "tt0061473", "tt22408160", "tt10399622", "tt7510222", "tt32375562", "tt21454134", "tt0318871", "tt0112159", "tt0213338", "tt0092067", "tt6587046", "tt0166924", "tt19760052", "tt0087544", "tt0169858", "tt0156887", "tt0113568", "tt0094625", "tt14561712", "tt27503384", "tt7575046", "tt0088247", "tt7131622", "tt7767422", "tt9243946", "tt7984734", "tt5727208", "tt2306299", "tt0903747", "tt0944947", "tt10919420", "tt0264464", "tt0480249", "tt10048342", "tt11271038", "tt16968450", "tt0780536", "tt0119698", "tt4154796", "tt0034583", "tt0056058", "tt10954984", "tt0364569", "tt0211915", "tt0245429", "tt1675434", "tt0054215", "tt14230458", "tt8228288", "tt0091251", "tt0081505", "tt0110413", "tt0110912", "tt0120737", "tt7160372", "tt0758758", "tt1950186", "tt1392190", "tt2278388", "tt1392214", "tt0117951", "tt0116282", "tt0099685", "tt0477348", "tt0382932", "tt0118715", "tt2106476", "tt0107048", "tt0087843", "tt1853728", "tt0112641", "tt5013056", "tt0105236", "tt1663202", "tt1856101", "tt0120382", "tt0144084", "tt0120689", "tt7286456", "tt7322224", "tt0050083", "tt0114369", "tt0111161", "tt0816692", "tt0060196", "tt0137523", "tt0109830", "tt0108052", "tt0102926", "tt0167261", "tt0133093", "tt6751668", "tt0167260", "tt0088763", "tt0068646", "tt0317248", "tt0086250", "tt0073486", "tt0060827", "tt0050976", "tt0062622", "tt0083658", "tt0053198", "tt0079944", "tt0086022", "tt0060107", "tt0075314", "tt0078788", "tt11813216", "tt13833688", "tt14208870", "tt13521006", "tt19623228", "tt0047478", "tt0083946", "tt15398776", "tt5537002", "tt14849194", "tt21027780"];
@@ -1348,6 +1608,11 @@
     const randomBtn = document.getElementById('btnRandomPick');
     if (randomBtn) {
       randomBtn.style.display = (tab === 'towatch') ? 'inline-flex' : 'none';
+    }
+
+    const addSoonBtn = document.getElementById('btnAddComingSoon');
+    if (addSoonBtn) {
+      addSoonBtn.style.display = (tab === 'waiting') ? 'inline-flex' : 'none';
     }
 
     render();
@@ -1445,13 +1710,13 @@
     if (currentTab === 'watched') {
       return `
         <div class="card-curate-row">
-          <button class="btn-card-fav" onclick="addToFavorites('${safeConst}')" title="Add to Favorites">★ Fav</button>
+          <button class="btn-card-fav ${isFav ? 'active' : ''}" onclick="toggleFavorite('${safeConst}')" title="${isFav ? 'Remove from Favorites' : 'Add to Favorites'}">★ Fav</button>
           <button class="btn-card-watched active" onclick="toggleWatched('${safeConst}')" title="Unmark as Watched">✕ Unwatch</button>
         </div>
       `;
     }
 
-    if (currentTab === 'favorites' || isFav) {
+    if (currentTab === 'favorites') {
       return `
         <div class="card-curate-row">
           ${watchedBtn}
@@ -1460,31 +1725,48 @@
       `;
     }
 
-    if (currentTab === 'towatch' || isToWatch) {
+    if (currentTab === 'towatch') {
       return `
         <div class="card-curate-row">
           ${watchedBtn}
-          <button class="btn-card-fav" onclick="addToFavorites('${safeConst}')" title="Add to Favorites">★ Fav</button>
+          <button class="btn-card-fav ${isFav ? 'active' : ''}" onclick="toggleFavorite('${safeConst}')" title="${isFav ? 'Remove from Favorites' : 'Add to Favorites'}">★</button>
           <button class="btn-card-remove" onclick="removeCurated('${safeConst}', 'towatch')" title="Remove from Ready to Watch">✕ Remove</button>
         </div>
       `;
     }
 
-    if (currentTab === 'waiting' || isWaiting) {
+    if (currentTab === 'waiting') {
       return `
         <div class="card-curate-row">
-          <button class="btn-card-curate" onclick="moveToWatch('${safeConst}')" title="Move to Ready to Watch">+ Ready</button>
+          ${watchedBtn}
+          <button class="btn-card-curate" onclick="moveToWatch('${safeConst}')" title="Move to Ready to Watch">→ Ready</button>
           <button class="btn-card-remove" onclick="removeCurated('${safeConst}', 'waiting')" title="Remove from Coming Soon">✕ Remove</button>
         </div>
       `;
     }
 
+    const listLabel = isToWatch ? '✓ Ready ▾' : (isWaiting ? '✓ Soon ▾' : '＋ List ▾');
+    const listClass = isToWatch ? 'in-ready' : (isWaiting ? 'in-soon' : '');
+
     return `
       <div class="card-curate-row">
-        <button class="btn-card-curate" onclick="addToWatch('${safeConst}')" title="Add to Ready to Watch">+ Ready</button>
-        <button class="btn-card-curate-soon" onclick="addToWaiting('${safeConst}')" title="Add to Coming Soon">+ Soon</button>
-        <button class="btn-card-fav" onclick="addToFavorites('${safeConst}')" title="Add to Favorites">★ Fav</button>
         ${watchedBtn}
+        <button class="btn-card-fav ${isFav ? 'active' : ''}" onclick="toggleFavorite('${safeConst}')" title="${isFav ? 'Remove from Favorites' : 'Add to Favorites'}">★</button>
+        <div class="card-list-dropdown">
+          <button class="btn-card-list ${listClass}" onclick="toggleCardListMenu(event, '${safeConst}')" title="Add to or remove from lists">
+            ${listLabel}
+          </button>
+          <div class="card-list-menu" id="listMenu_${safeConst}">
+            <div class="card-list-item ${isToWatch ? 'active' : ''}" onclick="toggleCardList(event, '${safeConst}', 'towatch')">
+              <span class="list-item-check">${isToWatch ? '✓' : '＋'}</span>
+              <span>Ready to Watch</span>
+            </div>
+            <div class="card-list-item ${isWaiting ? 'active' : ''}" onclick="toggleCardList(event, '${safeConst}', 'waiting')">
+              <span class="list-item-check">${isWaiting ? '✓' : '＋'}</span>
+              <span>Coming Soon</span>
+            </div>
+          </div>
+        </div>
       </div>
     `;
   }
@@ -1946,6 +2228,267 @@
     render();
   }
 
+  function toggleFavorite(constId) {
+    if (favoriteMovies.some(m => m.Const === constId)) {
+      removeCurated(constId, 'favorites');
+    } else {
+      addToFavorites(constId);
+    }
+  }
+
+  function toggleCardListMenu(e, constId) {
+    if (e) {
+      e.stopPropagation();
+    }
+    const menu = document.getElementById('listMenu_' + constId);
+    const isOpen = menu && menu.classList.contains('open');
+    closeAllCardListMenus();
+    if (menu && !isOpen) {
+      menu.classList.add('open');
+    }
+  }
+
+  function closeAllCardListMenus() {
+    document.querySelectorAll('.card-list-menu.open').forEach(el => el.classList.remove('open'));
+  }
+
+  function toggleCardList(e, constId, type) {
+    if (e) {
+      e.stopPropagation();
+    }
+    closeAllCardListMenus();
+    if (type === 'towatch') {
+      if (toWatchMovies.some(m => m.Const === constId)) {
+        removeCurated(constId, 'towatch');
+      } else {
+        addToWatch(constId);
+      }
+    } else if (type === 'waiting') {
+      if (waitingMovies.some(m => m.Const === constId)) {
+        removeCurated(constId, 'waiting');
+      } else {
+        addToWaiting(constId);
+      }
+    }
+  }
+
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.card-list-dropdown')) {
+      closeAllCardListMenus();
+    }
+  });
+
+  let addSoonSearchTimeout = null;
+
+  function openAddComingSoonModal() {
+    const modal = document.getElementById('addComingSoonModal');
+    const input = document.getElementById('addSoonInput');
+    if (!modal) return;
+    if (input) input.value = '';
+    renderAddSoonSuggestions('');
+    modal.classList.add('active');
+    setTimeout(() => {
+      if (input) input.focus();
+    }, 50);
+  }
+
+  function closeAddComingSoonModal() {
+    const modal = document.getElementById('addComingSoonModal');
+    if (modal) modal.classList.remove('active');
+  }
+
+  function handleAddSoonInput(val) {
+    if (addSoonSearchTimeout) clearTimeout(addSoonSearchTimeout);
+    addSoonSearchTimeout = setTimeout(() => {
+      renderAddSoonSuggestions(val.trim());
+    }, 250);
+  }
+
+  function lookupAddSoonMovie() {
+    const input = document.getElementById('addSoonInput');
+    renderAddSoonSuggestions(input ? input.value.trim() : '');
+  }
+
+  function renderAddSoonSuggestions(q) {
+    const container = document.getElementById('addSoonResults');
+    if (!container) return;
+
+    const constMatch = q.match(/tt\d{7,10}/);
+    if (constMatch) {
+      const constId = constMatch[0];
+      const existing = getMovieByConst(constId);
+      if (existing) {
+        renderAddSoonList(container, [existing]);
+        return;
+      }
+      container.innerHTML = '<div class="add-soon-item"><div class="add-soon-meta"><div class="add-soon-item-title">Fetching IMDb metadata for ' + escapeHtml(constId) + '...</div></div></div>';
+      fetchImdbSuggestJsonp(constId, (item) => {
+        if (item) {
+          renderAddSoonList(container, [item]);
+        } else {
+          container.innerHTML = '<div class="add-soon-item"><div class="add-soon-meta"><div class="add-soon-item-title">Title not found on IMDb</div><div class="add-soon-item-sub">Check the IMDb ID (tt...) or title name</div></div></div>';
+        }
+      });
+      return;
+    }
+
+    let matches = [];
+    if (q) {
+      const lq = q.toLowerCase();
+      matches = allMovies.filter(m => {
+        const title = (m.Title || '').toLowerCase();
+        const dir = (m.Directors || '').toLowerCase();
+        const orig = (m['Original Title'] || '').toLowerCase();
+        return title.includes(lq) || dir.includes(lq) || orig.includes(lq);
+      }).slice(0, 8);
+    } else {
+      matches = allMovies.filter(m => !waitingMovies.some(w => w.Const === m.Const) && !watchedMovies.includes(m.Const)).slice(0, 6);
+    }
+
+    if (!matches.length) {
+      if (q) {
+        container.innerHTML = '<div class="add-soon-item"><div class="add-soon-meta"><div class="add-soon-item-title">Searching IMDb for "' + escapeHtml(q) + '"...</div></div></div>';
+        searchImdbSuggestJsonp(q, (items) => {
+          if (items && items.length) {
+            renderAddSoonList(container, items);
+          } else {
+            container.innerHTML = '<div class="add-soon-item"><div class="add-soon-meta"><div class="add-soon-item-title">No movies found</div><div class="add-soon-item-sub">Try entering an IMDb ID directly (e.g. tt39602215)</div></div></div>';
+          }
+        });
+        return;
+      }
+      container.innerHTML = '<div class="add-soon-item"><div class="add-soon-meta"><div class="add-soon-item-title">Enter a movie title or IMDb ID above</div></div></div>';
+      return;
+    }
+
+    renderAddSoonList(container, matches);
+  }
+
+  function renderAddSoonList(container, list) {
+    let html = '';
+    list.forEach(m => {
+      const constId = m.Const || '';
+      const isAlreadyWaiting = waitingMovies.some(w => w.Const === constId);
+      const poster = formatPoster(m.Poster || '');
+      const title = escapeHtml(m.Title || 'Untitled');
+      const year = escapeHtml(m.Year || '');
+      const dir = escapeHtml(m.Directors || '');
+      const encodedData = encodeURIComponent(JSON.stringify(m));
+
+      html += `
+        <div class="add-soon-item">
+          <img src="${poster || 'assets/placeholder.jpg'}" alt="${title}" class="add-soon-thumb" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'38\\' height=\\'54\\' viewBox=\\'0 0 38 54\\'><rect width=\\'38\\' height=\\'54\\' fill=\\'%23141416\\'/></svg>'">
+          <div class="add-soon-meta">
+            <div class="add-soon-item-title">${title}</div>
+            <div class="add-soon-item-sub">${year}${dir ? ' &bull; ' + dir : ''} &bull; ${constId}</div>
+          </div>
+          ${isAlreadyWaiting ? '<span class="add-soon-item-badge">In Soon ✓</span>' : `<button type="button" class="btn-add-soon-action" onclick="addMovieObjectToWaiting('${encodedData}')">＋ Add</button>`}
+        </div>
+      `;
+    });
+    container.innerHTML = html;
+  }
+
+  function fetchImdbSuggestJsonp(constId, callback) {
+    const cleanConst = constId.toLowerCase();
+    const script = document.createElement('script');
+    window['imdb$' + cleanConst] = function(data) {
+      try {
+        if (data && Array.isArray(data.d)) {
+          const item = data.d.find(x => x && x.id === constId) || data.d[0];
+          if (item) {
+            let poster = '';
+            if (item.i && item.i[0]) {
+              poster = item.i[0].replace('._V1_.jpg', '._V1_QL75_UX380_CR0,0,380,562_.jpg');
+            }
+            callback({
+              Position: '',
+              Const: item.id || constId,
+              Title: item.l || constId,
+              Year: item.y ? String(item.y) : '',
+              Directors: item.s || '',
+              Genres: '',
+              Poster: poster,
+              'IMDb Rating': '',
+              'Runtime (mins)': '',
+              'Original Title': '',
+              URL: 'https://www.imdb.com/title/' + (item.id || constId) + '/'
+            });
+            return;
+          }
+        }
+      } catch (e) {}
+      callback(null);
+    };
+    script.src = 'https://v2.sg.media-imdb.com/suggests/' + cleanConst[0] + '/' + cleanConst + '.json';
+    script.onerror = () => callback(null);
+    document.head.appendChild(script);
+  }
+
+  function searchImdbSuggestJsonp(q, callback) {
+    const cleanQuery = q.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase().replace(/\s+/g, '_');
+    if (!cleanQuery) {
+      callback([]);
+      return;
+    }
+    const script = document.createElement('script');
+    window['imdb$' + cleanQuery] = function(data) {
+      try {
+        if (data && Array.isArray(data.d)) {
+          const results = data.d.filter(x => x && x.id && x.id.startsWith('tt')).slice(0, 6).map(item => {
+            let poster = '';
+            if (item.i && item.i[0]) {
+              poster = item.i[0].replace('._V1_.jpg', '._V1_QL75_UX380_CR0,0,380,562_.jpg');
+            }
+            return {
+              Position: '',
+              Const: item.id,
+              Title: item.l || item.id,
+              Year: item.y ? String(item.y) : '',
+              Directors: item.s || '',
+              Genres: '',
+              Poster: poster,
+              'IMDb Rating': '',
+              'Runtime (mins)': '',
+              'Original Title': '',
+              URL: 'https://www.imdb.com/title/' + item.id + '/'
+            };
+          });
+          callback(results);
+          return;
+        }
+      } catch (e) {}
+      callback([]);
+    };
+    script.src = 'https://v2.sg.media-imdb.com/suggests/' + cleanQuery[0] + '/' + cleanQuery + '.json';
+    script.onerror = () => callback([]);
+    document.head.appendChild(script);
+  }
+
+  function addMovieObjectToWaiting(encodedJson) {
+    try {
+      const movie = JSON.parse(decodeURIComponent(encodedJson));
+      if (!movie || !movie.Const) return;
+      const constId = movie.Const;
+      if (waitingMovies.some(m => m.Const === constId)) {
+        showToast('Already in Coming Soon');
+        return;
+      }
+      waitingMovies.push(movie);
+      if (!allMovies.some(m => m.Const === constId)) {
+        allMovies.push(movie);
+      }
+      const tIdx = toWatchMovies.findIndex(m => m.Const === constId);
+      if (tIdx >= 0) toWatchMovies.splice(tIdx, 1);
+      if (cinemaPickConst === constId) cinemaPickConst = '';
+      saveCuratedToStorage();
+      updateCounts();
+      render();
+      closeAddComingSoonModal();
+      showToast('Added "' + (movie.Title || constId) + '" to Coming Soon ✓');
+    } catch (e) {}
+  }
+
   let currentRateConstId = null;
 
   function renderRateStars(activeScore) {
@@ -2400,6 +2943,22 @@
     <div class="modal-actions rate-modal-actions">
       <button class="modal-btn" id="btnRemoveRating" onclick="clearMovieRating()" style="display: none;">Remove Rating</button>
       <button class="modal-btn" onclick="closeRateModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="addComingSoonModal" onclick="if(event.target === this) closeAddComingSoonModal()">
+  <div class="modal-card add-soon-modal-card">
+    <button class="modal-close-btn" onclick="closeAddComingSoonModal()">&times;</button>
+    <div class="modal-eyebrow">Coming Soon &bull; Curate Upcoming Films</div>
+    <h3 class="add-soon-title">Add to Coming Soon</h3>
+    <div class="add-soon-input-row">
+      <input type="text" id="addSoonInput" class="add-soon-input" placeholder="Search title or enter IMDb ID (tt...) / Link..." oninput="handleAddSoonInput(this.value)">
+      <button class="modal-btn primary" id="btnAddSoonLookup" onclick="lookupAddSoonMovie()">Search</button>
+    </div>
+    <div class="add-soon-results" id="addSoonResults"></div>
+    <div class="modal-actions add-soon-modal-actions">
+      <button class="modal-btn" onclick="closeAddComingSoonModal()">Close</button>
     </div>
   </div>
 </div>
