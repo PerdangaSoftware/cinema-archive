@@ -575,29 +575,28 @@
       "Trailer": "2yqXG3OcpNQ"
     },
     {
-      "Position": "55",
+      "Position": "",
       "Const": "tt26581740",
-      "Created": "2025-09-29",
-      "Modified": "2025-09-29",
+      "Created": "",
+      "Modified": "",
       "Description": "",
       "Title": "Weapons",
-      "Original Title": "Weapons",
+      "Original Title": "",
       "URL": "https://www.imdb.com/title/tt26581740/",
       "Title Type": "Movie",
       "IMDb Rating": "7.4",
       "Runtime (mins)": "128",
       "Year": "2025",
       "Genres": "Horror, Mystery",
-      "Num Votes": "424330",
-      "Release Date": "2025-08-08",
+      "Num Votes": "",
+      "Release Date": "",
       "Directors": "Zach Cregger",
-      "Your Rating": "",
+      "Your Rating": "8",
       "Date Rated": "",
-      "Poster": "https://m.media-amazon.com/images/M/MV5BNTBhNWJjZWItYzY3NS00M2NkLThmOWYtYTlmNzBmN2UxZWFjXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg",
-      "Trailer": "OpThntO9ixc"
+      "Poster": "https://m.media-amazon.com/images/M/MV5BNTBhNWJjZWItYzY3NS00M2NkLThmOWYtYTlmNzBmN2UxZWFjXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     },
     {
-      "Position": "77",
+      "Position": "76",
       "Const": "tt0060138",
       "Created": "2026-04-01",
       "Modified": "2026-04-01",
@@ -619,7 +618,7 @@
       "Trailer": "eL8MuxXB_Eg"
     },
     {
-      "Position": "82",
+      "Position": "81",
       "Const": "tt35538033",
       "Created": "2026-04-30",
       "Modified": "2026-04-30",
@@ -641,7 +640,7 @@
       "Trailer": "mNd1gb19A-c"
     },
     {
-      "Position": "85",
+      "Position": "84",
       "Const": "tt0123948",
       "Created": "2026-06-21",
       "Modified": "2026-06-21",
@@ -687,7 +686,7 @@
   ],
   "waiting": [
     {
-      "Position": "64",
+      "Position": "63",
       "Const": "tt31450459",
       "Created": "2026-02-02",
       "Modified": "2026-02-02",
@@ -709,7 +708,7 @@
       "Trailer": "qORTe1wW3Wg"
     },
     {
-      "Position": "65",
+      "Position": "64",
       "Const": "tt35514120",
       "Created": "2026-02-02",
       "Modified": "2026-02-02",
@@ -731,7 +730,7 @@
       "Trailer": "cmjpadVj-Vk"
     },
     {
-      "Position": "68",
+      "Position": "67",
       "Const": "tt15799564",
       "Created": "2026-02-02",
       "Modified": "2026-02-02",
@@ -753,7 +752,7 @@
       "Trailer": "Haw_sznA5aQ"
     },
     {
-      "Position": "83",
+      "Position": "82",
       "Const": "tt36834996",
       "Created": "2026-05-25",
       "Modified": "2026-05-25",
@@ -776,6 +775,7 @@
     }
   ],
   "watched_ids": [
+    "tt26581740",
     "tt18382850",
     "tt0208502",
     "tt0500092",
@@ -946,6 +946,27 @@
     "tt21027780"
   ],
   "watched_archive": [
+    {
+      "Position": "",
+      "Const": "tt26581740",
+      "Created": "",
+      "Modified": "",
+      "Description": "",
+      "Title": "Weapons",
+      "Original Title": "",
+      "URL": "https://www.imdb.com/title/tt26581740/",
+      "Title Type": "Movie",
+      "IMDb Rating": "7.4",
+      "Runtime (mins)": "128",
+      "Year": "2025",
+      "Genres": "Horror, Mystery",
+      "Num Votes": "",
+      "Release Date": "",
+      "Directors": "Zach Cregger",
+      "Your Rating": "8",
+      "Date Rated": "",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BNTBhNWJjZWItYzY3NS00M2NkLThmOWYtYTlmNzBmN2UxZWFjXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
     {
       "Position": "",
       "Const": "tt18382850",
@@ -4014,6 +4035,7 @@
     }
   ],
   "ratings": {
+    "tt26581740": "8",
     "tt18382850": "8",
     "tt0208502": "10",
     "tt0500092": "9",
@@ -4183,7 +4205,7 @@
     "tt14849194": "8",
     "tt21027780": "8"
   },
-  "cinema_pick": "tt26581740",
+  "cinema_pick": "",
   "all": [
     {
       "Position": "1",
@@ -5375,28 +5397,6 @@
     },
     {
       "Position": "55",
-      "Const": "tt26581740",
-      "Created": "2025-09-29",
-      "Modified": "2025-09-29",
-      "Description": "",
-      "Title": "Weapons",
-      "Original Title": "Weapons",
-      "URL": "https://www.imdb.com/title/tt26581740/",
-      "Title Type": "Movie",
-      "IMDb Rating": "7.4",
-      "Runtime (mins)": "128",
-      "Year": "2025",
-      "Genres": "Horror, Mystery",
-      "Num Votes": "424330",
-      "Release Date": "2025-08-08",
-      "Directors": "Zach Cregger",
-      "Your Rating": "",
-      "Date Rated": "",
-      "Poster": "https://m.media-amazon.com/images/M/MV5BNTBhNWJjZWItYzY3NS00M2NkLThmOWYtYTlmNzBmN2UxZWFjXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg",
-      "Trailer": "OpThntO9ixc"
-    },
-    {
-      "Position": "56",
       "Const": "tt0082776",
       "Created": "2025-10-26",
       "Modified": "2025-10-26",
@@ -5418,7 +5418,7 @@
       "Trailer": "DN8dH41a69U"
     },
     {
-      "Position": "57",
+      "Position": "56",
       "Const": "tt29567915",
       "Created": "2025-11-08",
       "Modified": "2025-11-08",
@@ -5440,7 +5440,7 @@
       "Trailer": "WvAy9C-bipY"
     },
     {
-      "Position": "58",
+      "Position": "57",
       "Const": "tt29768334",
       "Created": "2025-11-25",
       "Modified": "2025-11-25",
@@ -5462,7 +5462,7 @@
       "Trailer": "_Nk8TrBHOrA"
     },
     {
-      "Position": "59",
+      "Position": "58",
       "Const": "tt6938828",
       "Created": "2025-12-15",
       "Modified": "2025-12-15",
@@ -5484,7 +5484,7 @@
       "Trailer": "T77PDm3e1iE"
     },
     {
-      "Position": "60",
+      "Position": "59",
       "Const": "tt0353969",
       "Created": "2025-12-19",
       "Modified": "2025-12-19",
@@ -5506,7 +5506,7 @@
       "Trailer": "0n_HQwQU8ls"
     },
     {
-      "Position": "61",
+      "Position": "60",
       "Const": "tt33455099",
       "Created": "2025-12-29",
       "Modified": "2025-12-29",
@@ -5528,7 +5528,7 @@
       "Trailer": "HYspKk4yVXk"
     },
     {
-      "Position": "62",
+      "Position": "61",
       "Const": "tt0076162",
       "Created": "2026-01-03",
       "Modified": "2026-01-03",
@@ -5550,7 +5550,7 @@
       "Trailer": "WQ_Yo06kIIA"
     },
     {
-      "Position": "63",
+      "Position": "62",
       "Const": "tt15047880",
       "Created": "2026-02-02",
       "Modified": "2026-02-02",
@@ -5572,7 +5572,7 @@
       "Trailer": "SCYT8vb2siQ"
     },
     {
-      "Position": "64",
+      "Position": "63",
       "Const": "tt31450459",
       "Created": "2026-02-02",
       "Modified": "2026-02-02",
@@ -5594,7 +5594,7 @@
       "Trailer": "qORTe1wW3Wg"
     },
     {
-      "Position": "65",
+      "Position": "64",
       "Const": "tt35514120",
       "Created": "2026-02-02",
       "Modified": "2026-02-02",
@@ -5616,7 +5616,7 @@
       "Trailer": "cmjpadVj-Vk"
     },
     {
-      "Position": "66",
+      "Position": "65",
       "Const": "tt20426466",
       "Created": "2026-02-02",
       "Modified": "2026-02-02",
@@ -5638,7 +5638,7 @@
       "Trailer": "mdX7HqeeaBs"
     },
     {
-      "Position": "67",
+      "Position": "66",
       "Const": "tt15005870",
       "Created": "2026-02-02",
       "Modified": "2026-02-02",
@@ -5660,7 +5660,7 @@
       "Trailer": "FCUdBGoU5KI"
     },
     {
-      "Position": "68",
+      "Position": "67",
       "Const": "tt15799564",
       "Created": "2026-02-02",
       "Modified": "2026-02-02",
@@ -5682,7 +5682,7 @@
       "Trailer": "Haw_sznA5aQ"
     },
     {
-      "Position": "69",
+      "Position": "68",
       "Const": "tt37024725",
       "Created": "2026-02-02",
       "Modified": "2026-02-02",
@@ -5704,7 +5704,7 @@
       "Trailer": "7hIy3nQPCqg"
     },
     {
-      "Position": "70",
+      "Position": "69",
       "Const": "tt21303934",
       "Created": "2026-02-09",
       "Modified": "2026-02-09",
@@ -5726,7 +5726,7 @@
       "Trailer": "JMWsjsZGZnk"
     },
     {
-      "Position": "71",
+      "Position": "70",
       "Const": "tt14142060",
       "Created": "2026-02-11",
       "Modified": "2026-02-11",
@@ -5748,7 +5748,7 @@
       "Trailer": "n0pqP6ClcE8"
     },
     {
-      "Position": "72",
+      "Position": "71",
       "Const": "tt29355505",
       "Created": "2026-02-17",
       "Modified": "2026-02-17",
@@ -5770,7 +5770,7 @@
       "Trailer": "c51ND9Hdbw0"
     },
     {
-      "Position": "73",
+      "Position": "72",
       "Const": "tt0058006",
       "Created": "2026-03-16",
       "Modified": "2026-03-16",
@@ -5792,7 +5792,7 @@
       "Trailer": "06lr4b9vA60"
     },
     {
-      "Position": "74",
+      "Position": "73",
       "Const": "tt0082912",
       "Created": "2026-03-16",
       "Modified": "2026-03-16",
@@ -5814,7 +5814,7 @@
       "Trailer": "NvQy1Q7GuR8"
     },
     {
-      "Position": "75",
+      "Position": "74",
       "Const": "tt0022080",
       "Created": "2026-03-16",
       "Modified": "2026-03-16",
@@ -5836,7 +5836,7 @@
       "Trailer": "l8E2TzQmsKg"
     },
     {
-      "Position": "76",
+      "Position": "75",
       "Const": "tt0063291",
       "Created": "2026-03-16",
       "Modified": "2026-03-16",
@@ -5858,7 +5858,7 @@
       "Trailer": "FGcBNmiCdxw"
     },
     {
-      "Position": "77",
+      "Position": "76",
       "Const": "tt0060138",
       "Created": "2026-04-01",
       "Modified": "2026-04-01",
@@ -5880,7 +5880,7 @@
       "Trailer": "eL8MuxXB_Eg"
     },
     {
-      "Position": "78",
+      "Position": "77",
       "Const": "tt0074486",
       "Created": "2026-04-05",
       "Modified": "2026-04-05",
@@ -5902,7 +5902,7 @@
       "Trailer": "7WAzFWu2tVw"
     },
     {
-      "Position": "79",
+      "Position": "78",
       "Const": "tt0057869",
       "Created": "2026-04-23",
       "Modified": "2026-04-23",
@@ -5924,7 +5924,7 @@
       "Trailer": "TM0lC2QCiSU"
     },
     {
-      "Position": "80",
+      "Position": "79",
       "Const": "tt0083922",
       "Created": "2026-04-23",
       "Modified": "2026-04-23",
@@ -5946,7 +5946,7 @@
       "Trailer": "tDlA_QZmqkM"
     },
     {
-      "Position": "81",
+      "Position": "80",
       "Const": "tt0059592",
       "Created": "2026-04-23",
       "Modified": "2026-04-23",
@@ -5968,7 +5968,7 @@
       "Trailer": "TVvhJrrgfs0"
     },
     {
-      "Position": "82",
+      "Position": "81",
       "Const": "tt35538033",
       "Created": "2026-04-30",
       "Modified": "2026-04-30",
@@ -5990,7 +5990,7 @@
       "Trailer": "mNd1gb19A-c"
     },
     {
-      "Position": "83",
+      "Position": "82",
       "Const": "tt36834996",
       "Created": "2026-05-25",
       "Modified": "2026-05-25",
@@ -6012,7 +6012,7 @@
       "Trailer": "6qqMre2T32Q"
     },
     {
-      "Position": "84",
+      "Position": "83",
       "Const": "tt27369017",
       "Created": "2026-05-25",
       "Modified": "2026-05-25",
@@ -6034,7 +6034,7 @@
       "Trailer": "mYRc2Gl7geY"
     },
     {
-      "Position": "85",
+      "Position": "84",
       "Const": "tt0123948",
       "Created": "2026-06-21",
       "Modified": "2026-06-21",
@@ -6056,7 +6056,7 @@
       "Trailer": "Kr0LzE4VRkQ"
     },
     {
-      "Position": "86",
+      "Position": "85",
       "Const": "tt2076220",
       "Created": "2026-06-21",
       "Modified": "2026-06-21",
@@ -6078,7 +6078,7 @@
       "Trailer": "NWu9WjEcdbk"
     },
     {
-      "Position": "87",
+      "Position": "86",
       "Const": "tt32890033",
       "Created": "2026-06-29",
       "Modified": "2026-06-29",
@@ -6100,7 +6100,7 @@
       "Trailer": "exJJbMUcd1g"
     },
     {
-      "Position": "88",
+      "Position": "87",
       "Const": "tt1855199",
       "Created": "2026-09-04",
       "Modified": "2026-09-04",
@@ -6122,7 +6122,7 @@
       "Trailer": "9mQYxib26FM"
     },
     {
-      "Position": "89",
+      "Position": "88",
       "Const": "tt39094466",
       "Created": "2026-09-13",
       "Modified": "2026-09-13",
@@ -6144,7 +6144,7 @@
       "Trailer": "ILBDFlYMGAY"
     },
     {
-      "Position": "90",
+      "Position": "89",
       "Const": "tt41240964",
       "Created": "2026-09-13",
       "Modified": "2026-09-13",
@@ -6166,7 +6166,7 @@
       "Trailer": "PfgNjb-H9OE"
     },
     {
-      "Position": "91",
+      "Position": "90",
       "Const": "tt37803364",
       "Created": "2026-09-13",
       "Modified": "2026-09-13",
@@ -6188,7 +6188,7 @@
       "Trailer": "zd3qXH9qN70"
     },
     {
-      "Position": "92",
+      "Position": "91",
       "Const": "tt39602215",
       "Created": "2026-09-13",
       "Modified": "2026-09-13",
@@ -6210,7 +6210,7 @@
       "Trailer": "dY5kXykdbLo"
     },
     {
-      "Position": "93",
+      "Position": "92",
       "Const": "tt19637052",
       "Created": "2026-09-13",
       "Modified": "2026-09-13",
@@ -6232,7 +6232,7 @@
       "Trailer": "BF_J3-DmiS0"
     },
     {
-      "Position": "94",
+      "Position": "93",
       "Const": "tt43704164",
       "Created": "2026-09-14",
       "Modified": "2026-09-14",
@@ -6254,7 +6254,7 @@
       "Trailer": "i0-lYHCHzi8"
     },
     {
-      "Position": "95",
+      "Position": "94",
       "Const": "tt39239726",
       "Created": "2026-09-14",
       "Modified": "2026-09-14",
@@ -6276,7 +6276,7 @@
       "Trailer": "ATjUWojp42k"
     },
     {
-      "Position": "96",
+      "Position": "95",
       "Const": "tt41802342",
       "Created": "2026-09-14",
       "Modified": "2026-09-14",
@@ -6298,7 +6298,7 @@
       "Trailer": "hOFq7J4fmhY"
     },
     {
-      "Position": "97",
+      "Position": "96",
       "Const": "tt37815334",
       "Created": "2026-10-16",
       "Modified": "2026-10-16",
@@ -6320,7 +6320,7 @@
       "Trailer": "39-C_3DTROg"
     },
     {
-      "Position": "98",
+      "Position": "97",
       "Const": "tt45368240",
       "Created": "",
       "Modified": "",
