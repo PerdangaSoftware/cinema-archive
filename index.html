@@ -411,17 +411,12 @@
     .card-curate-row {
       gap: 4px;
     }
-    .btn-card-curate,
-    .btn-card-curate-soon,
-    .btn-card-fav,
-    .btn-card-watched,
-    .btn-card-remove,
-    .btn-card-list {
-      font-size: 8.5px;
-      padding: 5px 3px;
+    .btn-card-action {
+      height: 28px;
     }
-    .btn-card-fav {
-      flex: 0 0 28px;
+    .btn-card-action svg {
+      width: 13px;
+      height: 13px;
     }
   }
 
@@ -643,15 +638,9 @@
     width: 100%;
   }
 
-  .card-curate-row > button,
-  .card-curate-row > .card-list-dropdown {
+  .card-curate-row > .btn-card-action {
+    flex: 1 1 0;
     min-width: 0;
-  }
-
-  .card-curate-row > .btn-card-watched,
-  .card-curate-row > .btn-card-curate,
-  .card-curate-row > .btn-card-remove {
-    flex: 1 1 auto;
   }
 
   .card-footer-meta {
@@ -874,49 +863,57 @@
     color: #fbbf24;
   }
 
-  .btn-card-curate,
-  .btn-card-curate-soon,
-  .btn-card-fav,
-  .btn-card-watched,
-  .btn-card-remove,
-  .btn-card-list {
+  .btn-card-action {
+    flex: 1 1 0;
     min-width: 0;
-    background: transparent;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.02);
     border: 1px solid var(--border-light);
     color: var(--text-secondary);
-    font-family: var(--font-mono);
-    font-size: 9.5px;
-    padding: 5px 6px;
-    border-radius: 2px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    border-radius: 3px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    text-align: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    padding: 0;
   }
 
-  .btn-card-fav {
-    flex: 0 0 32px;
-    font-size: 11px;
-    padding: 5px 0;
+  .btn-card-action svg {
+    display: block;
+    pointer-events: none;
+    transition: transform 0.15s ease, stroke 0.2s ease, fill 0.2s ease;
   }
 
-  .btn-card-curate:hover {
+  .btn-card-action:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .btn-card-action:hover svg {
+    transform: scale(1.12);
+  }
+
+  .btn-card-action:active svg {
+    transform: scale(0.92);
+  }
+
+  .btn-card-watch:hover {
     border-color: var(--badge-green);
     color: var(--badge-green);
     background: rgba(16, 185, 129, 0.08);
   }
 
-  .btn-card-curate-soon:hover {
-    border-color: var(--badge-amber);
-    color: var(--badge-amber);
-    background: rgba(245, 158, 11, 0.08);
+  .btn-card-watch.active {
+    border-color: var(--badge-green);
+    background: rgba(16, 185, 129, 0.16);
+    color: var(--badge-green);
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.28);
+  }
+
+  .btn-card-fav svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
   }
 
   .btn-card-fav:hover {
@@ -929,107 +926,50 @@
     border-color: var(--accent-gold);
     color: var(--accent-gold);
     background: rgba(197, 160, 89, 0.16);
-    box-shadow: 0 0 8px rgba(197, 160, 89, 0.25);
+    box-shadow: 0 0 8px rgba(197, 160, 89, 0.3);
   }
 
-  .btn-card-watched:hover {
+  .btn-card-fav.active svg {
+    fill: var(--accent-gold);
+    stroke: var(--accent-gold);
+  }
+
+  .btn-card-ready:hover {
     border-color: var(--badge-green);
     color: var(--badge-green);
     background: rgba(16, 185, 129, 0.08);
   }
 
-  .btn-card-watched.active {
+  .btn-card-ready.active {
     border-color: var(--badge-green);
     background: rgba(16, 185, 129, 0.16);
     color: var(--badge-green);
-    font-weight: 700;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.28);
+  }
+
+  .btn-card-soon:hover {
+    border-color: var(--badge-amber);
+    color: var(--badge-amber);
+    background: rgba(245, 158, 11, 0.08);
+  }
+
+  .btn-card-soon.active {
+    border-color: var(--badge-amber);
+    background: rgba(245, 158, 11, 0.16);
+    color: var(--badge-amber);
+    box-shadow: 0 0 8px rgba(245, 158, 11, 0.28);
+  }
+
+  .btn-card-move-ready:hover {
+    border-color: var(--badge-green);
+    color: var(--badge-green);
+    background: rgba(16, 185, 129, 0.08);
   }
 
   .btn-card-remove:hover {
     border-color: #ef4444;
     color: #ef4444;
     background: rgba(239, 68, 68, 0.08);
-  }
-
-  .card-list-dropdown {
-    position: relative;
-    display: inline-flex;
-    flex: 0 0 auto;
-  }
-
-  .btn-card-list {
-    gap: 3px;
-  }
-
-  .btn-card-list:hover {
-    border-color: var(--text-primary);
-    color: var(--text-primary);
-  }
-
-  .btn-card-list.in-ready {
-    border-color: var(--badge-green);
-    color: var(--badge-green);
-    background: rgba(16, 185, 129, 0.1);
-  }
-
-  .btn-card-list.in-soon {
-    border-color: var(--badge-amber);
-    color: var(--badge-amber);
-    background: rgba(245, 158, 11, 0.1);
-  }
-
-  .card-list-menu {
-    position: absolute;
-    bottom: calc(100% + 4px);
-    right: 0;
-    min-width: 155px;
-    background: #141416;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 3px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.65);
-    padding: 4px;
-    z-index: 60;
-    display: none;
-  }
-
-  .card-list-menu.open {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .card-list-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 10px;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--text-secondary);
-    cursor: pointer;
-    border-radius: 2px;
-    transition: all 0.15s ease;
-    white-space: nowrap;
-    letter-spacing: 0.03em;
-  }
-
-  .card-list-item:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
-  }
-
-  .card-list-item.active {
-    color: #fff;
-    font-weight: 600;
-  }
-
-  .card-list-item .list-item-check {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 14px;
-    color: var(--accent-gold);
-    font-size: 11px;
   }
 
   .add-soon-modal-card {
@@ -1703,15 +1643,35 @@
     render();
   }
 
+  const ICON_CHECK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+  const ICON_STAR = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+  const ICON_CLOCK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+  const ICON_HOURGLASS = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14M5 2h14M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg>';
+  const ICON_ARROW_RIGHT = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+  const ICON_CLOSE = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+
   function getCardActionsHtml(m, isFav, isToWatch, isWaiting, isWatched) {
     const safeConst = escapeHtml(m.Const || '');
-    const watchedBtn = `<button class="btn-card-watched ${isWatched ? 'active' : ''}" onclick="toggleWatched('${safeConst}')" title="${isWatched ? 'Unmark as Watched' : 'Mark as Watched'}">${isWatched ? '✓ Watched' : '✓ Watch'}</button>`;
+
+    const watchBtn = `
+      <button type="button" class="btn-card-action btn-card-watch ${isWatched ? 'active' : ''}" onclick="toggleWatched('${safeConst}')" title="${isWatched ? 'Watched (click to unmark or rate)' : 'Mark as Watched'}">
+        ${ICON_CHECK}
+      </button>
+    `;
+
+    const favBtn = `
+      <button type="button" class="btn-card-action btn-card-fav ${isFav ? 'active' : ''}" onclick="toggleFavorite('${safeConst}')" title="${isFav ? 'In Favorites (click to remove)' : 'Add to Favorites'}">
+        ${ICON_STAR}
+      </button>
+    `;
 
     if (currentTab === 'watched') {
       return `
         <div class="card-curate-row">
-          <button class="btn-card-fav ${isFav ? 'active' : ''}" onclick="toggleFavorite('${safeConst}')" title="${isFav ? 'Remove from Favorites' : 'Add to Favorites'}">★ Fav</button>
-          <button class="btn-card-watched active" onclick="toggleWatched('${safeConst}')" title="Unmark as Watched">✕ Unwatch</button>
+          ${favBtn}
+          <button type="button" class="btn-card-action btn-card-remove" onclick="toggleWatched('${safeConst}')" title="Unmark as Watched">
+            ${ICON_CLOSE}
+          </button>
         </div>
       `;
     }
@@ -1719,8 +1679,10 @@
     if (currentTab === 'favorites') {
       return `
         <div class="card-curate-row">
-          ${watchedBtn}
-          <button class="btn-card-remove" onclick="removeCurated('${safeConst}', 'favorites')" title="Remove from Favorites">✕ Remove</button>
+          ${watchBtn}
+          <button type="button" class="btn-card-action btn-card-remove" onclick="removeCurated('${safeConst}', 'favorites')" title="Remove from Favorites">
+            ${ICON_CLOSE}
+          </button>
         </div>
       `;
     }
@@ -1728,9 +1690,11 @@
     if (currentTab === 'towatch') {
       return `
         <div class="card-curate-row">
-          ${watchedBtn}
-          <button class="btn-card-fav ${isFav ? 'active' : ''}" onclick="toggleFavorite('${safeConst}')" title="${isFav ? 'Remove from Favorites' : 'Add to Favorites'}">★</button>
-          <button class="btn-card-remove" onclick="removeCurated('${safeConst}', 'towatch')" title="Remove from Ready to Watch">✕ Remove</button>
+          ${watchBtn}
+          ${favBtn}
+          <button type="button" class="btn-card-action btn-card-remove" onclick="removeCurated('${safeConst}', 'towatch')" title="Remove from Ready to Watch">
+            ${ICON_CLOSE}
+          </button>
         </div>
       `;
     }
@@ -1738,35 +1702,35 @@
     if (currentTab === 'waiting') {
       return `
         <div class="card-curate-row">
-          ${watchedBtn}
-          <button class="btn-card-curate" onclick="moveToWatch('${safeConst}')" title="Move to Ready to Watch">→ Ready</button>
-          <button class="btn-card-remove" onclick="removeCurated('${safeConst}', 'waiting')" title="Remove from Coming Soon">✕ Remove</button>
+          ${watchBtn}
+          <button type="button" class="btn-card-action btn-card-move-ready" onclick="moveToWatch('${safeConst}')" title="Move to Ready to Watch">
+            ${ICON_ARROW_RIGHT}
+          </button>
+          <button type="button" class="btn-card-action btn-card-remove" onclick="removeCurated('${safeConst}', 'waiting')" title="Remove from Coming Soon">
+            ${ICON_CLOSE}
+          </button>
         </div>
       `;
     }
 
-    const listLabel = isToWatch ? '✓ Ready ▾' : (isWaiting ? '✓ Soon ▾' : '＋ List ▾');
-    const listClass = isToWatch ? 'in-ready' : (isWaiting ? 'in-soon' : '');
+    const readyBtn = `
+      <button type="button" class="btn-card-action btn-card-ready ${isToWatch ? 'active' : ''}" onclick="toggleReady('${safeConst}')" title="${isToWatch ? 'In Ready to Watch (click to remove)' : 'Add to Ready to Watch'}">
+        ${ICON_CLOCK}
+      </button>
+    `;
+
+    const soonBtn = `
+      <button type="button" class="btn-card-action btn-card-soon ${isWaiting ? 'active' : ''}" onclick="toggleWaiting('${safeConst}')" title="${isWaiting ? 'In Coming Soon (click to remove)' : 'Add to Coming Soon'}">
+        ${ICON_HOURGLASS}
+      </button>
+    `;
 
     return `
       <div class="card-curate-row">
-        ${watchedBtn}
-        <button class="btn-card-fav ${isFav ? 'active' : ''}" onclick="toggleFavorite('${safeConst}')" title="${isFav ? 'Remove from Favorites' : 'Add to Favorites'}">★</button>
-        <div class="card-list-dropdown">
-          <button class="btn-card-list ${listClass}" onclick="toggleCardListMenu(event, '${safeConst}')" title="Add to or remove from lists">
-            ${listLabel}
-          </button>
-          <div class="card-list-menu" id="listMenu_${safeConst}">
-            <div class="card-list-item ${isToWatch ? 'active' : ''}" onclick="toggleCardList(event, '${safeConst}', 'towatch')">
-              <span class="list-item-check">${isToWatch ? '✓' : '＋'}</span>
-              <span>Ready to Watch</span>
-            </div>
-            <div class="card-list-item ${isWaiting ? 'active' : ''}" onclick="toggleCardList(event, '${safeConst}', 'waiting')">
-              <span class="list-item-check">${isWaiting ? '✓' : '＋'}</span>
-              <span>Coming Soon</span>
-            </div>
-          </div>
-        </div>
+        ${watchBtn}
+        ${favBtn}
+        ${readyBtn}
+        ${soonBtn}
       </div>
     `;
   }
@@ -2236,47 +2200,21 @@
     }
   }
 
-  function toggleCardListMenu(e, constId) {
-    if (e) {
-      e.stopPropagation();
-    }
-    const menu = document.getElementById('listMenu_' + constId);
-    const isOpen = menu && menu.classList.contains('open');
-    closeAllCardListMenus();
-    if (menu && !isOpen) {
-      menu.classList.add('open');
+  function toggleReady(constId) {
+    if (toWatchMovies.some(m => m.Const === constId)) {
+      removeCurated(constId, 'towatch');
+    } else {
+      addToWatch(constId);
     }
   }
 
-  function closeAllCardListMenus() {
-    document.querySelectorAll('.card-list-menu.open').forEach(el => el.classList.remove('open'));
-  }
-
-  function toggleCardList(e, constId, type) {
-    if (e) {
-      e.stopPropagation();
-    }
-    closeAllCardListMenus();
-    if (type === 'towatch') {
-      if (toWatchMovies.some(m => m.Const === constId)) {
-        removeCurated(constId, 'towatch');
-      } else {
-        addToWatch(constId);
-      }
-    } else if (type === 'waiting') {
-      if (waitingMovies.some(m => m.Const === constId)) {
-        removeCurated(constId, 'waiting');
-      } else {
-        addToWaiting(constId);
-      }
+  function toggleWaiting(constId) {
+    if (waitingMovies.some(m => m.Const === constId)) {
+      removeCurated(constId, 'waiting');
+    } else {
+      addToWaiting(constId);
     }
   }
-
-  document.addEventListener('click', e => {
-    if (!e.target.closest('.card-list-dropdown')) {
-      closeAllCardListMenus();
-    }
-  });
 
   let addSoonSearchTimeout = null;
 
