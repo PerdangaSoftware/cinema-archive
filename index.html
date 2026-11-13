@@ -418,6 +418,19 @@
       width: 13px;
       height: 13px;
     }
+    .card-ratings-row {
+      gap: 5px;
+      margin: 6px 0 10px 0;
+    }
+    .rating-chip {
+      height: 24px;
+      padding: 0 5px;
+      font-size: 10px;
+    }
+    .chip-label {
+      font-size: 8px;
+      padding: 1px 3px;
+    }
   }
 
   .film-card {
@@ -602,20 +615,18 @@
   }
 
   .card-specs {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     font-size: 11px;
     font-family: var(--font-mono);
     color: var(--text-muted);
-    margin-bottom: 8px;
+    margin-bottom: 4px;
+    letter-spacing: 0.03em;
   }
 
   .card-genres {
     font-size: 11px;
     color: var(--text-secondary);
-    line-height: 1.3;
-    margin-bottom: 14px;
+    line-height: 1.35;
+    margin-bottom: 6px;
   }
 
   .card-action-bar {
@@ -688,51 +699,102 @@
     color: var(--accent-gold);
   }
 
-  .imdb-score {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--accent-gold);
-    font-weight: 700;
-  }
-
-  .card-ratings-group {
-    display: inline-flex;
+  .card-ratings-row {
+    display: flex;
     align-items: center;
     gap: 8px;
+    margin: 6px 0 12px 0;
+    width: 100%;
   }
 
-  .user-rate-btn {
-    background: transparent;
-    border: 1px solid transparent;
-    padding: 1px 5px;
-    border-radius: 2px;
+  .rating-chip {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 26px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
     font-family: var(--font-mono);
     font-size: 11px;
-    color: var(--text-muted);
-    cursor: pointer;
+    color: var(--text-secondary);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-sizing: border-box;
+  }
+
+  .rating-chip.imdb-chip {
+    border-color: rgba(245, 197, 24, 0.2);
+    background: rgba(245, 197, 24, 0.03);
+  }
+
+  .rating-chip.imdb-chip:hover {
+    border-color: rgba(245, 197, 24, 0.4);
+    background: rgba(245, 197, 24, 0.06);
+  }
+
+  .chip-label {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 1px 4px;
+    border-radius: 2px;
+    line-height: 1.1;
+  }
+
+  .chip-label.imdb-label {
+    background: #f5c518;
+    color: #000;
+  }
+
+  .chip-label.user-label {
+    background: rgba(197, 160, 89, 0.18);
+    color: var(--accent-gold);
+    border: 1px solid rgba(197, 160, 89, 0.35);
+  }
+
+  .chip-value {
+    font-weight: 700;
+    font-size: 11px;
     display: inline-flex;
     align-items: center;
     gap: 2px;
-    transition: all 0.15s ease;
-    line-height: 1.3;
+    white-space: nowrap;
   }
 
-  .user-rate-btn:hover {
-    color: #60a5fa;
-    border-color: rgba(59, 130, 246, 0.35);
-    background: rgba(59, 130, 246, 0.1);
+  .imdb-chip .chip-value {
+    color: #f5c518;
   }
 
-  .user-rate-btn.rated {
-    color: #60a5fa;
-    font-weight: 700;
-    border-color: rgba(59, 130, 246, 0.25);
-    background: rgba(59, 130, 246, 0.1);
+  .rating-chip.user-chip {
+    cursor: pointer;
+    border-color: var(--border-light);
+    color: var(--text-muted);
   }
 
-  .user-rate-btn .rate-max {
+  .rating-chip.user-chip:hover {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+    background: rgba(197, 160, 89, 0.08);
+  }
+
+  .rating-chip.user-chip.rated {
+    border-color: rgba(197, 160, 89, 0.35);
+    background: rgba(197, 160, 89, 0.08);
+    color: var(--accent-gold);
+  }
+
+  .rating-chip.user-chip.rated .chip-value {
+    color: var(--accent-gold);
+    text-shadow: 0 0 8px rgba(197, 160, 89, 0.3);
+  }
+
+  .chip-max {
     font-size: 9px;
-    opacity: 0.7;
+    opacity: 0.65;
     font-weight: 400;
   }
 
@@ -1828,11 +1890,19 @@
       const year = escapeHtml(m.Year || '—');
       const runtime = m['Runtime (mins)'] ? `${escapeHtml(m['Runtime (mins)'])} MIN` : '—';
       const ratingVal = m['IMDb Rating'];
-      const rating = ratingVal ? `★ ${escapeHtml(ratingVal)}` : '—';
       const myRating = getUserRating(m);
-      const rateBtnHtml = myRating
-        ? `<button class="user-rate-btn rated" onclick="openRateModal('${safeConst}')" title="Your Rating: ${escapeHtml(myRating)}/10">★ ${escapeHtml(myRating)}<span class="rate-max">/10</span></button>`
-        : `<button class="user-rate-btn" onclick="openRateModal('${safeConst}')" title="Rate 1–10">☆ Rate</button>`;
+      const ratingsRowHtml = `
+        <div class="card-ratings-row">
+          <div class="rating-chip imdb-chip" title="IMDb Rating: ${ratingVal ? escapeHtml(ratingVal) + ' / 10' : 'No rating'}">
+            <span class="chip-label imdb-label">IMDb</span>
+            <span class="chip-value">${ratingVal ? '★ ' + escapeHtml(ratingVal) : '—'}</span>
+          </div>
+          <button type="button" class="rating-chip user-chip ${myRating ? 'rated' : ''}" onclick="openRateModal('${safeConst}')" title="${myRating ? 'My Rating: ' + escapeHtml(myRating) + '/10 (Click to change)' : 'Rate film 1–10'}">
+            <span class="chip-label user-label">MY</span>
+            <span class="chip-value">${myRating ? '★ ' + escapeHtml(myRating) + '<span class="chip-max">/10</span>' : '☆ Rate'}</span>
+          </button>
+        </div>
+      `;
       const genres = escapeHtml(m.Genres || 'Drama');
       const posterSrc = escapeHtml(formatPoster(m.Poster || ''));
       const imdbUrl = escapeHtml(m.URL || ('https://www.imdb.com/title/' + (m.Const || '') + '/'));
@@ -1888,14 +1958,9 @@
               <h3 class="card-title">${title}</h3>
               ${orig}
               <div class="card-director">${director}</div>
-              <div class="card-specs">
-                <span>${year} &bull; ${runtime}</span>
-                <span class="card-ratings-group">
-                  <span class="imdb-score" title="IMDb Rating">${rating}</span>
-                  ${rateBtnHtml}
-                </span>
-              </div>
+              <div class="card-specs">${year} &bull; ${runtime}</div>
               <div class="card-genres">${genres}</div>
+              ${ratingsRowHtml}
             </div>
             <div class="card-action-bar ${isFavOnly ? 'fav-action-bar' : ''}">
               ${actionsHtml}
