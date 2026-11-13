@@ -575,27 +575,6 @@
       "Trailer": "2yqXG3OcpNQ"
     },
     {
-      "Position": "",
-      "Const": "tt26581740",
-      "Created": "",
-      "Modified": "",
-      "Description": "",
-      "Title": "Weapons",
-      "Original Title": "",
-      "URL": "https://www.imdb.com/title/tt26581740/",
-      "Title Type": "Movie",
-      "IMDb Rating": "7.4",
-      "Runtime (mins)": "128",
-      "Year": "2025",
-      "Genres": "Horror, Mystery",
-      "Num Votes": "",
-      "Release Date": "",
-      "Directors": "Zach Cregger",
-      "Your Rating": "8",
-      "Date Rated": "",
-      "Poster": "https://m.media-amazon.com/images/M/MV5BNTBhNWJjZWItYzY3NS00M2NkLThmOWYtYTlmNzBmN2UxZWFjXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
-    },
-    {
       "Position": "76",
       "Const": "tt0060138",
       "Created": "2026-04-01",
@@ -682,6 +661,27 @@
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BODVkYTVhMjMtYTlkZS00YjZiLTkxZDctMzk2ZGNjNGQ0MjFlXkEyXkFqcGc@._V1_FMjpg_UX600_.jpg",
       "Trailer": "-tJVdq_G_Go"
+    },
+    {
+      "Position": "100",
+      "Const": "tt0053472",
+      "Created": "",
+      "Modified": "",
+      "Description": "",
+      "Title": "Breathless",
+      "Original Title": "",
+      "URL": "https://www.imdb.com/title/tt0053472/",
+      "Title Type": "Movie",
+      "IMDb Rating": "7.6",
+      "Runtime (mins)": "90",
+      "Year": "1961",
+      "Genres": "Crime, Drama",
+      "Num Votes": "",
+      "Release Date": "",
+      "Directors": "Jean-Luc Godard",
+      "Your Rating": "",
+      "Date Rated": "",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BZGI5MWNjYmEtNzUxZC00YTI3LWE5MzctZTdhYjJkMGMxYzI3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     }
   ],
   "waiting": [
@@ -861,7 +861,6 @@
     }
   ],
   "watched_ids": [
-    "tt26581740",
     "tt18382850",
     "tt0208502",
     "tt0500092",
@@ -1032,27 +1031,6 @@
     "tt21027780"
   ],
   "watched_archive": [
-    {
-      "Position": "",
-      "Const": "tt26581740",
-      "Created": "",
-      "Modified": "",
-      "Description": "",
-      "Title": "Weapons",
-      "Original Title": "",
-      "URL": "https://www.imdb.com/title/tt26581740/",
-      "Title Type": "Movie",
-      "IMDb Rating": "7.4",
-      "Runtime (mins)": "128",
-      "Year": "2025",
-      "Genres": "Horror, Mystery",
-      "Num Votes": "",
-      "Release Date": "",
-      "Directors": "Zach Cregger",
-      "Your Rating": "8",
-      "Date Rated": "",
-      "Poster": "https://m.media-amazon.com/images/M/MV5BNTBhNWJjZWItYzY3NS00M2NkLThmOWYtYTlmNzBmN2UxZWFjXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
-    },
     {
       "Position": "",
       "Const": "tt18382850",
