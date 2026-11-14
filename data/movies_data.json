@@ -702,6 +702,27 @@
       "Your Rating": "",
       "Date Rated": "",
       "Poster": "https://m.media-amazon.com/images/M/MV5BZGI5MWNjYmEtNzUxZC00YTI3LWE5MzctZTdhYjJkMGMxYzI3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+      "Position": "1",
+      "Const": "tt0101318",
+      "Created": "",
+      "Modified": "",
+      "Description": "",
+      "Title": "The Lovers on the Bridge",
+      "Original Title": "",
+      "URL": "https://www.imdb.com/title/tt0101318/",
+      "Title Type": "Movie",
+      "IMDb Rating": "7.6",
+      "Runtime (mins)": "126",
+      "Year": "1999",
+      "Genres": "Drama, Romance",
+      "Num Votes": "",
+      "Release Date": "",
+      "Directors": "Leos Carax",
+      "Your Rating": "",
+      "Date Rated": "",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BNmYyZTUyNDctNmYwYi00OTIxLWIzMDQtNTRkZDE0MGI3MmVkXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
     }
   ],
   "waiting": [
@@ -4338,7 +4359,7 @@
     "tt14849194": "8",
     "tt21027780": "8"
   },
-  "cinema_pick": "",
+  "cinema_pick": "tt0123948",
   "all": [
     {
       "Position": "1",
